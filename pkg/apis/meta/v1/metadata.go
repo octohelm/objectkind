@@ -20,11 +20,11 @@ func (v *Metadata) CopyFromObject(o schema.Object) {
 		}
 	}
 
-	if x, ok := o.(schema.ObjectWithCreationTimestamp); ok {
+	if x, ok := o.(schema.CreationTimestampGetter); ok {
 		v.SetCreationTimestamp(x.GetCreationTimestamp())
 	}
 
-	if x, ok := o.(schema.ObjectWithModificationTimestamp); ok {
+	if x, ok := o.(schema.ModificationTimestampGetter); ok {
 		v.SetModificationTimestamp(x.GetModificationTimestamp())
 	}
 }

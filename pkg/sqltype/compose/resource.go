@@ -60,7 +60,7 @@ var _ interface {
 } = &Resource[uint64]{}
 
 func (r *Resource[ID]) CopyFromObject(o schema.Object) {
-	if canGetID, ok := o.(schema.ObjectWithID[ID]); ok {
+	if canGetID, ok := o.(schema.IDGetter[ID]); ok {
 		r.ID = canGetID.GetID()
 	}
 
@@ -69,11 +69,11 @@ func (r *Resource[ID]) CopyFromObject(o schema.Object) {
 		r.Description = sqltypenullable.Text(x.GetDescription())
 	}
 
-	if x, ok := o.(schema.ObjectWithCreationTimestamp); ok {
+	if x, ok := o.(schema.CreationTimestampGetter); ok {
 		r.CreatedAt = x.GetCreationTimestamp()
 	}
 
-	if x, ok := o.(schema.ObjectWithModificationTimestamp); ok {
+	if x, ok := o.(schema.ModificationTimestampGetter); ok {
 		r.UpdatedAt = x.GetModificationTimestamp()
 	}
 
@@ -81,7 +81,7 @@ func (r *Resource[ID]) CopyFromObject(o schema.Object) {
 }
 
 func (r Resource[ID]) CopyToObject(o schema.ObjectSetter) {
-	if canSetID, ok := o.(schema.ObjectIDSetter[ID]); ok {
+	if canSetID, ok := o.(schema.IDSetter[ID]); ok {
 		canSetID.SetID(r.ID)
 	}
 
@@ -90,11 +90,11 @@ func (r Resource[ID]) CopyToObject(o schema.ObjectSetter) {
 		x.SetDescription(string(r.Description))
 	}
 
-	if x, ok := o.(schema.ObjectCreationTimestampSetter); ok {
+	if x, ok := o.(schema.CreationTimestampSetter); ok {
 		x.SetCreationTimestamp(r.CreatedAt)
 	}
 
-	if x, ok := o.(schema.ObjectModificationTimestampSetter); ok {
+	if x, ok := o.(schema.ModificationTimestampSetter); ok {
 		x.SetModificationTimestamp(r.UpdatedAt)
 	}
 
@@ -108,13 +108,13 @@ var _ interface {
 func (r CodedResource[ID, Code]) CopyToObject(o schema.ObjectSetter) {
 	r.Resource.CopyToObject(o)
 
-	if canSetCode, ok := o.(schema.ObjectCodeSetter[Code]); ok {
+	if canSetCode, ok := o.(schema.CodeSetter[Code]); ok {
 		canSetCode.SetCode(r.Code)
 	}
 }
 
 func (r *CodedResource[ID, Code]) CopyFromObject(o schema.Object) {
-	if canGetID, ok := o.(schema.ObjectWithCode[Code]); ok {
+	if canGetID, ok := o.(schema.CodeGetter[Code]); ok {
 		r.Code = canGetID.GetCode()
 	}
 

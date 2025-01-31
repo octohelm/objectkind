@@ -23,34 +23,34 @@ type ObjectDescriptorSetter interface {
 	SetAnnotation(key string, value string)
 }
 
-type ObjectWithID[ID ~uint64] interface {
+type IDGetter[ID ~uint64] interface {
 	GetID() ID
 }
 
-type ObjectIDSetter[ID ~uint64] interface {
+type IDSetter[ID ~uint64] interface {
 	SetID(id ID)
 }
 
-type ObjectWithCode[Code ~string] interface {
+type CodeGetter[Code ~string] interface {
 	GetCode() Code
 }
 
-type ObjectCodeSetter[Code ~string] interface {
+type CodeSetter[Code ~string] interface {
 	SetCode(code Code)
 }
 
-type ObjectWithCreationTimestamp interface {
+type CreationTimestampGetter interface {
 	GetCreationTimestamp() sqltypetime.Timestamp
 }
 
-type ObjectCreationTimestampSetter interface {
+type CreationTimestampSetter interface {
 	SetCreationTimestamp(creationTimestamp sqltypetime.Timestamp)
 }
 
-type ObjectWithModificationTimestamp interface {
+type ModificationTimestampGetter interface {
 	GetModificationTimestamp() sqltypetime.Timestamp
 }
 
-type ObjectModificationTimestampSetter interface {
+type ModificationTimestampSetter interface {
 	SetModificationTimestamp(modificationTimestamp sqltypetime.Timestamp)
 }

@@ -12,25 +12,25 @@ type OperationTimes struct {
 	ModificationTimestamp sqltypetime.Timestamp `json:"modificationTimestamp,omitzero"`
 }
 
-var _ schema.ObjectWithCreationTimestamp = &OperationTimes{}
+var _ schema.CreationTimestampGetter = &OperationTimes{}
 
 func (v OperationTimes) GetCreationTimestamp() sqltypetime.Timestamp {
 	return v.CreationTimestamp
 }
 
-var _ schema.ObjectCreationTimestampSetter = &OperationTimes{}
+var _ schema.CreationTimestampSetter = &OperationTimes{}
 
 func (v *OperationTimes) SetCreationTimestamp(creationTimestamp sqltypetime.Timestamp) {
 	v.CreationTimestamp = creationTimestamp
 }
 
-var _ schema.ObjectWithModificationTimestamp = &OperationTimes{}
+var _ schema.ModificationTimestampGetter = &OperationTimes{}
 
 func (v OperationTimes) GetModificationTimestamp() sqltypetime.Timestamp {
 	return v.ModificationTimestamp
 }
 
-var _ schema.ObjectModificationTimestampSetter = &OperationTimes{}
+var _ schema.ModificationTimestampSetter = &OperationTimes{}
 
 func (v *OperationTimes) SetModificationTimestamp(modificationTimestamp sqltypetime.Timestamp) {
 	v.ModificationTimestamp = modificationTimestamp
