@@ -1,9 +1,9 @@
 package compose
 
 import (
+	"database/sql/driver"
 	"time"
 
-	"database/sql/driver"
 	"github.com/octohelm/storage/pkg/sqltype"
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
 )

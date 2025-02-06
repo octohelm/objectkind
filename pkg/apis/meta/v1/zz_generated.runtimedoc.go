@@ -24,15 +24,13 @@ func runtimeDoc(v any, prefix string, names ...string) ([]string, bool) {
 	return nil, false
 }
 
-func (v *CodeReference[Code]) RuntimeDoc(names ...string) ([]string, bool) {
+func (v *Codable[Code]) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
 		case "Code":
-			return []string{}, true
-
-		}
-		if doc, ok := runtimeDoc(&v.TypeMeta, "", names...); ok {
-			return doc, ok
+			return []string{
+				"编码",
+			}, true
 		}
 
 		return nil, false
@@ -40,34 +38,14 @@ func (v *CodeReference[Code]) RuntimeDoc(names ...string) ([]string, bool) {
 	return []string{}, true
 }
 
-func (v *CodedObject[ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
+func (v *CodableObject[ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
-		case "Code":
-			return []string{
-				"编码",
-			}, true
-
 		}
 		if doc, ok := runtimeDoc(&v.Object, "", names...); ok {
 			return doc, ok
 		}
-
-		return nil, false
-	}
-	return []string{}, true
-}
-
-func (v *CodedObjectRequest[Code]) RuntimeDoc(names ...string) ([]string, bool) {
-	if len(names) > 0 {
-		switch names[0] {
-		case "Code":
-			return []string{
-				"编码",
-			}, true
-
-		}
-		if doc, ok := runtimeDoc(&v.ObjectRequest, "", names...); ok {
+		if doc, ok := runtimeDoc(&v.Codable, "", names...); ok {
 			return doc, ok
 		}
 
@@ -76,7 +54,42 @@ func (v *CodedObjectRequest[Code]) RuntimeDoc(names ...string) ([]string, bool) 
 	return []string{}, true
 }
 
-func (v *Descriptor) RuntimeDoc(names ...string) ([]string, bool) {
+func (v *CodableReference[O, Code]) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		}
+		if doc, ok := runtimeDoc(&v.TypeMeta, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Codable, "", names...); ok {
+			return doc, ok
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *CodableRequest[O, Code]) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		}
+		if doc, ok := runtimeDoc(&v.TypeMeta, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Describer, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Codable, "", names...); ok {
+			return doc, ok
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *Describer) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
 		case "Name":
@@ -92,6 +105,67 @@ func (v *Descriptor) RuntimeDoc(names ...string) ([]string, bool) {
 				"其他注解",
 			}, true
 
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *GroupKind) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		case "Group":
+			return []string{}, true
+		case "Kind":
+			return []string{}, true
+
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *GroupVersion) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		case "Group":
+			return []string{}, true
+		case "Version":
+			return []string{}, true
+
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *GroupVersionKind) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		case "Group":
+			return []string{}, true
+		case "Version":
+			return []string{}, true
+		case "Kind":
+			return []string{}, true
+
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *Identifiable[ID]) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		case "ID":
+			return []string{
+				"资源 id",
+			}, true
 		}
 
 		return nil, false
@@ -121,15 +195,14 @@ func (v *List[T]) RuntimeDoc(names ...string) ([]string, bool) {
 func (v *Metadata) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
-
 		}
 		if doc, ok := runtimeDoc(&v.TypeMeta, "", names...); ok {
 			return doc, ok
 		}
-		if doc, ok := runtimeDoc(&v.Descriptor, "", names...); ok {
+		if doc, ok := runtimeDoc(&v.Describer, "", names...); ok {
 			return doc, ok
 		}
-		if doc, ok := runtimeDoc(&v.OperationTimes, "", names...); ok {
+		if doc, ok := runtimeDoc(&v.OperationTimestamps, "", names...); ok {
 			return doc, ok
 		}
 
@@ -141,13 +214,11 @@ func (v *Metadata) RuntimeDoc(names ...string) ([]string, bool) {
 func (v *Object[ID]) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
-		case "ID":
-			return []string{
-				"id",
-			}, true
-
 		}
 		if doc, ok := runtimeDoc(&v.Metadata, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Identifiable, "", names...); ok {
 			return doc, ok
 		}
 
@@ -156,30 +227,14 @@ func (v *Object[ID]) RuntimeDoc(names ...string) ([]string, bool) {
 	return []string{}, true
 }
 
-func (v *ObjectReference[ID]) RuntimeDoc(names ...string) ([]string, bool) {
+func (v *ObjectReference[O, ID]) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
-		case "ID":
-			return []string{
-				"id",
-			}, true
-
 		}
 		if doc, ok := runtimeDoc(&v.TypeMeta, "", names...); ok {
 			return doc, ok
 		}
-
-		return nil, false
-	}
-	return []string{}, true
-}
-
-func (v *ObjectRequest) RuntimeDoc(names ...string) ([]string, bool) {
-	if len(names) > 0 {
-		switch names[0] {
-
-		}
-		if doc, ok := runtimeDoc(&v.Metadata, "", names...); ok {
+		if doc, ok := runtimeDoc(&v.Identifiable, "", names...); ok {
 			return doc, ok
 		}
 
@@ -188,7 +243,7 @@ func (v *ObjectRequest) RuntimeDoc(names ...string) ([]string, bool) {
 	return []string{}, true
 }
 
-func (v *OperationTimes) RuntimeDoc(names ...string) ([]string, bool) {
+func (v *OperationTimestamps) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
 		case "CreationTimestamp":
@@ -200,6 +255,22 @@ func (v *OperationTimes) RuntimeDoc(names ...string) ([]string, bool) {
 				"更新时间",
 			}, true
 
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *Request[O]) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		}
+		if doc, ok := runtimeDoc(&v.TypeMeta, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Describer, "", names...); ok {
+			return doc, ok
 		}
 
 		return nil, false

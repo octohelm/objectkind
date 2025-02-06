@@ -4,6 +4,6 @@ type Provider interface {
 	GetAnnotation(k string) (value string, ok bool)
 }
 
-type Accessor interface {
+type Setter interface {
 	SetAnnotation(k string, value string)
 }

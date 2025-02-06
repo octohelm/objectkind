@@ -1,8 +1,6 @@
 package v1
 
-import "github.com/octohelm/objectkind/pkg/schema"
-
-type ObjectKind = schema.ObjectKind
+import "github.com/octohelm/objectkind/pkg/object"
 
 type TypeMeta struct {
 	// 资源类型
@@ -11,14 +9,12 @@ type TypeMeta struct {
 	APIVersion string `json:"apiVersion,omitzero"`
 }
 
-func (v TypeMeta) GetObjectKind() ObjectKind {
-	return &v
-}
+var _ object.Type = TypeMeta{}
 
-func (v TypeMeta) GroupVersionKind() schema.GroupVersionKind {
-	return schema.FromAPIVersionAndKind(v.APIVersion, v.Kind)
-}
+func (t TypeMeta) GetKind() string       { return t.Kind }
+func (t TypeMeta) GetAPIVersion() string { return t.APIVersion }
 
-func (v *TypeMeta) SetGroupVersionKind(gvk schema.GroupVersionKind) {
-	v.APIVersion, v.Kind = gvk.ToAPIVersionAndKind()
-}
+var _ object.KindAndAPIVersionSetter = &TypeMeta{}
+
+func (t *TypeMeta) SetKind(kind string)          { t.Kind = kind }
+func (t *TypeMeta) SetAPIVersion(version string) { t.APIVersion = version }

@@ -16,7 +16,7 @@ func (ann Annotation) Get(accessor Provider) (string, bool) {
 	return accessor.GetAnnotation(string(ann))
 }
 
-func (ann Annotation) MarshalTo(accessor Accessor, v any) error {
+func (ann Annotation) MarshalTo(accessor Setter, v any) error {
 	b := &bytes.Buffer{}
 
 	switch x := v.(type) {

@@ -3,7 +3,7 @@ package compose
 import (
 	"time"
 
-	"github.com/octohelm/objectkind/pkg/schema"
+	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/storage/pkg/sqltype"
 	sqltypenullable "github.com/octohelm/storage/pkg/sqltype/nullable"
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
@@ -46,77 +46,65 @@ func (r *Resource[ID]) ForceMarkModifiedAt() {
 	r.CreatedAt = r.UpdatedAt
 }
 
-type CodedResource[ID ~uint64, Code ~string] struct {
-	Resource[ID]
+var (
+	_ object.Describer           = &Resource[uint64]{}
+	_ object.OperationTimestamps = &Resource[uint64]{}
+)
 
+func (r *Resource[ID]) GetName() string {
+	return r.Name
+}
+
+func (r *Resource[ID]) SetName(name string) {
+	r.Name = name
+}
+
+func (r Resource[ID]) GetDescription() string {
+	return string(r.Description)
+}
+
+func (r *Resource[ID]) SetDescription(description string) {
+	r.Description = sqltypenullable.Text(description)
+}
+
+func (r Resource[ID]) GetCreationTimestamp() object.Timestamp {
+	return r.CreatedAt
+}
+
+func (r *Resource[ID]) SetCreationTimestamp(timestamp object.Timestamp) {
+	r.CreatedAt = timestamp
+	r.MarkCreatedAt()
+}
+
+func (r Resource[ID]) GetModificationTimestamp() object.Timestamp {
+	return r.UpdatedAt
+}
+
+func (r *Resource[ID]) SetModificationTimestamp(timestamp object.Timestamp) {
+	r.UpdatedAt = timestamp
+	r.MarkModifiedAt()
+}
+
+var _ interface {
+	object.IDGetter[uint64]
+	object.IDSetter[uint64]
+} = &Resource[uint64]{}
+
+func (r Resource[ID]) GetID() ID    { return r.ID }
+func (r *Resource[ID]) SetID(id ID) { r.ID = id }
+
+type CodableResource[ID ~uint64, Code ~string] struct {
+	Resource[ID]
 	// 编码
 	// 人类可读编码
 	Code Code `db:"f_code" json:"code"`
 }
 
 var _ interface {
-	schema.ObjectReceiver
-	schema.ObjectProvider
-} = &Resource[uint64]{}
+	object.CodeGetter[string]
+	object.CodeGetter[string]
+} = &CodableResource[uint64, string]{}
 
-func (r *Resource[ID]) CopyFromObject(o schema.Object) {
-	if canGetID, ok := o.(schema.IDGetter[ID]); ok {
-		r.ID = canGetID.GetID()
-	}
+func (r CodableResource[ID, Code]) GetCode() Code { return r.Code }
 
-	if x, ok := o.(schema.ObjectDescriptor); ok {
-		r.Name = x.GetName()
-		r.Description = sqltypenullable.Text(x.GetDescription())
-	}
-
-	if x, ok := o.(schema.CreationTimestampGetter); ok {
-		r.CreatedAt = x.GetCreationTimestamp()
-	}
-
-	if x, ok := o.(schema.ModificationTimestampGetter); ok {
-		r.UpdatedAt = x.GetModificationTimestamp()
-	}
-
-	r.MarkModifiedAt()
-}
-
-func (r Resource[ID]) CopyToObject(o schema.ObjectSetter) {
-	if canSetID, ok := o.(schema.IDSetter[ID]); ok {
-		canSetID.SetID(r.ID)
-	}
-
-	if x, ok := o.(schema.ObjectDescriptorSetter); ok {
-		x.SetName(r.Name)
-		x.SetDescription(string(r.Description))
-	}
-
-	if x, ok := o.(schema.CreationTimestampSetter); ok {
-		x.SetCreationTimestamp(r.CreatedAt)
-	}
-
-	if x, ok := o.(schema.ModificationTimestampSetter); ok {
-		x.SetModificationTimestamp(r.UpdatedAt)
-	}
-
-}
-
-var _ interface {
-	schema.ObjectReceiver
-	schema.ObjectProvider
-} = &CodedResource[uint64, string]{}
-
-func (r CodedResource[ID, Code]) CopyToObject(o schema.ObjectSetter) {
-	r.Resource.CopyToObject(o)
-
-	if canSetCode, ok := o.(schema.CodeSetter[Code]); ok {
-		canSetCode.SetCode(r.Code)
-	}
-}
-
-func (r *CodedResource[ID, Code]) CopyFromObject(o schema.Object) {
-	if canGetID, ok := o.(schema.CodeGetter[Code]); ok {
-		r.Code = canGetID.GetCode()
-	}
-
-	r.Resource.CopyFromObject(o)
-}
+func (r *CodableResource[ID, Code]) SetCode(code Code) { r.Code = code }

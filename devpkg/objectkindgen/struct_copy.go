@@ -7,12 +7,15 @@ import (
 	"iter"
 	"reflect"
 
+	"github.com/octohelm/objectkind/pkg/runtime"
+
 	"github.com/octohelm/gengo/pkg/gengo"
 	"github.com/octohelm/gengo/pkg/gengo/snippet"
 )
 
 type structCopy struct {
 	*objectKindGen
+
 	gengo.Context
 	canMissing bool
 
@@ -29,13 +32,22 @@ func (c *structCopy) IsNil() bool {
 
 func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 	return snippet.Snippets(func(yield func(snippet.Snippet) bool) {
-		if c.isMetaObjectHead(c.src) {
+		if c.isObjectType(c.src) {
 			if !yield(snippet.T(`
-@dst.SetGroupVersionKind(@dst.GetObjectKind().GroupVersionKind())
-@dst.CopyFromObject(@src)
+@runtimeCopy(@dst, @src)
 `, snippet.Args{
 				"src": snippet.ID(c.srcVar),
 				"dst": snippet.ID(c.dstVar),
+
+				"runtimeCopy": func() snippet.Snippet {
+					if c.isCodableObject(c.src) {
+						return snippet.PkgExposeFor[runtime.R]("CopyCodableObject")
+					}
+					if c.isObject(c.src) {
+						return snippet.PkgExposeFor[runtime.R]("CopyObject")
+					}
+					return snippet.PkgExposeFor[runtime.R]("Copy")
+				}(),
 			})) {
 				return
 			}
@@ -53,6 +65,10 @@ func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 		for i := 0; i < s.NumFields(); i++ {
 			srcField := s.Field(i)
 			tag := reflect.StructTag(s.Tag(i))
+
+			if c.isMetaV1Exposed(srcField.Type()) {
+				continue
+			}
 
 			if v, ok := tag.Lookup("json"); ok {
 				if v == "-" {
@@ -161,7 +177,7 @@ if @src.@FieldName != nil {
 	if isSrcStruct && isDstStruct {
 		doCopy := snippet.Snippets(func(yield func(snippet.Snippet) bool) {
 			if !yield(snippet.T(`
-copy@FieldName := func(o *@DstType, v *@SrcType) {
+copy@FieldName := func(d *@DstType, s *@SrcType) {
 	@fieldsCopy
 }
 `, snippet.Args{
@@ -173,10 +189,10 @@ copy@FieldName := func(o *@DstType, v *@SrcType) {
 					Context:       c.Context,
 					objectKindGen: c.objectKindGen,
 					canMissing:    c.canMissing,
-					srcVar:        "v",
-					dstVar:        "o",
-					src:           srcType.(*types.Named),
+					dstVar:        "d",
+					srcVar:        "s",
 					dst:           dstType.(*types.Named),
+					src:           srcType.(*types.Named),
 				},
 			})) {
 				return
@@ -290,7 +306,6 @@ for i, x := range @src.@FieldName {
 				})) {
 					return
 				}
-
 			}).Frag(ctx)
 		}
 	}
@@ -298,7 +313,6 @@ for i, x := range @src.@FieldName {
 	panic(fmt.Errorf("field %s is not copy from %s to %s", c.name(), c.srcField.Type(), c.dstField.Type()))
 
 	return func(yield func(string) bool) {
-
 	}
 }
 

@@ -1,7 +1,9 @@
 GENGO = go run ./internal/cmd/tool gen
 
-gen.go:
-	$(GENGO) ./pkg/apis/meta/v1
+gen:
+	$(GENGO) \
+		./pkg/apis/meta/v1 \
+		./internal/example/apis/order/v1
 
 test:
 	go test ./...
