@@ -8,9 +8,20 @@ type APIVersionGetter interface {
 	GetAPIVersion() string
 }
 
-type KindAndAPIVersionSetter interface {
+type KindSetter interface {
 	SetKind(kind string)
+}
+
+type APIVersionSetter interface {
 	SetAPIVersion(version string)
+}
+
+type PluralizedKindGetter interface {
+	GetPluralizedKind() string
+}
+
+type PluralizedKindSetter interface {
+	SetPluralizedKind(kind string)
 }
 
 type Describer interface {
@@ -33,11 +44,15 @@ type Annotatable interface {
 	SetAnnotation(key string, value string)
 }
 
-type IDGetter[ID ~uint64] interface {
+type Identity interface {
+	~uint64 | ~string
+}
+
+type IDGetter[ID Identity] interface {
 	GetID() ID
 }
 
-type IDSetter[ID ~uint64] interface {
+type IDSetter[ID Identity] interface {
 	SetID(id ID)
 }
 

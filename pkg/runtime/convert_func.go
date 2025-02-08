@@ -6,7 +6,7 @@ import (
 
 type Convert[D any, S any] func(src *S) (*D, error)
 
-func CodableObjectConvertFunc[D object.Type, ID ~uint64, Code ~string, S object.CodableObject[ID, Code]](convert func(dst *D, src *S) error) Convert[D, S] {
+func CodableObjectConvertFunc[D object.Type, ID object.Identity, Code ~string, S object.CodableObject[ID, Code]](convert func(dst *D, src *S) error) Convert[D, S] {
 	return func(src *S) (*D, error) {
 		dst := New[D]()
 
@@ -19,7 +19,7 @@ func CodableObjectConvertFunc[D object.Type, ID ~uint64, Code ~string, S object.
 	}
 }
 
-func ObjectConvertFunc[D object.Type, ID ~uint64, S object.Object[ID]](convert func(dst *D, src *S) error) Convert[D, S] {
+func ObjectConvertFunc[D object.Type, ID object.Identity, S object.Object[ID]](convert func(dst *D, src *S) error) Convert[D, S] {
 	return func(src *S) (*D, error) {
 		dst := New[D]()
 

@@ -14,7 +14,10 @@ var _ object.Type = TypeMeta{}
 func (t TypeMeta) GetKind() string       { return t.Kind }
 func (t TypeMeta) GetAPIVersion() string { return t.APIVersion }
 
-var _ object.KindAndAPIVersionSetter = &TypeMeta{}
+var _ object.KindSetter = &TypeMeta{}
 
-func (t *TypeMeta) SetKind(kind string)          { t.Kind = kind }
+func (t *TypeMeta) SetKind(kind string) { t.Kind = kind }
+
+var _ object.APIVersionSetter = &TypeMeta{}
+
 func (t *TypeMeta) SetAPIVersion(version string) { t.APIVersion = version }

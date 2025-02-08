@@ -62,11 +62,20 @@ func Collect[O object.Type](itemSeq iter.Seq2[*O, error]) ([]*O, error) {
 }
 
 func FindOne[M sqlpipe.Model, O object.Type](ctx context.Context, ex sqlpipeex.SourceExecutor[M], createSeq BuildObjectSeq[M, O]) (*O, error) {
+	var v *O
+
 	for item, err := range createSeq(ctx, ex.PipeE(sqlpipe.Limit[M](1))) {
 		if err != nil {
 			return nil, err
 		}
-		return item, nil
+		if v == nil {
+			v = item
+		}
 	}
-	return nil, &dberr.SqlError{Type: dberr.ErrTypeNotFound}
+
+	if v == nil {
+		return nil, &dberr.SqlError{Type: dberr.ErrTypeNotFound}
+	}
+
+	return v, nil
 }

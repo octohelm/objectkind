@@ -19,9 +19,9 @@ type Converter[O any, M any] interface {
 	FromObject(o *O) (*M, error)
 }
 
-func ForObject[ID ~uint64, M object.Object[ID], O object.Object[ID]](
-	toObject ConvertFunc[O, M],
-	fromObject ConvertFunc[M, O],
+func ForObject[ID object.Identity, M object.Object[ID], O object.Object[ID]](
+	toObject func(o *O, m *M) error,
+	fromObject func(m *M, o *O) error,
 ) Converter[O, M] {
 	return &objectConverter[ID, M, O]{
 		toObject:   runtime.ObjectConvertFunc(toObject),
@@ -29,7 +29,7 @@ func ForObject[ID ~uint64, M object.Object[ID], O object.Object[ID]](
 	}
 }
 
-type objectConverter[ID ~uint64, M object.Object[ID], O object.Object[ID]] struct {
+type objectConverter[ID object.Identity, M object.Object[ID], O object.Object[ID]] struct {
 	fromObject func(o *O) (*M, error)
 	toObject   func(m *M) (*O, error)
 }
@@ -42,9 +42,9 @@ func (c *objectConverter[ID, M, O]) FromObject(o *O) (*M, error) {
 	return c.fromObject(o)
 }
 
-func ForCodableObject[ID ~uint64, Code ~string, M object.CodableObject[ID, Code], O object.CodableObject[ID, Code]](
-	toObject ConvertFunc[O, M],
-	fromObject ConvertFunc[M, O],
+func ForCodableObject[ID object.Identity, Code ~string, M object.CodableObject[ID, Code], O object.CodableObject[ID, Code]](
+	toObject func(o *O, m *M) error,
+	fromObject func(m *M, o *O) error,
 ) Converter[O, M] {
 	return &codableObjectConverter[ID, Code, M, O]{
 		toObject:   runtime.CodableObjectConvertFunc(toObject),
@@ -52,7 +52,7 @@ func ForCodableObject[ID ~uint64, Code ~string, M object.CodableObject[ID, Code]
 	}
 }
 
-type codableObjectConverter[ID ~uint64, Code ~string, M object.Object[ID], O object.Object[ID]] struct {
+type codableObjectConverter[ID object.Identity, Code ~string, M object.Object[ID], O object.Object[ID]] struct {
 	fromObject func(o *O) (*M, error)
 	toObject   func(m *M) (*O, error)
 }

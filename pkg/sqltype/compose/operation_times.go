@@ -10,7 +10,7 @@ import (
 
 type CreationTimestamp struct {
 	// 创建时间
-	CreatedAt sqltypetime.Timestamp `db:"f_created_at,default='0'" json:"creationTimestamp,omitzero"`
+	CreatedAt sqltypetime.Timestamp `db:"f_created_at,default='0'" json:"creationTimestamp,omitzero" sortable:""`
 }
 
 func (times *CreationTimestamp) MarkCreatedAt() {
@@ -21,7 +21,7 @@ func (times *CreationTimestamp) MarkCreatedAt() {
 
 type ModificationTimestamp struct {
 	// 更新时间
-	UpdatedAt sqltypetime.Timestamp `db:"f_updated_at,default='0'" json:"modificationTimestamp,omitzero"`
+	UpdatedAt sqltypetime.Timestamp `db:"f_updated_at,default='0'" json:"modificationTimestamp,omitzero" sortable:""`
 }
 
 func (times *ModificationTimestamp) MarkModifiedAt() {

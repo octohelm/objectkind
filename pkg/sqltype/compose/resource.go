@@ -47,8 +47,7 @@ func (r *Resource[ID]) ForceMarkModifiedAt() {
 }
 
 var (
-	_ object.Describer           = &Resource[uint64]{}
-	_ object.OperationTimestamps = &Resource[uint64]{}
+	_ object.Describer = &Resource[uint64]{}
 )
 
 func (r *Resource[ID]) GetName() string {
@@ -66,6 +65,8 @@ func (r Resource[ID]) GetDescription() string {
 func (r *Resource[ID]) SetDescription(description string) {
 	r.Description = sqltypenullable.Text(description)
 }
+
+var _ object.OperationTimestamps = &Resource[uint64]{}
 
 func (r Resource[ID]) GetCreationTimestamp() object.Timestamp {
 	return r.CreatedAt
@@ -102,9 +103,8 @@ type CodableResource[ID ~uint64, Code ~string] struct {
 
 var _ interface {
 	object.CodeGetter[string]
-	object.CodeGetter[string]
+	object.CodeSetter[string]
 } = &CodableResource[uint64, string]{}
 
-func (r CodableResource[ID, Code]) GetCode() Code { return r.Code }
-
+func (r CodableResource[ID, Code]) GetCode() Code      { return r.Code }
 func (r *CodableResource[ID, Code]) SetCode(code Code) { r.Code = code }

@@ -7,10 +7,9 @@ import (
 	"iter"
 	"reflect"
 
-	"github.com/octohelm/objectkind/pkg/runtime"
-
 	"github.com/octohelm/gengo/pkg/gengo"
 	"github.com/octohelm/gengo/pkg/gengo/snippet"
+	"github.com/octohelm/objectkind/pkg/runtime"
 )
 
 type structCopy struct {
@@ -32,7 +31,7 @@ func (c *structCopy) IsNil() bool {
 
 func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 	return snippet.Snippets(func(yield func(snippet.Snippet) bool) {
-		if c.isObjectType(c.src) {
+		if c.isObjectType(c.Context, c.src) {
 			if !yield(snippet.T(`
 @runtimeCopy(@dst, @src)
 `, snippet.Args{
@@ -60,39 +59,42 @@ func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 			originFields[f.Name()] = f
 		}
 
-		s := c.src.Underlying().(*types.Struct)
+		if s, ok := c.src.Underlying().(*types.Struct); ok {
+			for i := 0; i < s.NumFields(); i++ {
+				srcField := s.Field(i)
+				tag := reflect.StructTag(s.Tag(i))
 
-		for i := 0; i < s.NumFields(); i++ {
-			srcField := s.Field(i)
-			tag := reflect.StructTag(s.Tag(i))
-
-			if c.isMetaV1Exposed(srcField.Type()) {
-				continue
-			}
-
-			if v, ok := tag.Lookup("json"); ok {
-				if v == "-" {
+				if c.isMetaV1Exposed(srcField.Type()) {
 					continue
 				}
 
-				dstField, ok := originFields[srcField.Name()]
-				if !ok {
-					if c.canMissing {
+				if v, ok := tag.Lookup("json"); ok {
+					if v == "-" {
 						continue
 					}
 
-					panic(fmt.Errorf("dst struct %s missing field %s", c.dst, srcField.Name()))
-				}
+					dstField, ok := originFields[srcField.Name()]
+					if !ok {
+						if c.canMissing {
+							continue
+						}
 
-				if !yield(&fieldCopy{
-					structCopy: c,
-					srcField:   srcField,
-					dstField:   dstField,
-				}) {
-					return
+						panic(fmt.Errorf("dst struct %s missing field %s", c.dst, srcField.Name()))
+					}
+
+					if !yield(&fieldCopy{
+						structCopy: c,
+						srcField:   srcField,
+						dstField:   dstField,
+					}) {
+						return
+					}
 				}
 			}
+		} else {
+			panic(fmt.Errorf("type unmatched: dst: %s, src: %s", c.dst, c.src))
 		}
+
 	}).Frag(ctx)
 }
 

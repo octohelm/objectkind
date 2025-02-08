@@ -13,6 +13,10 @@ func (Order) GetKind() string {
 	return "Order"
 }
 
+func (Order) GetPluralizedKind() string {
+	return "Orders"
+}
+
 func (Order) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
@@ -21,12 +25,20 @@ func (OrderItem) GetKind() string {
 	return "OrderItem"
 }
 
+func (OrderItem) GetPluralizedKind() string {
+	return "OrderItems"
+}
+
 func (OrderItem) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
 
 func (OrderItemRequestForCreate) GetKind() string {
 	return "OrderItem"
+}
+
+func (OrderItemRequestForCreate) GetPluralizedKind() string {
+	return "OrderItems"
 }
 
 func (OrderItemRequestForCreate) GetAPIVersion() string {
@@ -73,6 +85,10 @@ func (OrderRequestForCreate) GetKind() string {
 	return "Order"
 }
 
+func (OrderRequestForCreate) GetPluralizedKind() string {
+	return "Orders"
+}
+
 func (OrderRequestForCreate) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
@@ -109,12 +125,20 @@ func (Product) GetKind() string {
 	return "Product"
 }
 
+func (Product) GetPluralizedKind() string {
+	return "Products"
+}
+
 func (Product) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
 
 func (ProductReference) GetKind() string {
 	return "Product"
+}
+
+func (ProductReference) GetPluralizedKind() string {
+	return "Products"
 }
 
 func (ProductReference) GetAPIVersion() string {
@@ -139,6 +163,10 @@ func (ProductRequestForCreate) GetKind() string {
 	return "Product"
 }
 
+func (ProductRequestForCreate) GetPluralizedKind() string {
+	return "Products"
+}
+
 func (ProductRequestForCreate) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
@@ -159,6 +187,10 @@ func (src *ProductRequestForCreate) AsProduct() *Product {
 
 func (ProductRequestForUpdate) GetKind() string {
 	return "Product"
+}
+
+func (ProductRequestForUpdate) GetPluralizedKind() string {
+	return "Products"
 }
 
 func (ProductRequestForUpdate) GetAPIVersion() string {
@@ -183,6 +215,10 @@ func (Sku) GetKind() string {
 	return "Sku"
 }
 
+func (Sku) GetPluralizedKind() string {
+	return "Skus"
+}
+
 func (Sku) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
@@ -193,6 +229,10 @@ func (t Sku) GetOwner() object.Type {
 
 func (SkuReference) GetKind() string {
 	return "Sku"
+}
+
+func (SkuReference) GetPluralizedKind() string {
+	return "Skus"
 }
 
 func (SkuReference) GetAPIVersion() string {
@@ -217,6 +257,10 @@ func (SkuRequestForCreate) GetKind() string {
 	return "Sku"
 }
 
+func (SkuRequestForCreate) GetPluralizedKind() string {
+	return "Skus"
+}
+
 func (SkuRequestForCreate) GetAPIVersion() string {
 	return SchemeGroupVersion.String()
 }
@@ -239,6 +283,10 @@ func (src *SkuRequestForCreate) AsSku() *Sku {
 
 func (SkuRequestForUpdate) GetKind() string {
 	return "Sku"
+}
+
+func (SkuRequestForUpdate) GetPluralizedKind() string {
+	return "Skus"
 }
 
 func (SkuRequestForUpdate) GetAPIVersion() string {

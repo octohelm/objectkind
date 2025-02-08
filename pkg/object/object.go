@@ -1,6 +1,6 @@
 package object
 
-type Object[ID ~uint64] interface {
+type Object[ID Identity] interface {
 	Type
 	IDGetter[ID]
 }
@@ -10,7 +10,7 @@ type Codable[Code ~string] interface {
 	CodeGetter[Code]
 }
 
-type CodableObject[ID ~uint64, Code ~string] interface {
+type CodableObject[ID Identity, Code ~string] interface {
 	Type
 	IDGetter[ID]
 	CodeGetter[Code]

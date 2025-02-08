@@ -4,7 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
-func CopyCodableObject[D object.Type, ID ~uint64, Code ~string, S object.CodableObject[ID, Code]](dst *D, src *S) {
+func CopyCodableObject[D object.Type, ID object.Identity, Code ~string, S object.CodableObject[ID, Code]](dst *D, src *S) {
 	if d, ok := any(dst).(object.CodeSetter[Code]); ok {
 		if s, ok := any(src).(object.CodeGetter[Code]); ok {
 			d.SetCode(s.GetCode())
@@ -14,7 +14,7 @@ func CopyCodableObject[D object.Type, ID ~uint64, Code ~string, S object.Codable
 	CopyObject(dst, src)
 }
 
-func CopyObject[D object.Type, ID ~uint64, S object.Object[ID]](dst *D, src *S) {
+func CopyObject[D object.Type, ID object.Identity, S object.Object[ID]](dst *D, src *S) {
 	if d, ok := any(dst).(object.IDSetter[ID]); ok {
 		if s, ok := any(src).(object.IDGetter[ID]); ok {
 			d.SetID(s.GetID())

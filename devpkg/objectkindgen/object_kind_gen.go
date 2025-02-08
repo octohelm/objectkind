@@ -1,13 +1,14 @@
 package objectkindgen
 
 import (
+	"github.com/octohelm/gengo/pkg/inflector"
 	"go/types"
 	"reflect"
+	"strings"
 	"sync"
 
 	"github.com/octohelm/gengo/pkg/gengo"
 	"github.com/octohelm/gengo/pkg/gengo/snippet"
-	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/objectkind/pkg/runtime"
 )
@@ -20,8 +21,10 @@ type objectKindGen struct {
 	once sync.Once
 
 	objectTypeInterface               *types.Interface
-	objectRefIDConvertableInterface   *types.Interface
 	objectRefCodeConvertableInterface *types.Interface
+
+	objectRefIDConvertableInterface       *types.Interface
+	objectRefStringIDConvertableInterface *types.Interface
 }
 
 func (*objectKindGen) Name() string {
@@ -30,7 +33,10 @@ func (*objectKindGen) Name() string {
 
 func (g *objectKindGen) init(c gengo.Context) {
 	g.objectTypeInterface = typeInterfaceFor[object.Type](c)
+
 	g.objectRefIDConvertableInterface = typeInterfaceFor[object.RefIDConvertable](c)
+	g.objectRefStringIDConvertableInterface = typeInterfaceFor[object.RefStringIDConvertable](c)
+
 	g.objectRefCodeConvertableInterface = typeInterfaceFor[object.RefCodeConvertable](c)
 }
 
@@ -77,9 +83,20 @@ func (g *objectKindGen) generateObjectVariant(c gengo.Context, t *types.Named) {
 }
 
 func (g *objectKindGen) generateObjectKind(c gengo.Context, t *types.Named, as *types.Named) {
+	singularTypeName := func() string {
+		if as != nil {
+			return as.Obj().Name()
+		}
+		return t.Obj().Name()
+	}()
+
 	c.RenderT(`
 func(@Type) GetKind() string {
-	return "@TypeName"
+	return @TypeName
+}
+
+func(@Type) GetPluralizedKind() string {
+	return @PluralizedTypeName
 }
 
 func(@Type) GetAPIVersion() string {
@@ -88,12 +105,9 @@ func(@Type) GetAPIVersion() string {
 
 `, snippet.Args{
 		"Type": snippet.ID(t.Obj()),
-		"TypeName": func() snippet.Snippet {
-			if as != nil {
-				return snippet.ID(as.Obj())
-			}
-			return snippet.ID(t.Obj())
-		}(),
+
+		"TypeName":           snippet.Value(singularTypeName),
+		"PluralizedTypeName": snippet.Value(inflector.Pluralize(singularTypeName)),
 	})
 
 	if s, ok := t.Underlying().(*types.Struct); ok {
@@ -156,19 +170,23 @@ func (src *@SrcType) As@DstType() *@DstType {
 
 func (g *objectKindGen) isMetaV1Exposed(t types.Type) bool {
 	if n, ok := t.(*types.Named); ok {
-		return reflect.TypeFor[metav1.TypeMeta]().PkgPath() == n.Obj().Pkg().Path()
+		return strings.HasSuffix(n.Obj().Pkg().Path(), "/meta/v1")
 	}
 	return false
 }
 
-func (g *objectKindGen) isObjectType(t types.Type) bool {
-	return types.Implements(t, g.objectTypeInterface) || types.Implements(types.NewPointer(t), g.objectTypeInterface)
+func (g *objectKindGen) isCodableObject(t types.Type) bool {
+	return g.isObject(t) && implements(t, g.objectRefCodeConvertableInterface)
 }
 
 func (g *objectKindGen) isObject(t types.Type) bool {
-	return types.Implements(t, g.objectRefIDConvertableInterface) || types.Implements(types.NewPointer(t), g.objectRefIDConvertableInterface)
+	return implements(t, g.objectRefIDConvertableInterface) || implements(t, g.objectRefStringIDConvertableInterface)
 }
 
-func (g *objectKindGen) isCodableObject(t types.Type) bool {
-	return g.isObject(t) && (types.Implements(t, g.objectRefCodeConvertableInterface) || types.Implements(types.NewPointer(t), g.objectRefCodeConvertableInterface))
+func (g *objectKindGen) isObjectType(c gengo.Context, t types.Type) bool {
+	return implements(t, g.objectTypeInterface)
+}
+
+func implements(t types.Type, itype *types.Interface) bool {
+	return types.Implements(t, itype) || types.Implements(types.NewPointer(t), itype)
 }
