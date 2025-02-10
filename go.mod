@@ -7,8 +7,8 @@ require (
 	github.com/innoai-tech/infra v0.0.0-20250206080604-d22fa200963d
 	github.com/octohelm/courier v0.0.0-20250203112930-059bbf41c91c
 	github.com/octohelm/gengo v0.0.0-20250208093034-2a09863d11f8
-	github.com/octohelm/storage v0.0.0-20250207022515-6305b4367a0d
-	github.com/octohelm/x v0.0.0-20250109055815-dda0e47e75ea
+	github.com/octohelm/storage v0.0.0-20250210051921-08a1a1a1f3f7
+	github.com/octohelm/x v0.0.0-20250210030010-81907387c139
 )
 
 require github.com/go-json-experiment/json v0.0.0-20250129011340-4e0381018ad6

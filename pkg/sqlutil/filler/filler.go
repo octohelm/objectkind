@@ -36,12 +36,21 @@ func (f *filler[ID, O, M]) FillSet(ctx context.Context, itemSet sqlpipeex.RelCac
 		return nil
 	}
 
+	items := sqlpipeex.OneToOne[ID, O]{}
+
 	for x, err := range f.createSeq(ctx, f.buildExecutor(itemSet.Keys())) {
 		if err != nil {
 			return err
 		}
-		for t := range itemSet.Records(any(x).(object.IDGetter[ID]).GetID()) {
-			*t = *x
+
+		id := any(x).(object.IDGetter[ID]).GetID()
+		items.Record(id, x)
+	}
+
+	// have to wait side data filled
+	for id, item := range items {
+		for t := range itemSet.Records(id) {
+			*t = *item
 		}
 	}
 
