@@ -94,7 +94,6 @@ func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 		} else {
 			panic(fmt.Errorf("type unmatched: dst: %s, src: %s", c.dst, c.src))
 		}
-
 	}).Frag(ctx)
 }
 

@@ -1,9 +1,10 @@
 package compose
 
 import (
+	"time"
+
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/storage/pkg/sqltype"
-	"time"
 
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
 )

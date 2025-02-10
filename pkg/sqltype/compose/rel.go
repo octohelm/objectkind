@@ -1,10 +1,11 @@
 package compose
 
 import (
+	"time"
+
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/storage/pkg/sqltype"
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
-	"time"
 )
 
 type Rel[ID ~uint64] struct {

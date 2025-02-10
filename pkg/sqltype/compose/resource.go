@@ -46,9 +46,7 @@ func (r *Resource[ID]) ForceMarkModifiedAt() {
 	r.CreatedAt = r.UpdatedAt
 }
 
-var (
-	_ object.Describer = &Resource[uint64]{}
-)
+var _ object.Describer = &Resource[uint64]{}
 
 func (r *Resource[ID]) GetName() string {
 	return r.Name

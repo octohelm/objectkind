@@ -2,13 +2,14 @@ package runtime_test
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/go-json-experiment/json"
 	"github.com/octohelm/courier/pkg/validator/taggedunion"
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/objectkind/pkg/runtime"
 	testingx "github.com/octohelm/x/testing"
-	"testing"
 )
 
 func TestKindTagged(t *testing.T) {
@@ -31,7 +32,6 @@ func TestKindTagged(t *testing.T) {
 			testingx.Expect(t, u2.Underlying(), testingx.Equal(any(runtime.New[TypeA]())))
 		})
 	})
-
 }
 
 var mappings = runtime.KindTaggedMapping{}
