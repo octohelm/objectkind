@@ -1,6 +1,6 @@
 module github.com/octohelm/objectkind
 
-go 1.23.6
+go 1.24.0
 
 require (
 	github.com/go-courier/logr v0.3.1 // indirect

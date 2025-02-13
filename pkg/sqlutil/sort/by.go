@@ -11,12 +11,18 @@ import (
 	"github.com/octohelm/storage/pkg/sqlpipe"
 )
 
-func DescSort[M sqlpipe.Model](s Sorter[M]) string {
-	return fmt.Sprintf("%s!%s", s.Name(), "desc")
+func DescSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
+	return &By[M]{
+		By:     fmt.Sprintf("%s!%s", s.Name(), "desc"),
+		Sorter: s,
+	}
 }
 
-func AscSort[M sqlpipe.Model](s Sorter[M]) string {
-	return fmt.Sprintf("%s!%s", s.Name(), "asc")
+func AscSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
+	return &By[M]{
+		By:     fmt.Sprintf("%s!%s", s.Name(), "asc"),
+		Sorter: s,
+	}
 }
 
 type By[M sqlpipe.Model] struct {
