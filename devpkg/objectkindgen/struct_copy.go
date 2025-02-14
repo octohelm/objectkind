@@ -39,11 +39,14 @@ func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 				"dst": snippet.ID(c.dstVar),
 
 				"runtimeCopy": func() snippet.Snippet {
-					if c.isCodableObject(c.src) {
-						return snippet.PkgExposeFor[runtime.R]("CopyCodableObject")
-					}
 					if c.isObject(c.src) {
+						if c.isCodable(c.src) {
+							return snippet.PkgExposeFor[runtime.R]("CopyCodableObject")
+						}
 						return snippet.PkgExposeFor[runtime.R]("CopyObject")
+					}
+					if c.isCodable(c.src) {
+						return snippet.PkgExposeFor[runtime.R]("CopyCodable")
 					}
 					return snippet.PkgExposeFor[runtime.R]("Copy")
 				}(),

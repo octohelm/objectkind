@@ -177,7 +177,11 @@ func (g *objectKindGen) isMetaV1Exposed(t types.Type) bool {
 }
 
 func (g *objectKindGen) isCodableObject(t types.Type) bool {
-	return g.isObject(t) && implements(t, g.objectRefCodeConvertableInterface)
+	return g.isObject(t) && g.isCodable(t)
+}
+
+func (g *objectKindGen) isCodable(t types.Type) bool {
+	return implements(t, g.objectRefCodeConvertableInterface)
 }
 
 func (g *objectKindGen) isObject(t types.Type) bool {

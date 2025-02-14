@@ -24,6 +24,16 @@ func CopyObject[D object.Type, ID object.Identity, S object.Object[ID]](dst *D, 
 	Copy(dst, src)
 }
 
+func CopyCodable[D object.Type, Code ~string, S object.Codable[Code]](dst *D, src *S) {
+	if d, ok := any(dst).(object.CodeSetter[Code]); ok {
+		if s, ok := any(src).(object.CodeGetter[Code]); ok {
+			d.SetCode(s.GetCode())
+		}
+	}
+
+	Copy(dst, src)
+}
+
 func Copy[D object.Type, S object.Type](dst *D, src *S) {
 	copyObject(dst, src)
 }
