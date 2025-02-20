@@ -17,7 +17,7 @@ type Filler[ID ~uint64, O object.Object[ID], M sqlpipe.Model] interface {
 }
 
 func For[ID ~uint64, O object.Object[ID], M sqlpipe.Model](
-	buildExecutor func(ids []ID) sqlpipeex.SourceExecutor[M],
+	buildExecutor func(ids iter.Seq[ID]) sqlpipeex.SourceExecutor[M],
 	buildObjectSeq sqlutil.BuildObjectSeq[M, O],
 ) Filler[ID, O, M] {
 	return &filler[ID, O, M]{
@@ -27,7 +27,7 @@ func For[ID ~uint64, O object.Object[ID], M sqlpipe.Model](
 }
 
 type filler[ID ~uint64, O object.Object[ID], M sqlpipe.Model] struct {
-	buildExecutor func(ids []ID) sqlpipeex.SourceExecutor[M]
+	buildExecutor func(ids iter.Seq[ID]) sqlpipeex.SourceExecutor[M]
 	createSeq     sqlutil.BuildObjectSeq[M, O]
 }
 

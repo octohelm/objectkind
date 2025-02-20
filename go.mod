@@ -3,11 +3,11 @@ module github.com/octohelm/objectkind
 go 1.24.0
 
 require (
-	github.com/go-courier/logr v0.3.1 // indirect
+	github.com/go-courier/logr v0.3.2 // indirect
 	github.com/innoai-tech/infra v0.0.0-20250213104230-1fc536ec5b7c
 	github.com/octohelm/courier v0.0.0-20250213104025-f21d0877d28c
-	github.com/octohelm/gengo v0.0.0-20250213040207-59af51fbf311
-	github.com/octohelm/storage v0.0.0-20250213104425-f88ffbefaf9b
+	github.com/octohelm/gengo v0.0.0-20250219103331-fc799ce3110a
+	github.com/octohelm/storage v0.0.0-20250220031208-39c0a4faa652
 	github.com/octohelm/x v0.0.0-20250213100717-a5d72cc790e0
 )
 

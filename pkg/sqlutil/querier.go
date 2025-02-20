@@ -14,7 +14,7 @@ import (
 
 func Objects[M sqlpipe.Model, O object.Type](ctx context.Context, ex sqlpipeex.SourceExecutor[M], convert func(m *M) (*O, error)) iter.Seq2[*O, error] {
 	return func(yield func(*O, error) bool) {
-		for m, err := range ex.Item(ctx) {
+		for m, err := range ex.Items(ctx) {
 			if err != nil {
 				yield(nil, err)
 				return

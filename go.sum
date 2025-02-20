@@ -21,8 +21,8 @@ github.com/emicklei/proto v1.13.4 h1:myn1fyf8t7tAqIzV91Tj9qXpvyXXGXk8OS2H6IBSc9g
 github.com/emicklei/proto v1.13.4/go.mod h1:rn1FgRS/FANiZdD2djyH7TMA9jdRDcYQ9IEN9yvjX0A=
 github.com/fatih/color v1.18.0 h1:S8gINlzdQ840/4pfAwic/ZE0djQEH3wM94VfqLTZcOM=
 github.com/fatih/color v1.18.0/go.mod h1:4FelSpRwEGDpQ12mAdzqdOukCy4u8WUtOY6lkT/6HfU=
-github.com/go-courier/logr v0.3.1 h1:RcHM7qpO8OpuV+zFvJMXtJEspTnnYmT6uGiAomwb8X8=
-github.com/go-courier/logr v0.3.1/go.mod h1:NQWi+TSv0rS1RfyWHv7MNEI5cNy9NR6k1n8R24uHgdY=
+github.com/go-courier/logr v0.3.2 h1:zzh5t9BFtZ6IjALisEbWQy11WPMa259wgQRYM8K4fVc=
+github.com/go-courier/logr v0.3.2/go.mod h1:ojcyR9ttwhxczm8iABg/ekFwLlzvGaJVLyqWLhL7woM=
 github.com/go-json-experiment/json v0.0.0-20250213060926-925ba3f173fa h1:Rpu6sKAzIeSWBkrFHD52g8yipagcPbY2Lmm70NL1Gzc=
 github.com/go-json-experiment/json v0.0.0-20250213060926-925ba3f173fa/go.mod h1:TiCD2a1pcmjd7YnhGH0f/zKNcCD06B029pHhzV23c2M=
 github.com/go-logr/logr v1.2.2/go.mod h1:jdQByPbusPIv2/zmleS9BjJVeZ6kBagPoEUsqbVz/1A=
@@ -80,10 +80,10 @@ github.com/octohelm/courier v0.0.0-20250213104025-f21d0877d28c h1:NbOhk0Q67fatnp
 github.com/octohelm/courier v0.0.0-20250213104025-f21d0877d28c/go.mod h1:k3SW8TTXtWcA8hbxokOpLJk9hUX1e34MtNM5ZbAjOgM=
 github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733 h1:QFroPAzF1hZYuy90nuxz6XXrX12ZLQUTmsAOLUbBVAk=
 github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733/go.mod h1:s4JBUBvmokS4N0uxRnjds0tBRlBn355OFz2EDHLnEZk=
-github.com/octohelm/gengo v0.0.0-20250213040207-59af51fbf311 h1:rBYYUN5nSiMA0gvR5eEiUhcIX/zZAIuJOmw6jleZbvo=
-github.com/octohelm/gengo v0.0.0-20250213040207-59af51fbf311/go.mod h1:jCs5Sz1eqYYEnbbE4bN6ZsxQmz/2f2RBhTGPfXzIa1I=
-github.com/octohelm/storage v0.0.0-20250213104425-f88ffbefaf9b h1:9Ete2K0nEaxodjWrafYBlENA41m1tF6+dlgzfMCG5O4=
-github.com/octohelm/storage v0.0.0-20250213104425-f88ffbefaf9b/go.mod h1:JL4lK0Bro22/QxJHdlqE54b6FS6DJIDksmUyLE1ExhA=
+github.com/octohelm/gengo v0.0.0-20250219103331-fc799ce3110a h1:ZUej76TLnrVMXBlF0fYgp2W53bNLYQQboT9hjBIKtvc=
+github.com/octohelm/gengo v0.0.0-20250219103331-fc799ce3110a/go.mod h1:Z1jRAOYHNcGJzRVIbzXpK+cXM+VM67bV1pwwh6RoYtU=
+github.com/octohelm/storage v0.0.0-20250220031208-39c0a4faa652 h1:WuZE5/5FYksBxSrs5hiWjTtJMt4O8ZsSOGT8DPNRueM=
+github.com/octohelm/storage v0.0.0-20250220031208-39c0a4faa652/go.mod h1:KLeTojH9FC6h9MMp2Q4EtShtq7BKGMzOK+jbQZikTsk=
 github.com/octohelm/x v0.0.0-20250213100717-a5d72cc790e0 h1:qY5AHEFZJ6tmI6Ixmch3Iy1+99Zf1Cc7tAe5+dkN/7E=
 github.com/octohelm/x v0.0.0-20250213100717-a5d72cc790e0/go.mod h1:EaMGdCSJiZislRhgbbCol1GgPN05NhIIdgAWDPJMRf4=
 github.com/onsi/ginkgo/v2 v2.22.1 h1:QW7tbJAUDyVDVOM5dFa7qaybo+CRfR7bemlQUN6Z8aM=
