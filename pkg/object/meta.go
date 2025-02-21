@@ -1,7 +1,13 @@
 package object
 
+import "iter"
+
 type Type interface {
 	GetKind() string
+}
+
+type ParentIter interface {
+	Parents() iter.Seq[Type]
 }
 
 type APIVersionGetter interface {

@@ -2,12 +2,17 @@ module github.com/octohelm/objectkind
 
 go 1.24.0
 
+tool (
+	github.com/octohelm/objectkind/internal/cmd/devtool
+	mvdan.cc/gofumpt
+)
+
 require (
 	github.com/go-courier/logr v0.3.2 // indirect
 	github.com/innoai-tech/infra v0.0.0-20250213104230-1fc536ec5b7c
 	github.com/octohelm/courier v0.0.0-20250213104025-f21d0877d28c
 	github.com/octohelm/gengo v0.0.0-20250219103331-fc799ce3110a
-	github.com/octohelm/storage v0.0.0-20250220031208-39c0a4faa652
+	github.com/octohelm/storage v0.0.0-20250221042236-b1fcbca17cb7
 	github.com/octohelm/x v0.0.0-20250213100717-a5d72cc790e0
 )
 

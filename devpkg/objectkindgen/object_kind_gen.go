@@ -121,14 +121,31 @@ func(@Type) GetAPIVersion() string {
 					f := s.Field(i)
 
 					c.RenderT(`
-func(t @Type) GetOwner() @objectType {
-	return t.@FieldName
+func(v *@Type) Parents() @iterSeq[@objectType] {
+	return func(yield func(@objectType) bool) {
+		if v.@FieldName != nil {
+			if !yield(v.@FieldName) {
+				return
+			}
+
+			if x, ok := any(v.@FieldName).(@parentIter); ok {
+				for t := range x.Parents() {
+					if !yield(t) {
+						return
+					}
+				}
+			}
+		}
+	}
 }
 
 `, snippet.Args{
-						"Type":       snippet.ID(t.Obj()),
-						"FieldName":  snippet.ID(f.Name()),
+						"Type":      snippet.ID(t.Obj()),
+						"FieldName": snippet.ID(f.Name()),
+
+						"iterSeq":    snippet.PkgExpose("iter", "Seq"),
 						"objectType": snippet.PkgExposeFor[object.Type](),
+						"parentIter": snippet.PkgExposeFor[object.ParentIter](),
 					})
 				}
 				break

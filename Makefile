@@ -1,9 +1,5 @@
-GENGO = go run ./internal/cmd/tool gen
-
 gen:
-	$(GENGO) \
-		./pkg/apis/meta/v1 \
-		./internal/example/apis/order/v1
+	go generate ./...
 
 test:
 	go test ./...
@@ -15,4 +11,4 @@ dep.update:
 	go get -u ./...
 
 fmt:
-	gofumpt -w -l .
+	go tool gofumpt -w -l .
