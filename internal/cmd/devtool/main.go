@@ -14,6 +14,8 @@ import (
 	_ "github.com/octohelm/courier/devpkg/uintstrgen"
 	_ "github.com/octohelm/gengo/devpkg/deepcopygen"
 	_ "github.com/octohelm/gengo/devpkg/runtimedocgen"
+	_ "github.com/octohelm/storage/devpkg/filteropgen"
+	_ "github.com/octohelm/storage/devpkg/tablegen"
 
 	_ "github.com/octohelm/objectkind/devpkg/objectkindgen"
 )

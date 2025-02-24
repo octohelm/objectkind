@@ -51,7 +51,6 @@ func List[M sqlpipe.Model, O object.Type](ctx context.Context, ex sqlpipeex.Sour
 
 func Collect[O object.Type](itemSeq iter.Seq2[*O, error]) ([]*O, error) {
 	items := make([]*O, 0)
-
 	for item, err := range itemSeq {
 		if err != nil {
 			return nil, err
@@ -78,4 +77,25 @@ func FindOne[M sqlpipe.Model, O object.Type](ctx context.Context, ex sqlpipeex.S
 	}
 
 	return v, nil
+}
+
+func FillSet[ID ~uint64, O object.Object[ID], M sqlpipe.Model](ctx context.Context, targets sqlpipeex.Set[ID, O], ex sqlpipeex.SourceExecutor[M], createSeq BuildObjectSeq[M, O]) error {
+	items := sqlpipeex.OneToOne[ID, O]{}
+
+	for x, err := range createSeq(ctx, ex) {
+		if err != nil {
+			return err
+		}
+
+		items.Record(any(x).(object.IDGetter[ID]).GetID(), x)
+	}
+
+	// have to wait side data filled
+	for id, item := range items {
+		for t := range targets.Records(id) {
+			*t = *item
+		}
+	}
+
+	return nil
 }

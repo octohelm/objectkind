@@ -3,11 +3,15 @@ package query
 import (
 	"context"
 
-	contextx "github.com/octohelm/x/context"
+	"github.com/octohelm/objectkind/pkg/sqlutil/query/internal/queryopts"
 )
 
-var queryModeCtx = contextx.New[int](contextx.WithDefaults(All))
+type Options = queryopts.Options
 
-func With(ctx context.Context, mode int) context.Context {
-	return queryModeCtx.Inject(ctx, queryModeCtx.From(ctx)|mode)
+func With(ctx context.Context, options ...Options) context.Context {
+	if len(options) == 0 {
+		return ctx
+	}
+
+	return queryopts.InjectContext(ctx, queryopts.FromContext(ctx).Join(options...))
 }

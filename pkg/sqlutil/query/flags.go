@@ -1,79 +1,76 @@
 package query
 
-import "context"
+import (
+	"context"
 
-const (
-	all = -(iota + 1)
-
-	skipCount
-	skipResourceStatus
-
-	skipResourceOwner
-	skipResourceSecondaryOwner
-
-	skipSubResources
+	"github.com/octohelm/objectkind/pkg/sqlutil/query/internal/queryflags"
+	"github.com/octohelm/objectkind/pkg/sqlutil/query/internal/queryopts"
 )
 
-const (
-	All = 1 << -all
-	// 不 Count
-	SkipCount = 1 << -skipCount
-	// 不查询资源状态类信息
-	SkipResourceStatus = 1 << -skipResourceStatus
-	// 不查询资源直接归属
-	SkipResourceOwner = 1 << -skipResourceOwner
-	// 不查询资源次要归属
-	SkipResourceSecondaryOwner = 1 << -skipResourceSecondaryOwner
-	// 不查询子资源详细信息
-	SkipSubResources = 1 << -skipSubResources
+func FillCount(v bool) Options {
+	if v {
+		return queryflags.RequestCount | 1
+	}
+	return queryflags.RequestCount | 0
+}
+
+func FillResourceStatus(v bool) Options {
+	if v {
+		return queryflags.RequestResourceStatus | 1
+	}
+	return queryflags.RequestResourceStatus | 0
+}
+
+func FillSubResources(v bool) Options {
+	if v {
+		return queryflags.RequestSubResources | 1
+	}
+	return queryflags.RequestSubResources | 0
+}
+
+func FillResourceOwner(v bool) Options {
+	if v {
+		return queryflags.RequestResourceOwner | 1
+	}
+	return queryflags.RequestResourceOwner | 0
+}
+
+func FillResourceSecondaryOwner(v bool) Options {
+	if v {
+		return queryflags.RequestResourceSecondaryOwner | 1
+	}
+	return queryflags.RequestResourceSecondaryOwner | 0
+}
+
+var (
+	SkipCount                  = FillCount(false)
+	SkipResourceStatus         = FillResourceStatus(false)
+	SkipSubResources           = FillSubResources(false)
+	SkipResourceOwner          = FillResourceOwner(false)
+	SkipResourceSecondaryOwner = FillResourceSecondaryOwner(false)
 )
 
 func NeedCount(ctx context.Context) bool {
-	mode := queryModeCtx.From(ctx)
-
-	if mode&SkipCount != 0 {
-		return false
-	}
-
-	return true
+	v, _ := queryopts.GetOption(queryopts.FromContext(ctx), FillCount)
+	return v
 }
 
 func NeedResourceStatus(ctx context.Context) bool {
-	mode := queryModeCtx.From(ctx)
-
-	if mode&SkipResourceStatus != 0 {
-		return false
-	}
-
-	return true
-}
-
-func NeedResourceOwner(ctx context.Context) bool {
-	mode := queryModeCtx.From(ctx)
-
-	if mode&SkipResourceOwner != 0 {
-		return false
-	}
-
-	return true
-}
-
-func NeedResourceSecondaryOwner(ctx context.Context) bool {
-	mode := queryModeCtx.From(ctx)
-
-	if mode&SkipResourceSecondaryOwner != 0 {
-		return false
-	}
-
-	return true
+	v, _ := queryopts.GetOption(queryopts.FromContext(ctx), FillResourceStatus)
+	return v
 }
 
 func NeedSubResources(ctx context.Context) bool {
-	mode := queryModeCtx.From(ctx)
+	v, _ := queryopts.GetOption(queryopts.FromContext(ctx), FillSubResources)
+	return v
+}
 
-	if mode&SkipSubResources != 0 {
-		return false
-	}
+func NeedResourceOwner(ctx context.Context) bool {
+	v, _ := queryopts.GetOption(queryopts.FromContext(ctx), FillResourceOwner)
+	return v
+}
 
-	return true
+func NeedResourceSecondaryOwner(ctx context.Context) bool {
+	v, _ := queryopts.GetOption(queryopts.FromContext(ctx), FillResourceSecondaryOwner)
+	return v
 }

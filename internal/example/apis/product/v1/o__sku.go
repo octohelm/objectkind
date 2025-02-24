@@ -1,6 +1,7 @@
 package v1
 
 import (
+	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 )
 
@@ -25,5 +26,7 @@ type SkuCode string
 
 type SkuSpec struct {
 	// 单价
-	Price float64 `json:"price"`
+	Price transactionv1.CurrencyValue `json:"price"`
+	// 货币单位
+	Currency transactionv1.Currency `json:"currency"`
 }
