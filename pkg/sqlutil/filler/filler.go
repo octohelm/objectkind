@@ -65,7 +65,7 @@ func FillOwnerSet[ID ~uint64, O object.Object[ID]](ctx context.Context, objects 
 	return FillSet(sqlutilquery.With(ctx, sqlutilquery.SkipSubResources), objects)
 }
 
-func FillSubResourceSet[OwnerID ~uint64, Owner object.Object[OwnerID]](ctx context.Context, owners sqlpipeex.Set[OwnerID, Owner]) error {
+func FillSubResourcesOfOwnerSet[OwnerID ~uint64, Owner object.Object[OwnerID]](ctx context.Context, owners sqlpipeex.Set[OwnerID, Owner]) error {
 	if owners == nil || owners.IsZero() {
 		return nil
 	}

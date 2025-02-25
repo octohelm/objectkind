@@ -44,7 +44,7 @@ func (q *ProductQuerier) Products(ctx context.Context, ex sqlpipeex.SourceExecut
 		}
 
 		if sqlutilquery.NeedSubResources(ctx) {
-			if err := sqlutilfiller.FillSubResourceSet(ctx, products); err != nil {
+			if err := sqlutilfiller.FillSubResourcesOfOwnerSet(ctx, products); err != nil {
 				return err
 			}
 		}
