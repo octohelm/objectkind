@@ -4,31 +4,33 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
-func New[O object.Type]() *O {
-	o := new(O)
+func New[O any]() *O {
+	v := new(O)
 
-	if x, ok := any(o).(object.PluralizedKindSetter); ok {
-		if kinder, ok := any(o).(object.PluralizedKindGetter); ok {
-			x.SetPluralizedKind(kinder.GetPluralizedKind())
+	if o, ok := any(v).(object.Type); ok {
+		if x, ok := o.(object.PluralizedKindSetter); ok {
+			if kinder, ok := o.(object.PluralizedKindGetter); ok {
+				x.SetPluralizedKind(kinder.GetPluralizedKind())
+			}
+		}
+
+		if x, ok := o.(object.KindSetter); ok {
+			if kinder, ok := o.(object.Type); ok {
+				x.SetKind(kinder.GetKind())
+			}
+		}
+
+		if x, ok := o.(object.APIVersionSetter); ok {
+			if apiVersioner, ok := o.(object.APIVersionGetter); ok {
+				x.SetAPIVersion(apiVersioner.GetAPIVersion())
+			}
 		}
 	}
 
-	if x, ok := any(o).(object.KindSetter); ok {
-		if kinder, ok := any(o).(object.Type); ok {
-			x.SetKind(kinder.GetKind())
-		}
-	}
-
-	if x, ok := any(o).(object.APIVersionSetter); ok {
-		if apiVersioner, ok := any(o).(object.APIVersionGetter); ok {
-			x.SetAPIVersion(apiVersioner.GetAPIVersion())
-		}
-	}
-
-	return o
+	return v
 }
 
-func Build[T object.Type](mutations ...func(t *T)) *T {
+func Build[T any](mutations ...func(t *T)) *T {
 	o := New[T]()
 	for _, mut := range mutations {
 		if mut != nil {
