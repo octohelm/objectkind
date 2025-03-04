@@ -32,7 +32,7 @@ func Fill[ID ~uint64, O object.Object[ID]](ctx context.Context, items ...*O) err
 	for _, item := range items {
 		itemSet.Record(any(item).(object.IDGetter[ID]).GetID(), item)
 	}
-	return FillSet(ctx, itemSet)
+	return FillSet[ID, O](ctx, itemSet)
 }
 
 func FillSeq[ID ~uint64, O object.Object[ID]](ctx context.Context, itemSeq iter.Seq[*O]) error {
@@ -40,7 +40,7 @@ func FillSeq[ID ~uint64, O object.Object[ID]](ctx context.Context, itemSeq iter.
 	for item := range itemSeq {
 		itemSet.Record(any(item).(object.IDGetter[ID]).GetID(), item)
 	}
-	return FillSet(ctx, itemSet)
+	return FillSet[ID, O](ctx, itemSet)
 }
 
 func FillSet[ID ~uint64, O object.Object[ID]](ctx context.Context, objects sqlpipeex.Set[ID, O]) error {

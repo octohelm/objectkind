@@ -3,8 +3,15 @@ package query
 import (
 	"context"
 
+	"github.com/octohelm/objectkind/pkg/sqlutil/query/internal/queryflags"
 	"github.com/octohelm/objectkind/pkg/sqlutil/query/internal/queryopts"
 )
+
+func Background(ctx context.Context, options ...Options) context.Context {
+	f := queryflags.Flags{}
+	f.Set(queryflags.AllFlags)
+	return queryopts.InjectContext(ctx, (&queryopts.Opt{Flags: f}).Join(options...))
+}
 
 type Options = queryopts.Options
 
