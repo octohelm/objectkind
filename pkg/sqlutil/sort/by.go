@@ -85,19 +85,17 @@ func (by *By[M]) Unmarshal(text string, sorters iter.Seq[Sorter[M]]) error {
 		return nil
 	}
 
-	request := strings.ToLower(text)
-	parts := strings.Split(request, "!")
+	parts := strings.Split(strings.ToLower(text), "!")
 
 	for sorter := range sorters {
-		k := strings.ToLower(sorter.Name())
-		if parts[0] == k {
-			by.By = request
+		if parts[0] == strings.ToLower(sorter.Name()) {
+			by.By = text
 			by.Sorter = sorter
 			return nil
 		}
 	}
 
-	return fmt.Errorf("invalid sort type %s", request)
+	return fmt.Errorf("invalid sort type %s", text)
 }
 
 type enumValue struct {
