@@ -11,7 +11,7 @@ import (
 )
 
 // Filler
-// Deprecated use FillSet, Fill, FillSeq, FillOwnerSet, FillSubResourceSet instead
+// Deprecated use FillSet, Fill, FillSeq, FillOwnerSet, FillSubResourcesOfOwnerSet instead
 type Filler[ID ~uint64, O object.Object[ID], M sqlpipe.Model] interface {
 	FillSet(ctx context.Context, itemSet sqlpipeex.Set[ID, O]) error
 	FillSeq(ctx context.Context, itemSeq iter.Seq[*O]) error

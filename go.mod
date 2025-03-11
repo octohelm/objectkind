@@ -14,7 +14,7 @@ require (
 	github.com/octohelm/courier v0.0.0-20250307082142-7b6d7159a88c
 	github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733 // indirect
 	github.com/octohelm/gengo v0.0.0-20250225091908-fe5a392970d3
-	github.com/octohelm/storage v0.0.0-20250228031119-0a9b4895b6ea
+	github.com/octohelm/storage v0.0.0-20250311061459-ddeebd3a6087
 	github.com/octohelm/x v0.0.0-20250307053041-306f2dec9027
 )
 

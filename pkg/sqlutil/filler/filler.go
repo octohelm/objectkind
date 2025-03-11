@@ -20,7 +20,7 @@ type OwnerSetFiller[ID ~uint64, O object.Object[ID]] interface {
 
 var fillers = Fillers{}
 
-func Register[ID ~uint64, O object.Object[ID]](filler SetFiller[ID, O]) {
+func Register[ID ~uint64, O object.Object[ID], Filler SetFiller[ID, O]](filler Filler) {
 	fillers.Register(reflect.TypeFor[O](), filler)
 }
 
@@ -43,8 +43,8 @@ func FillSeq[ID ~uint64, O object.Object[ID]](ctx context.Context, itemSeq iter.
 	return FillSet[ID, O](ctx, itemSet)
 }
 
-func FillSet[ID ~uint64, O object.Object[ID]](ctx context.Context, objects sqlpipeex.Set[ID, O]) error {
-	if objects == nil || objects.IsZero() {
+func FillSet[ID ~uint64, O object.Object[ID], S sqlpipeex.Set[ID, O]](ctx context.Context, objects S) error {
+	if any(objects) == nil || objects.IsZero() {
 		return nil
 	}
 
@@ -61,12 +61,12 @@ func FillSet[ID ~uint64, O object.Object[ID]](ctx context.Context, objects sqlpi
 	return nil
 }
 
-func FillOwnerSet[ID ~uint64, O object.Object[ID]](ctx context.Context, objects sqlpipeex.Set[ID, O]) error {
+func FillOwnerSet[ID ~uint64, O object.Object[ID], S sqlpipeex.Set[ID, O]](ctx context.Context, objects S) error {
 	return FillSet(sqlutilquery.With(ctx, sqlutilquery.SkipSubResources), objects)
 }
 
-func FillSubResourcesOfOwnerSet[OwnerID ~uint64, Owner object.Object[OwnerID]](ctx context.Context, owners sqlpipeex.Set[OwnerID, Owner]) error {
-	if owners == nil || owners.IsZero() {
+func FillSubResourcesOfOwnerSet[OwnerID ~uint64, Owner object.Object[OwnerID], OwnerSet sqlpipeex.Set[OwnerID, Owner]](ctx context.Context, owners OwnerSet) error {
+	if any(owners) == nil || owners.IsZero() {
 		return nil
 	}
 

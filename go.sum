@@ -85,8 +85,8 @@ github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733 h1:QFroPAzF1h
 github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733/go.mod h1:s4JBUBvmokS4N0uxRnjds0tBRlBn355OFz2EDHLnEZk=
 github.com/octohelm/gengo v0.0.0-20250225091908-fe5a392970d3 h1:sWkasxrh4vzJw2UXpD4QLJNZcPI66hGeB5IgRCQgS/w=
 github.com/octohelm/gengo v0.0.0-20250225091908-fe5a392970d3/go.mod h1:VDCHCWcXq9gMcdVzyPkq9a2KxU3tKE8F5TNyqy0zdGM=
-github.com/octohelm/storage v0.0.0-20250228031119-0a9b4895b6ea h1:5FdhcFzlSOTCBLTXTsMdTfCwC+iVreKffDmlB/thnik=
-github.com/octohelm/storage v0.0.0-20250228031119-0a9b4895b6ea/go.mod h1:jmzFACfesiYfGrNomALFsHeVwRMQuireEHWGczTkR3U=
+github.com/octohelm/storage v0.0.0-20250311061459-ddeebd3a6087 h1:jqTMqWbAhbA+oFgx6/F3vL+gNgrjwKLpQzSDMMg8FOY=
+github.com/octohelm/storage v0.0.0-20250311061459-ddeebd3a6087/go.mod h1:jmzFACfesiYfGrNomALFsHeVwRMQuireEHWGczTkR3U=
 github.com/octohelm/x v0.0.0-20250307053041-306f2dec9027 h1:fDSvc6gb6hoW3rkowY3jCqOdORIUh49+LUQVzF0IDp0=
 github.com/octohelm/x v0.0.0-20250307053041-306f2dec9027/go.mod h1:9kW/B5DWC+Oe2yiat3bg0FELTk8X5qFvATKQAfc8TLU=
 github.com/onsi/ginkgo/v2 v2.22.1 h1:QW7tbJAUDyVDVOM5dFa7qaybo+CRfR7bemlQUN6Z8aM=
