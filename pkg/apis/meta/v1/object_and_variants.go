@@ -38,3 +38,13 @@ type CodableRequest[O object.Codable[Code], Code ~string] struct {
 	Describer
 	Codable[Code]
 }
+
+type Response[O object.Type, ID ~uint64] struct {
+	Metadata
+	Identifiable[ID]
+}
+
+type CodableResponse[O object.Type, ID ~uint64, Code ~string] struct {
+	Response[O, ID]
+	Codable[Code]
+}

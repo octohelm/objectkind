@@ -69,6 +69,22 @@ func (v *CodableRequest[O, Code]) RuntimeDoc(names ...string) ([]string, bool) {
 	return []string{}, true
 }
 
+func (v *CodableResponse[O, ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		}
+		if doc, ok := runtimeDoc(&v.Response, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Codable, "", names...); ok {
+			return doc, ok
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
 func (v *Describer) RuntimeDoc(names ...string) ([]string, bool) {
 	if len(names) > 0 {
 		switch names[0] {
@@ -250,6 +266,22 @@ func (v *Request[O]) RuntimeDoc(names ...string) ([]string, bool) {
 			return doc, ok
 		}
 		if doc, ok := runtimeDoc(&v.Describer, "", names...); ok {
+			return doc, ok
+		}
+
+		return nil, false
+	}
+	return []string{}, true
+}
+
+func (v *Response[O, ID]) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		}
+		if doc, ok := runtimeDoc(&v.Metadata, "", names...); ok {
+			return doc, ok
+		}
+		if doc, ok := runtimeDoc(&v.Identifiable, "", names...); ok {
 			return doc, ok
 		}
 
