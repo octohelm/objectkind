@@ -15,7 +15,7 @@ import (
 
 type ProductByID struct {
 	// 通过 id 筛选
-	ID *filter.Filter[productv1.ProductID] `name:"order-product~id,omitzero" in:"query"`
+	ID *filter.Filter[productv1.ProductID] `name:"product~id,omitzero" in:"query"`
 }
 
 func (f *ProductByID) OperatorType() sqlpipe.OperatorType {
@@ -29,7 +29,7 @@ func (f *ProductByID) Next(src sqlpipe.Source[product.Product]) sqlpipe.Source[p
 type ProductSortByID struct{}
 
 func (f *ProductSortByID) Name() string {
-	return "order-product~id"
+	return "product~id"
 }
 
 func (f *ProductSortByID) Label() string {
@@ -41,7 +41,7 @@ func (f *ProductSortByID) Sort(src sqlpipe.Source[product.Product], sortBy func(
 }
 
 type ProductByState struct {
-	State *filter.Filter[productv1.ProductState] `name:"order-product~state,omitzero" in:"query"`
+	State *filter.Filter[productv1.ProductState] `name:"product~state,omitzero" in:"query"`
 }
 
 func (f *ProductByState) OperatorType() sqlpipe.OperatorType {
@@ -54,7 +54,7 @@ func (f *ProductByState) Next(src sqlpipe.Source[product.Product]) sqlpipe.Sourc
 
 type SkuByID struct {
 	// 通过 id 筛选
-	ID *filter.Filter[productv1.SkuID] `name:"order-sku~id,omitzero" in:"query"`
+	ID *filter.Filter[productv1.SkuID] `name:"product-sku~id,omitzero" in:"query"`
 }
 
 func (f *SkuByID) OperatorType() sqlpipe.OperatorType {
@@ -68,7 +68,7 @@ func (f *SkuByID) Next(src sqlpipe.Source[product.Sku]) sqlpipe.Source[product.S
 type SkuSortByID struct{}
 
 func (f *SkuSortByID) Name() string {
-	return "order-sku~id"
+	return "product-sku~id"
 }
 
 func (f *SkuSortByID) Label() string {
@@ -81,7 +81,7 @@ func (f *SkuSortByID) Sort(src sqlpipe.Source[product.Sku], sortBy func(col sqlb
 
 type SkuByCode struct {
 	// 通过 编码 筛选
-	Code *filter.Filter[productv1.SkuCode] `name:"order-sku~code,omitzero" in:"query"`
+	Code *filter.Filter[productv1.SkuCode] `name:"product-sku~code,omitzero" in:"query"`
 }
 
 func (f *SkuByCode) OperatorType() sqlpipe.OperatorType {
@@ -94,7 +94,7 @@ func (f *SkuByCode) Next(src sqlpipe.Source[product.Sku]) sqlpipe.Source[product
 
 type SkuByProductID struct {
 	// 通过 所属产品 筛选
-	ProductID *filter.Filter[productv1.ProductID] `name:"order-sku~productID,omitzero" in:"query"`
+	ProductID *filter.Filter[productv1.ProductID] `name:"product-sku~productID,omitzero" in:"query"`
 }
 
 func (f *SkuByProductID) OperatorType() sqlpipe.OperatorType {

@@ -9,6 +9,9 @@ func (v *Product) RuntimeDoc(names ...string) ([]string, bool) {
 		switch names[0] {
 		case "Status":
 			return []string{}, true
+		case "Skus":
+			return []string{}, true
+
 		}
 		if doc, ok := runtimeDoc(&v.Object, "商品", names...); ok {
 			return doc, ok
