@@ -54,9 +54,14 @@ func copyObject(dst any, src any) {
 		}
 	}
 
-	if d, ok := dst.(object.OperationTimestamps); ok {
-		if s, ok := src.(object.OperationTimestamps); ok {
+	if d, ok := dst.(object.CreationTimestampDescriber); ok {
+		if s, ok := src.(object.CreationTimestampDescriber); ok {
 			d.SetCreationTimestamp(s.GetCreationTimestamp())
+		}
+	}
+
+	if d, ok := dst.(object.ModificationTimestampDescriber); ok {
+		if s, ok := src.(object.ModificationTimestampDescriber); ok {
 			d.SetModificationTimestamp(s.GetModificationTimestamp())
 		}
 	}
