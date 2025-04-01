@@ -48,7 +48,7 @@ func (r *Resource[ID]) ForceMarkModifiedAt() {
 
 var _ object.Describer = &Resource[uint64]{}
 
-func (r *Resource[ID]) GetName() string {
+func (r Resource[ID]) GetName() string {
 	return r.Name
 }
 
@@ -92,6 +92,12 @@ var _ interface {
 func (r Resource[ID]) GetID() ID    { return r.ID }
 func (r *Resource[ID]) SetID(id ID) { r.ID = id }
 
+var _ object.AsRefIDGetter = &Resource[uint64]{}
+
+func (r Resource[ID]) GetAsRefID() object.RefID {
+	return object.RefID(r.ID)
+}
+
 type CodableResource[ID ~uint64, Code ~string] struct {
 	Resource[ID]
 	// 编码
@@ -106,3 +112,9 @@ var _ interface {
 
 func (r CodableResource[ID, Code]) GetCode() Code      { return r.Code }
 func (r *CodableResource[ID, Code]) SetCode(code Code) { r.Code = code }
+
+var _ object.AsRefCodeGetter = &CodableResource[uint64, string]{}
+
+func (r CodableResource[ID, Code]) GetAsRefCode() object.RefCode {
+	return object.RefCode(r.Code)
+}
