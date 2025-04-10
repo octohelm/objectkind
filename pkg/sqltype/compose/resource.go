@@ -92,7 +92,7 @@ var _ interface {
 func (r Resource[ID]) GetID() ID    { return r.ID }
 func (r *Resource[ID]) SetID(id ID) { r.ID = id }
 
-var _ object.AsRefIDGetter = &Resource[uint64]{}
+var _ object.AsRefIDGetter = Resource[uint64]{}
 
 func (r Resource[ID]) GetAsRefID() object.RefID {
 	return object.RefID(r.ID)
@@ -102,7 +102,7 @@ type CodableResource[ID ~uint64, Code ~string] struct {
 	Resource[ID]
 	// 编码
 	// 人类可读编码
-	Code Code `db:"f_code" json:"code"`
+	Code Code `db:"f_code" json:"code" sortable:""`
 }
 
 var _ interface {

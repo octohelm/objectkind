@@ -92,6 +92,20 @@ func (f *SkuByCode) Next(src sqlpipe.Source[product.Sku]) sqlpipe.Source[product
 	return src.Pipe(sqlpipefilter.AsWhere(product.SkuT.Code, f.Code))
 }
 
+type SkuSortByCode struct{}
+
+func (f *SkuSortByCode) Name() string {
+	return "product-sku~code"
+}
+
+func (f *SkuSortByCode) Label() string {
+	return "编码"
+}
+
+func (f *SkuSortByCode) Sort(src sqlpipe.Source[product.Sku], sortBy func(col sqlbuilder.Column) sqlpipe.SourceOperator[product.Sku]) sqlpipe.Source[product.Sku] {
+	return src.Pipe(sortBy(product.SkuT.Code))
+}
+
 type SkuByProductID struct {
 	// 通过 所属产品 筛选
 	ProductID *filter.Filter[productv1.ProductID] `name:"product-sku~productID,omitzero" in:"query"`
