@@ -84,12 +84,12 @@ func (r *Resource[ID]) SetModificationTimestamp(timestamp object.Timestamp) {
 	r.MarkModifiedAt()
 }
 
-var _ interface {
-	object.IDGetter[uint64]
-	object.IDSetter[uint64]
-} = &Resource[uint64]{}
+var _ object.IDGetter[uint64] = Resource[uint64]{}
 
-func (r Resource[ID]) GetID() ID    { return r.ID }
+func (r Resource[ID]) GetID() ID { return r.ID }
+
+var _ object.IDSetter[uint64] = &Resource[uint64]{}
+
 func (r *Resource[ID]) SetID(id ID) { r.ID = id }
 
 var _ object.AsRefIDGetter = Resource[uint64]{}
@@ -105,15 +105,15 @@ type CodableResource[ID ~uint64, Code ~string] struct {
 	Code Code `db:"f_code" json:"code" sortable:""`
 }
 
-var _ interface {
-	object.CodeGetter[string]
-	object.CodeSetter[string]
-} = &CodableResource[uint64, string]{}
+var _ object.CodeGetter[string] = CodableResource[uint64, string]{}
 
-func (r CodableResource[ID, Code]) GetCode() Code      { return r.Code }
+func (r CodableResource[ID, Code]) GetCode() Code { return r.Code }
+
+var _ object.CodeSetter[string] = &CodableResource[uint64, string]{}
+
 func (r *CodableResource[ID, Code]) SetCode(code Code) { r.Code = code }
 
-var _ object.AsRefCodeGetter = &CodableResource[uint64, string]{}
+var _ object.AsRefCodeGetter = CodableResource[uint64, string]{}
 
 func (r CodableResource[ID, Code]) GetAsRefCode() object.RefCode {
 	return object.RefCode(r.Code)

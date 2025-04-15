@@ -7,8 +7,11 @@ test:
 test-race:
     go test -race ./...
 
-dep-update:
+update:
     go get -u ./...
+
+dep:
+    go mod tidy
 
 fmt:
     go tool gofumpt -w -l .
