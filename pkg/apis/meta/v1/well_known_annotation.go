@@ -4,5 +4,9 @@ import "github.com/octohelm/objectkind/pkg/annotate"
 
 const (
 	AnnotationSpecDigest annotate.Annotation = "spec/digest"
-	AnnotationRevisionID annotate.Annotation = "revision/id"
+)
+
+const (
+	AnnotationRevisionID     annotate.Annotation = "revision/id"
+	AnnotationRevisionDigest annotate.Annotation = "revision/digest"
 )
