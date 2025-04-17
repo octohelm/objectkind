@@ -81,6 +81,8 @@ github.com/octohelm/courier v0.0.0-20250409025123-af965993745b h1:VFCEdSbpyHUyX+
 github.com/octohelm/courier v0.0.0-20250409025123-af965993745b/go.mod h1:hc7h5xB5zddAxSzRHr/ipBza2HRDfWKNZ2of4FYbWPw=
 github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733 h1:QFroPAzF1hZYuy90nuxz6XXrX12ZLQUTmsAOLUbBVAk=
 github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733/go.mod h1:s4JBUBvmokS4N0uxRnjds0tBRlBn355OFz2EDHLnEZk=
+github.com/octohelm/exp v0.0.0-20250329083516-2c6693277395 h1:0/JOIkYxvRpk+PmD6GYv34v9racSxUmUmtVYF4G4zLY=
+github.com/octohelm/exp v0.0.0-20250329083516-2c6693277395/go.mod h1:iUzSOBp8QW+PNSYCiGXAX+9DfZyXcjygNO8zHRyDaaQ=
 github.com/octohelm/gengo v0.0.0-20250415085555-ac23c78ea087 h1:r1GiaXw5bCqu9+ODQuF3NImAJQJHJTVCvXFk/TFm8rI=
 github.com/octohelm/gengo v0.0.0-20250415085555-ac23c78ea087/go.mod h1:0Dh96/14t+A7nmqBf7TyPXBv+tdflmbMi5x97ytMTdY=
 github.com/octohelm/storage v0.0.0-20250411030002-7585457581be h1:hnQE4e6gVMT5mpY3HOwi7cJmo1USme8VU5pQK+1Ku68=

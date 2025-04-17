@@ -20,6 +20,7 @@ require (
 
 require (
 	github.com/go-json-experiment/json v0.0.0-20250223041408-d3c622f1b874
+	github.com/octohelm/exp v0.0.0-20250329083516-2c6693277395
 	github.com/opencontainers/go-digest v1.0.0
 	golang.org/x/sync v0.13.0
 )
