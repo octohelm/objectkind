@@ -23,7 +23,9 @@ func GenInjectContext(ctx context.Context, tpe Gen) context.Context {
 }
 
 func (p *IDGen) InjectContext(ctx context.Context) context.Context {
-	return GenInjectContext(ctx, p)
+	ctx = GenInjectContext(ctx, p.gen)
+
+	return ctx
 }
 
 func (v *IDGen) Init(ctx context.Context) error {

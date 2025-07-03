@@ -19,10 +19,6 @@ func (Product) TableName() string {
 	return "t_product"
 }
 
-func (Product) GetKind() string {
-	return "Product"
-}
-
 func (Product) PrimaryKey() []string {
 	return []string{
 		"ID",
@@ -39,6 +35,10 @@ func (Product) Indexes() sqlbuilder.Indexes {
 
 func init() {
 	T.Add(ProductT)
+}
+
+func (Product) GetKind() string {
+	return "Product"
 }
 
 func (tableProduct) New() sqlbuilder.Model {
@@ -87,10 +87,6 @@ func (Sku) TableName() string {
 	return "t_product_sku"
 }
 
-func (Sku) GetKind() string {
-	return "Sku"
-}
-
 func (Sku) PrimaryKey() []string {
 	return []string{
 		"ID",
@@ -108,6 +104,10 @@ func (Sku) UniqueIndexes() sqlbuilder.Indexes {
 
 func init() {
 	T.Add(SkuT)
+}
+
+func (Sku) GetKind() string {
+	return "Sku"
 }
 
 func (tableSku) New() sqlbuilder.Model {

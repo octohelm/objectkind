@@ -37,9 +37,9 @@ func (t *Typed[ID]) NewTo(v *ID) error {
 	return nil
 }
 
-// +gengo:injectable:provider Gen
+// +gengo:injectable:provider
 type IDGen struct {
-	Gen
+	gen Gen `provide:""`
 }
 
 func (i *IDGen) afterInit(ctx context.Context) error {
@@ -47,6 +47,6 @@ func (i *IDGen) afterInit(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	i.Gen = g
+	i.gen = g
 	return nil
 }
