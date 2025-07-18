@@ -21,7 +21,7 @@ func (ann Annotation) MarshalTo(accessor Setter, v any) error {
 
 	switch x := v.(type) {
 	default:
-		if err := json.MarshalWrite(b, x, jsonv1.OmitEmptyWithLegacyDefinition(true)); err != nil {
+		if err := json.MarshalWrite(b, x, jsonv1.OmitEmptyWithLegacySemantics(true)); err != nil {
 			return err
 		}
 	}

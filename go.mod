@@ -1,6 +1,6 @@
 module github.com/octohelm/objectkind
 
-go 1.24.4
+go 1.24.5
 
 tool (
 	github.com/octohelm/objectkind/internal/cmd/devtool
@@ -10,19 +10,19 @@ tool (
 require (
 	github.com/go-courier/logr v0.3.2 // indirect
 	github.com/go-courier/snowflakeid v1.2.1
-	github.com/innoai-tech/infra v0.0.0-20250703075817-5146c534b956
-	github.com/octohelm/courier v0.0.0-20250703075201-298ec05e0543
+	github.com/innoai-tech/infra v0.0.0-20250711051916-203918f623de
+	github.com/octohelm/courier v0.0.0-20250718061230-74edffef15fa
 	github.com/octohelm/enumeration v0.0.0-20250115091102-ddf41951d733 // indirect
-	github.com/octohelm/gengo v0.0.0-20250418031154-d14a228621d4
-	github.com/octohelm/storage v0.0.0-20250701035722-305a0ebd9962
-	github.com/octohelm/x v0.0.0-20250409031213-9c254440c2b8
+	github.com/octohelm/gengo v0.0.0-20250711045910-061ca3315825
+	github.com/octohelm/storage v0.0.0-20250718061658-04a1ad2a5aa7
+	github.com/octohelm/x v0.0.0-20250718061117-5256cd84ed4c
 )
 
 require (
-	github.com/go-json-experiment/json v0.0.0-20250626171732-1a886bd29d1b
+	github.com/go-json-experiment/json v0.0.0-20250714165856-be8212f5270d
 	github.com/octohelm/exp v0.0.0-20250610043704-ec5e24647f61
 	github.com/opencontainers/go-digest v1.0.0
-	golang.org/x/sync v0.15.0
+	golang.org/x/sync v0.16.0
 )
 
 require (
@@ -69,19 +69,19 @@ require (
 	go.opentelemetry.io/otel/sdk/metric v1.37.0 // indirect
 	go.opentelemetry.io/otel/trace v1.37.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.7.0 // indirect
-	golang.org/x/crypto v0.39.0 // indirect
-	golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b // indirect
-	golang.org/x/mod v0.25.0 // indirect
-	golang.org/x/net v0.41.0 // indirect
-	golang.org/x/sys v0.33.0 // indirect
-	golang.org/x/text v0.26.0 // indirect
-	golang.org/x/tools v0.34.0 // indirect
+	golang.org/x/crypto v0.40.0 // indirect
+	golang.org/x/exp v0.0.0-20250717185816-542afb5b7346 // indirect
+	golang.org/x/mod v0.26.0 // indirect
+	golang.org/x/net v0.42.0 // indirect
+	golang.org/x/sys v0.34.0 // indirect
+	golang.org/x/text v0.27.0 // indirect
+	golang.org/x/tools v0.35.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250603155806-513f23925822 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250603155806-513f23925822 // indirect
 	google.golang.org/grpc v1.73.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	modernc.org/libc v1.66.2 // indirect
+	modernc.org/libc v1.66.3 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 	modernc.org/sqlite v1.38.0 // indirect
