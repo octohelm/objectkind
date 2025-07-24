@@ -97,9 +97,11 @@ func (src *Order) AsOrderRequestForCreate() *OrderRequestForCreate {
 	dst := pkgruntime.New[OrderRequestForCreate]()
 	pkgruntime.CopyObject(dst, src)
 	copySpec := func(d *OrderSpecRequestForCreate, s *OrderSpec) {
-		d.Items = make([]*OrderItemRequestForCreate, len(s.Items))
-		for i, x := range s.Items {
-			d.Items[i] = x.AsOrderItemRequestForCreate()
+		if n := len(s.Items); n > 0 {
+			d.Items = make([]*OrderItemRequestForCreate, n)
+			for i, x := range s.Items {
+				d.Items[i] = x.AsOrderItemRequestForCreate()
+			}
 		}
 	}
 	copySpec(&dst.Spec, &src.Spec)
@@ -111,9 +113,11 @@ func (src *OrderRequestForCreate) AsOrder() *Order {
 	dst := pkgruntime.New[Order]()
 	pkgruntime.Copy(dst, src)
 	copySpec := func(d *OrderSpec, s *OrderSpecRequestForCreate) {
-		d.Items = make([]*OrderItem, len(s.Items))
-		for i, x := range s.Items {
-			d.Items[i] = x.AsOrderItem()
+		if n := len(s.Items); n > 0 {
+			d.Items = make([]*OrderItem, n)
+			for i, x := range s.Items {
+				d.Items[i] = x.AsOrderItem()
+			}
 		}
 	}
 	copySpec(&dst.Spec, &src.Spec)

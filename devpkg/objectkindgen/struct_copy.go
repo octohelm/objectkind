@@ -297,9 +297,11 @@ if (@src.@FieldName != nil) {
 		if isSrcSliceElemStruct && isDstSliceElemStruct {
 			return snippet.Snippets(func(yield func(snippet.Snippet) bool) {
 				if !yield(snippet.T(`
-@dst.@FieldName = make(@DstFieldType, len(@src.@FieldName))
-for i, x := range @src.@FieldName {
-	@dst.@FieldName[i] = x.As@DstElemTypeName()
+if n := len(@src.@FieldName); n > 0 {
+	@dst.@FieldName = make(@DstFieldType, n)
+	for i, x := range @src.@FieldName {
+		@dst.@FieldName[i] = x.As@DstElemTypeName()
+	}
 }
 `, snippet.Args{
 					"FieldName":       snippet.ID(c.name()),
