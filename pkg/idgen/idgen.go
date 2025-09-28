@@ -4,14 +4,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/go-courier/snowflakeid"
-	"github.com/go-courier/snowflakeid/workeridutil"
+	"github.com/octohelm/idx/pkg/snowflake"
+	"github.com/octohelm/idx/pkg/workerid"
 	"github.com/octohelm/objectkind/pkg/idgen/internal"
 )
 
 var (
 	startTime, _ = time.Parse(time.RFC3339, "2020-01-01T00:00:00Z")
-	sff          = snowflakeid.NewSnowflakeFactory(16, 8, 5, startTime)
+	sff          = snowflake.NewFactory(16, 8, 5, startTime)
 )
 
 // +gengo:injectable:provider
@@ -43,7 +43,7 @@ type IDGen struct {
 }
 
 func (i *IDGen) afterInit(ctx context.Context) error {
-	g, err := sff.NewSnowflake(workeridutil.WorkerIDFromIP(internal.ResolveExposedIP()))
+	g, err := sff.NewSnowflake(workerid.FromIP(internal.ResolveExposedIP()))
 	if err != nil {
 		return err
 	}
