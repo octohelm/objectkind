@@ -1,61 +1,75 @@
-package query
+package query_test
 
 import (
 	"context"
 	"testing"
 
-	testingx "github.com/octohelm/x/testing"
+	"github.com/octohelm/x/cmp"
+	. "github.com/octohelm/x/testing/v2"
+
+	"github.com/octohelm/objectkind/pkg/sqlutil/query"
 )
 
 func TestOptions(t *testing.T) {
-	t.Run("flags", func(t *testing.T) {
-		ctx := With(context.Background())
+	t.Run("Flags 状态校验", func(t *testing.T) {
+		ctx := query.With(context.Background())
 
-		testingx.Expect(t, NeedCount(ctx), testingx.BeTrue())
-		testingx.Expect(t, NeedResourceStatus(ctx), testingx.BeTrue())
-		testingx.Expect(t, NeedSubResources(ctx), testingx.BeTrue())
-		testingx.Expect(t, NeedResourceOwner(ctx), testingx.BeTrue())
-		testingx.Expect(t, NeedResourceSecondaryOwner(ctx), testingx.BeTrue())
+		Then(t, "默认情况下所有 Flag 均为开启状态",
+			Expect(query.NeedCount(ctx), Be(cmp.True())),
+			Expect(query.NeedResourceStatus(ctx), Be(cmp.True())),
+			Expect(query.NeedSubResources(ctx), Be(cmp.True())),
+			Expect(query.NeedResourceOwner(ctx), Be(cmp.True())),
+			Expect(query.NeedResourceSecondaryOwner(ctx), Be(cmp.True())),
+		)
 
-		t.Run("skip count", func(t *testing.T) {
-			ctx2 := With(ctx, SkipCount)
-			testingx.Expect(t, NeedCount(ctx2), testingx.BeFalse())
+		t.Run("跳过总数统计 (SkipCount)", func(t *testing.T) {
+			ctx2 := query.With(ctx, query.SkipCount)
 
-			t.Run("then enabled", func(t *testing.T) {
-				ctx3 := With(ctx, FillCount(true))
-				testingx.Expect(t, NeedCount(ctx3), testingx.BeTrue())
+			Then(t, "NeedCount 应该关闭",
+				Expect(query.NeedCount(ctx2), Be(cmp.False())),
+			)
+
+			t.Run("重新开启总数统计", func(t *testing.T) {
+				ctx3 := query.With(ctx2, query.FillCount(true))
+
+				Then(t, "NeedCount 应该恢复开启",
+					Expect(query.NeedCount(ctx3), Be(cmp.True())),
+				)
 			})
 		})
 
-		t.Run("skip resource status", func(t *testing.T) {
-			ctx2 := With(ctx, SkipResourceStatus)
-			testingx.Expect(t, NeedResourceStatus(ctx2), testingx.BeFalse())
-		})
+		t.Run("各种 Skip 选项覆盖", func(t *testing.T) {
+			Then(t, "SkipResourceStatus 生效",
+				Expect(query.NeedResourceStatus(query.With(ctx, query.SkipResourceStatus)), Be(cmp.False())),
+			)
 
-		t.Run("skip sub resources", func(t *testing.T) {
-			ctx2 := With(ctx, SkipSubResources)
-			testingx.Expect(t, NeedSubResources(ctx2), testingx.BeFalse())
-		})
+			Then(t, "SkipSubResources 生效",
+				Expect(query.NeedSubResources(query.With(ctx, query.SkipSubResources)), Be(cmp.False())),
+			)
 
-		t.Run("skip resource owner", func(t *testing.T) {
-			ctx2 := With(ctx, SkipResourceOwner)
-			testingx.Expect(t, NeedResourceOwner(ctx2), testingx.BeFalse())
-		})
+			Then(t, "SkipResourceOwner 生效",
+				Expect(query.NeedResourceOwner(query.With(ctx, query.SkipResourceOwner)), Be(cmp.False())),
+			)
 
-		t.Run("skip resource secondary owner", func(t *testing.T) {
-			ctx2 := With(ctx, SkipResourceSecondaryOwner)
-			testingx.Expect(t, NeedResourceSecondaryOwner(ctx2), testingx.BeFalse())
+			Then(t, "SkipResourceSecondaryOwner 生效",
+				Expect(query.NeedResourceSecondaryOwner(query.With(ctx, query.SkipResourceSecondaryOwner)), Be(cmp.False())),
+			)
 		})
 	})
 
-	t.Run("with filler", func(t *testing.T) {
-		ctx := With(context.Background())
-		testingx.Expect(t, NeedFiller[Object](ctx), testingx.BeTrue())
+	t.Run("Filler 泛型配置校验", func(t *testing.T) {
+		ctx := query.With(context.Background())
 
-		t.Run("skip filler for object", func(t *testing.T) {
-			ctx2 := With(ctx, Filler[Object](false))
+		Then(t, "默认开启 Filler",
+			Expect(query.NeedFiller[Object](ctx), Be(cmp.True())),
+		)
 
-			testingx.Expect(t, NeedFiller[Object](ctx2), testingx.BeFalse())
+		t.Run("禁用特定类型的 Filler", func(t *testing.T) {
+			ctx2 := query.With(ctx, query.Filler[Object](false))
+
+			Then(t, "NeedFiller 应该关闭",
+				Expect(query.NeedFiller[Object](ctx2), Be(cmp.False())),
+			)
 		})
 	})
 }

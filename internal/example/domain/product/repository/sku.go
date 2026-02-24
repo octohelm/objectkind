@@ -3,11 +3,12 @@ package repository
 import (
 	"context"
 
+	"github.com/octohelm/storage/pkg/sqlpipe"
+
 	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productconvert "github.com/octohelm/objectkind/internal/example/domain/product/convert"
 	"github.com/octohelm/objectkind/pkg/idgen"
-	"github.com/octohelm/storage/pkg/sqlpipe"
 )
 
 // +gengo:injectable

@@ -4,11 +4,12 @@ import (
 	"context"
 
 	"github.com/octohelm/courier/pkg/validator"
+	"github.com/octohelm/x/anyjson"
+	"github.com/opencontainers/go-digest"
+
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/objectkind/pkg/sqltype/digest/flags"
-	"github.com/octohelm/x/anyjson"
-	"github.com/opencontainers/go-digest"
 )
 
 type Hasher interface {

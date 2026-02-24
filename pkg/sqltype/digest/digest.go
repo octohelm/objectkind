@@ -2,9 +2,10 @@ package digest
 
 import (
 	"github.com/octohelm/exp/xiter"
+	"github.com/opencontainers/go-digest"
+
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
-	"github.com/opencontainers/go-digest"
 )
 
 var annotationKeysShouldOmit = []string{

@@ -6,30 +6,41 @@ import (
 
 	"github.com/go-json-experiment/json"
 	"github.com/octohelm/courier/pkg/validator/taggedunion"
+	. "github.com/octohelm/x/testing/v2"
+
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/objectkind/pkg/runtime"
-	testingx "github.com/octohelm/x/testing"
 )
 
 func TestKindTagged(t *testing.T) {
 	u := &Union{}
 	u.SetUnderlying(runtime.New[TypeA]())
 
-	t.Run("underlying should be TypeA pointer", func(t *testing.T) {
-		testingx.Expect(t, u.Underlying(), testingx.Equal(any(runtime.New[TypeA]())))
+	t.Run("Underlying 类型校验", func(t *testing.T) {
+		Then(t, "Underlying 应该是 TypeA 指针",
+			Expect(u.Underlying(), Equal(any(runtime.New[TypeA]()))),
+		)
 	})
 
-	t.Run("should be json marshaled", func(t *testing.T) {
-		raw, err := json.Marshal(u)
-		testingx.Expect(t, err, testingx.BeNil[error]())
-		testingx.Expect(t, string(raw), testingx.Be(`{"kind":"TypeA"}`))
+	t.Run("JSON 序列化与反序列化", func(t *testing.T) {
+		raw := MustValue(t, func() ([]byte, error) {
+			return json.Marshal(u)
+		})
 
-		t.Run("should be json unmarshalled", func(t *testing.T) {
+		Then(t, "序列化结果符合预期",
+			Expect(string(raw), Equal(`{"kind":"TypeA"}`)),
+		)
+
+		t.Run("反序列化", func(t *testing.T) {
 			u2 := &Union{}
-			err := json.Unmarshal(raw, u2)
-			testingx.Expect(t, err, testingx.BeNil[error]())
-			testingx.Expect(t, u2.Underlying(), testingx.Equal(any(runtime.New[TypeA]())))
+			Must(t, func() error {
+				return json.Unmarshal(raw, u2)
+			})
+
+			Then(t, "反序列化后的 Underlying 保持一致",
+				Expect(u2.Underlying(), Equal(any(runtime.New[TypeA]()))),
+			)
 		})
 	})
 }

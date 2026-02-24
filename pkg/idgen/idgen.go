@@ -6,6 +6,7 @@ import (
 
 	"github.com/octohelm/idx/pkg/snowflake"
 	"github.com/octohelm/idx/pkg/workerid"
+
 	"github.com/octohelm/objectkind/pkg/idgen/internal"
 )
 

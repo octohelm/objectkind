@@ -1,6 +1,8 @@
 package flags
 
-import "context"
+import (
+	"context"
+)
 
 type Flag uint
 

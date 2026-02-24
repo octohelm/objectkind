@@ -1,6 +1,8 @@
 package v1
 
-import "github.com/octohelm/objectkind/pkg/object"
+import (
+	"github.com/octohelm/objectkind/pkg/object"
+)
 
 type Identifiable[ID ~uint64] struct {
 	// 资源 id

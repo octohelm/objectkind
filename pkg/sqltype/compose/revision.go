@@ -3,10 +3,10 @@ package compose
 import (
 	"time"
 
-	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/storage/pkg/sqltype"
-
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
+
+	"github.com/octohelm/objectkind/pkg/object"
 )
 
 type Revision[ID ~uint64, Digest ~string] struct {

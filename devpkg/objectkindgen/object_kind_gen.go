@@ -6,10 +6,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/octohelm/gengo/pkg/inflector"
-
 	"github.com/octohelm/gengo/pkg/gengo"
 	"github.com/octohelm/gengo/pkg/gengo/snippet"
+	"github.com/octohelm/gengo/pkg/inflector"
+
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/objectkind/pkg/runtime"
 )

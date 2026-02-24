@@ -1,12 +1,12 @@
 package product
 
 import (
-	"github.com/octohelm/objectkind/pkg/annotate"
-	sqltypecompose "github.com/octohelm/objectkind/pkg/sqltype/compose"
 	"github.com/octohelm/storage/pkg/sqltype/json"
 
 	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
 	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
+	"github.com/octohelm/objectkind/pkg/annotate"
+	sqltypecompose "github.com/octohelm/objectkind/pkg/sqltype/compose"
 )
 
 // Sku

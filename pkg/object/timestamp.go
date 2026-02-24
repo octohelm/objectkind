@@ -1,6 +1,8 @@
 package object
 
-import sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
+import (
+	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
+)
 
 type Timestamp = sqltypetime.Timestamp
 

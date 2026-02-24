@@ -9,6 +9,7 @@ import (
 
 	"github.com/octohelm/gengo/pkg/gengo"
 	"github.com/octohelm/gengo/pkg/gengo/snippet"
+
 	"github.com/octohelm/objectkind/pkg/runtime"
 )
 
@@ -57,8 +58,7 @@ func (c *structCopy) Frag(ctx context.Context) iter.Seq[string] {
 
 		dstFields := c.dst.Underlying().(*types.Struct)
 		originFields := map[string]*types.Var{}
-		for i := 0; i < dstFields.NumFields(); i++ {
-			f := dstFields.Field(i)
+		for f := range dstFields.Fields() {
 			originFields[f.Name()] = f
 		}
 

@@ -3,28 +3,27 @@ package repository_test
 import (
 	"testing"
 
-	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
-
 	"github.com/innoai-tech/infra/pkg/otel"
+	"github.com/octohelm/storage/pkg/filter"
+	sessiondb "github.com/octohelm/storage/pkg/session/db"
+	"github.com/octohelm/x/cmp"
+	. "github.com/octohelm/x/testing/v2"
+
 	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
+	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productfilter "github.com/octohelm/objectkind/internal/example/domain/product/filter"
 	productrepository "github.com/octohelm/objectkind/internal/example/domain/product/repository"
 	"github.com/octohelm/objectkind/internal/pkg/testingutil"
 	"github.com/octohelm/objectkind/pkg/idgen"
 	"github.com/octohelm/objectkind/pkg/runtime"
-	"github.com/octohelm/storage/pkg/filter"
-	sessiondb "github.com/octohelm/storage/pkg/session/db"
-	testingx "github.com/octohelm/x/testing"
 )
 
 func TestSkuRepository(t *testing.T) {
 	d := &struct {
 		otel.Otel
 		idgen.IDGen
-
 		sessiondb.Database
-
 		productrepository.ProductRepository
 		productrepository.SkuRepository
 	}{}
@@ -32,7 +31,6 @@ func TestSkuRepository(t *testing.T) {
 	d.LogLevel = "debug"
 	d.LogFormat = "text"
 	d.EnableMigrate = true
-
 	d.ApplyCatalog("test", product.T)
 
 	ctx := testingutil.NewContext(t, d)
@@ -41,47 +39,53 @@ func TestSkuRepository(t *testing.T) {
 		pdt.Name = "测试产品"
 	})
 
-	t.Run("put product", func(t *testing.T) {
-		err := d.PutProducts(ctx, pdt)
-		testingx.Expect(t, err, testingx.BeNil[error]())
+	Must(t, func() error {
+		return d.PutProducts(ctx, pdt)
 	})
 
-	t.Run("put sku", func(t *testing.T) {
+	t.Run("保存并查询 SKU", func(t *testing.T) {
 		sku := runtime.Build(func(sku *productv1.Sku) {
 			sku.Code = "pdt-1122"
 			sku.Name = "pdt-1122"
-
 			sku.Spec.Price = 1
 			sku.Spec.Currency = transactionv1.CurrencyCNY
-
 			sku.Product = pdt
 		})
 
-		err := d.PutSkus(ctx, sku)
-		testingx.Expect(t, err, testingx.BeNil[error]())
-
-		t.Run("then skus should be listed", func(t *testing.T) {
-			skuList, err := d.ListSku(ctx, &productfilter.SkuByCode{
-				Code: filter.Eq(sku.Code),
-			})
-			testingx.Expect(t, err, testingx.BeNil[error]())
-			testingx.Expect(t, len(skuList.Items), testingx.Be(1))
-
-			pdtOfSku := skuList.Items[0]
-			testingx.Expect(t, pdtOfSku.Product.ID, testingx.Be(pdt.ID))
-			testingx.Expect(t, pdtOfSku.Product.Name, testingx.Be(pdt.Name))
+		Must(t, func() error {
+			return d.PutSkus(ctx, sku)
 		})
 
-		t.Run("then product listed should be includes sku", func(t *testing.T) {
-			productList, err := d.ListProduct(ctx, &productfilter.ProductByID{
-				ID: filter.Eq(pdt.ID),
+		t.Run("能够通过 Code 列表查询到该 SKU", func(t *testing.T) {
+			skuList := MustValue(t, func() (*productv1.SkuList, error) {
+				return d.ListSku(ctx, &productfilter.SkuByCode{
+					Code: filter.Eq(sku.Code),
+				})
 			})
-			testingx.Expect(t, err, testingx.BeNil[error]())
-			testingx.Expect(t, len(productList.Items), testingx.Be(1))
+
+			Then(t, "SKU 列表属性正确",
+				Expect(skuList.Items, Be(cmp.Len[[]*productv1.Sku](1))),
+				Expect(skuList.Items[0].Product.ID, Equal(pdt.ID)),
+				Expect(skuList.Items[0].Product.Name, Equal(pdt.Name)),
+			)
+		})
+
+		t.Run("查询产品时应包含关联的 SKU", func(t *testing.T) {
+			productList := MustValue(t, func() (*productv1.ProductList, error) {
+				return d.ListProduct(ctx, &productfilter.ProductByID{
+					ID: filter.Eq(pdt.ID),
+				})
+			})
+
+			Then(t, "产品及其关联 SKU 校验",
+				Expect(productList.Items, Be(cmp.Len[[]*productv1.Product](1))),
+			)
 
 			pdtWithSkus := productList.Items[0]
-			testingx.Expect(t, len(pdtWithSkus.Skus), testingx.Be(1))
-			testingx.Expect(t, pdtWithSkus.Skus[0].Code, testingx.Be(sku.Code))
+			Then(t, "SKU 列表符合预期",
+				Expect(pdtWithSkus.Skus, Be(cmp.Len[[]*productv1.Sku](1))),
+				Expect(pdtWithSkus.Skus[0].Code, Equal(sku.Code)),
+			)
 		})
 	})
 }

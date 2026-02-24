@@ -1,6 +1,8 @@
 package digest
 
-import "github.com/opencontainers/go-digest"
+import (
+	"github.com/opencontainers/go-digest"
+)
 
 type Digestible struct {
 	// 摘要

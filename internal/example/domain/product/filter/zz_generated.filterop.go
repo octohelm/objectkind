@@ -5,12 +5,13 @@ DON'T EDIT THIS FILE
 package filter
 
 import (
-	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
-	product "github.com/octohelm/objectkind/internal/example/domain/product"
 	filter "github.com/octohelm/storage/pkg/filter"
 	sqlbuilder "github.com/octohelm/storage/pkg/sqlbuilder"
 	sqlpipe "github.com/octohelm/storage/pkg/sqlpipe"
 	sqlpipefilter "github.com/octohelm/storage/pkg/sqlpipe/filter"
+
+	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
+	product "github.com/octohelm/objectkind/internal/example/domain/product"
 )
 
 type ProductByID struct {

@@ -5,14 +5,15 @@ DON'T EDIT THIS FILE
 package product
 
 import (
-	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
-	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
-	annotate "github.com/octohelm/objectkind/pkg/annotate"
 	sqlbuilder "github.com/octohelm/storage/pkg/sqlbuilder"
 	modelscoped "github.com/octohelm/storage/pkg/sqlbuilder/modelscoped"
 	sqltypejson "github.com/octohelm/storage/pkg/sqltype/json"
 	nullable "github.com/octohelm/storage/pkg/sqltype/nullable"
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
+
+	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
+	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
+	annotate "github.com/octohelm/objectkind/pkg/annotate"
 )
 
 func (Product) TableName() string {

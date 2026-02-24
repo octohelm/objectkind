@@ -5,9 +5,10 @@ import (
 	"iter"
 	"reflect"
 
+	sqlpipeex "github.com/octohelm/storage/pkg/sqlpipe/ex"
+
 	"github.com/octohelm/objectkind/pkg/object"
 	sqlutilquery "github.com/octohelm/objectkind/pkg/sqlutil/query"
-	sqlpipeex "github.com/octohelm/storage/pkg/sqlpipe/ex"
 )
 
 type SetFiller[ID ~uint64, O object.Object[ID]] interface {

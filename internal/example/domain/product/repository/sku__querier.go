@@ -4,6 +4,12 @@ import (
 	"context"
 	"iter"
 
+	"github.com/octohelm/storage/pkg/dberr"
+	"github.com/octohelm/storage/pkg/filter"
+	"github.com/octohelm/storage/pkg/sqlpipe"
+	sqlpipeex "github.com/octohelm/storage/pkg/sqlpipe/ex"
+	iterx "github.com/octohelm/x/iter"
+
 	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productconvert "github.com/octohelm/objectkind/internal/example/domain/product/convert"
@@ -11,11 +17,6 @@ import (
 	"github.com/octohelm/objectkind/pkg/sqlutil"
 	sqlutilfiller "github.com/octohelm/objectkind/pkg/sqlutil/filler"
 	sqlutilquery "github.com/octohelm/objectkind/pkg/sqlutil/query"
-	"github.com/octohelm/storage/pkg/dberr"
-	"github.com/octohelm/storage/pkg/filter"
-	"github.com/octohelm/storage/pkg/sqlpipe"
-	sqlpipeex "github.com/octohelm/storage/pkg/sqlpipe/ex"
-	iterx "github.com/octohelm/x/iter"
 )
 
 type SkuQuerier struct {

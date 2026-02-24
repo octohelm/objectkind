@@ -14,4 +14,5 @@ dep:
     go mod tidy
 
 fmt:
-    go tool gofumpt -w -l .
+    go fix ./...
+    go tool devtool fmt -l -w .

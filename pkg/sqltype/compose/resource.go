@@ -3,10 +3,11 @@ package compose
 import (
 	"time"
 
-	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/storage/pkg/sqltype"
 	sqltypenullable "github.com/octohelm/storage/pkg/sqltype/nullable"
 	sqltypetime "github.com/octohelm/storage/pkg/sqltype/time"
+
+	"github.com/octohelm/objectkind/pkg/object"
 )
 
 type Resource[ID ~uint64] struct {

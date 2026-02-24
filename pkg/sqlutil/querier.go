@@ -4,12 +4,13 @@ import (
 	"context"
 	"iter"
 
-	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
-	"github.com/octohelm/objectkind/pkg/object"
-	sqlutilquery "github.com/octohelm/objectkind/pkg/sqlutil/query"
 	"github.com/octohelm/storage/pkg/dberr"
 	"github.com/octohelm/storage/pkg/sqlpipe"
 	sqlpipeex "github.com/octohelm/storage/pkg/sqlpipe/ex"
+
+	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
+	"github.com/octohelm/objectkind/pkg/object"
+	sqlutilquery "github.com/octohelm/objectkind/pkg/sqlutil/query"
 )
 
 func Objects[M sqlpipe.Model, O object.Type](ctx context.Context, ex sqlpipeex.SourceExecutor[M], convert func(m *M) (*O, error)) iter.Seq2[*O, error] {

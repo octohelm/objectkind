@@ -1,6 +1,8 @@
 package queryflags
 
-import "github.com/octohelm/objectkind/pkg/sqlutil/query/internal"
+import (
+	"github.com/octohelm/objectkind/pkg/sqlutil/query/internal"
+)
 
 type Bools uint64
 

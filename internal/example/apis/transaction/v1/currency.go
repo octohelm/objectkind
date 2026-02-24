@@ -33,7 +33,7 @@ func (v CurrencyValue) String() string {
 }
 
 func (v CurrencyValue) MarshalJSON() ([]byte, error) {
-	return []byte(fmt.Sprintf("%.2f", v)), nil
+	return fmt.Appendf(nil, "%.2f", v), nil
 }
 
 func (v CurrencyValue) Mul(quantity int64) CurrencyValue {

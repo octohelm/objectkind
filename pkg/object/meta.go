@@ -1,6 +1,8 @@
 package object
 
-import "iter"
+import (
+	"iter"
+)
 
 type Type interface {
 	GetKind() string
