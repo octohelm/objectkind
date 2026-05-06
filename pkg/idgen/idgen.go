@@ -16,15 +16,18 @@ var (
 )
 
 // +gengo:injectable:provider
+// Gen 唯一 ID 生成器接口。
 type Gen interface {
 	ID() (uint64, error)
 }
 
+// TypedGen 类型安全的 ID 生成器接口。
 type TypedGen[ID ~uint64] interface {
 	NewTo(v *ID) error
 }
 
 // +gengo:injectable
+// Typed 类型安全的 ID 生成器实现，基于 Gen 为指定 ID 类型生成唯一 ID。
 type Typed[ID ~uint64] struct {
 	g Gen `inject:""`
 }
@@ -39,6 +42,7 @@ func (t *Typed[ID]) NewTo(v *ID) error {
 }
 
 // +gengo:injectable:provider
+// IDGen 基于雪花算法的全局唯一 ID 生成器。
 type IDGen struct {
 	gen Gen `provide:""`
 }

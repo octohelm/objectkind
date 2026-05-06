@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/storage/pkg/sqlpipe"
 )
 
+// Pager 分页操作符，包含偏移量和条数限制
 type Pager[M sqlpipe.Model] struct {
 	// 分页偏移
 	Offset int64 `name:"offset,omitzero" in:"query"`

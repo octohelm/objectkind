@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
+// Identifiable 通过数字 ID 标识的资源基础结构
 type Identifiable[ID ~uint64] struct {
 	// 资源 id
 	ID ID `json:"id"`

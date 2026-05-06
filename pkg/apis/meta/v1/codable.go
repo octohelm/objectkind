@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
+// Codable 通过编码标识的资源基础结构
 type Codable[Code ~string] struct {
 	// 编码
 	Code Code `json:"code"`

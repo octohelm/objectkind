@@ -5,9 +5,9 @@ import (
 
 	"github.com/octohelm/storage/pkg/sqlpipe"
 
-	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productconvert "github.com/octohelm/objectkind/internal/example/domain/product/convert"
+	productv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/product/v1"
 	"github.com/octohelm/objectkind/pkg/idgen"
 )
 
@@ -26,8 +26,10 @@ func (repo *ProductRepository) PutProducts(ctx context.Context, products ...*pro
 	mProducts := make([]*product.Product, 0, len(products))
 
 	for _, pdt := range products {
-		if err := repo.idGen.NewTo(&pdt.ID); err != nil {
-			return err
+		if pdt.ID == 0 {
+			if err := repo.idGen.NewTo(&pdt.ID); err != nil {
+				return err
+			}
 		}
 
 		mProduct, err := productconvert.Product.FromObject(pdt)
@@ -48,12 +50,14 @@ func (repo *ProductRepository) PutProducts(ctx context.Context, products ...*pro
 
 		product.ProductT.CreatedAt,
 		product.ProductT.UpdatedAt,
+		product.ProductT.State,
 	)).PipeE(
 		sqlpipe.OnConflictDoUpdateSet(
 			product.ProductT.I.Primary,
 
 			product.ProductT.Name,
 			product.ProductT.Description,
+			product.ProductT.State,
 
 			product.ProductT.UpdatedAt,
 		),
@@ -76,4 +80,8 @@ func (repo *ProductRepository) PutProducts(ctx context.Context, products ...*pro
 	}
 
 	return nil
+}
+
+func (repo *ProductRepository) DeleteProducts(ctx context.Context, operators ...sqlpipe.SourceOperator[product.Product]) error {
+	return repo.Product.PipeE(operators...).PipeE(sqlpipe.DoDelete[product.Product]()).Commit(ctx)
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/octohelm/storage/pkg/sqlpipe"
 )
 
+// DescSort 创建降序排序
 func DescSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
 	return &By[M]{
 		By:     fmt.Sprintf("%s!%s", s.Name(), "desc"),
@@ -18,6 +19,7 @@ func DescSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
 	}
 }
 
+// AscSort 创建升序排序
 func AscSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
 	return &By[M]{
 		By:     fmt.Sprintf("%s!%s", s.Name(), "asc"),
@@ -25,6 +27,7 @@ func AscSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
 	}
 }
 
+// By 排序操作符，封装排序表达式与排序器实现
 type By[M sqlpipe.Model] struct {
 	By     string
 	Sorter Sorter[M]

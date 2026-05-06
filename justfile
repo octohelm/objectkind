@@ -1,18 +1,11 @@
-gen:
-    go generate ./...
+# Root 命令入口：注册 toolchain 与模块 justfile
 
-test:
-    go test ./...
+# Go toolchain
+mod go "tool/go/justfile"
+# example cli
+mod example "internal/example/cmd/example/justfile"
 
-test-race:
-    go test -race ./...
-
-update:
-    go get -u ./...
-
-dep:
-    go mod tidy
-
-fmt:
-    go fix ./...
-    go tool devtool fmt -l -w .
+# 列出所有可用命令（含子模块，无输入）
+[group('meta')]
+default:
+    @just --list --list-submodules

@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
+// CopyCodableObject 从源对象拷贝 Code 和 Object 信息到目标对象。
 func CopyCodableObject[D object.Type, ID object.Identity, Code ~string, S object.CodableObject[ID, Code]](dst *D, src *S) {
 	if d, ok := any(dst).(object.CodeSetter[Code]); ok {
 		if s, ok := any(src).(object.CodeGetter[Code]); ok {
@@ -14,6 +15,7 @@ func CopyCodableObject[D object.Type, ID object.Identity, Code ~string, S object
 	CopyObject(dst, src)
 }
 
+// CopyObject 从源对象拷贝 ID 和 Type 信息到目标对象。
 func CopyObject[D object.Type, ID object.Identity, S object.Object[ID]](dst *D, src *S) {
 	if d, ok := any(dst).(object.IDSetter[ID]); ok {
 		if s, ok := any(src).(object.IDGetter[ID]); ok {
@@ -24,6 +26,7 @@ func CopyObject[D object.Type, ID object.Identity, S object.Object[ID]](dst *D, 
 	Copy(dst, src)
 }
 
+// CopyCodable 从源对象拷贝 Code 和 Type 信息到目标对象。
 func CopyCodable[D object.Type, Code ~string, S object.Codable[Code]](dst *D, src *S) {
 	if d, ok := any(dst).(object.CodeSetter[Code]); ok {
 		if s, ok := any(src).(object.CodeGetter[Code]); ok {
@@ -34,6 +37,7 @@ func CopyCodable[D object.Type, Code ~string, S object.Codable[Code]](dst *D, sr
 	Copy(dst, src)
 }
 
+// Copy 从源对象拷贝 Type 信息到目标对象。
 func Copy[D object.Type, S object.Type](dst *D, src *S) {
 	copyObject(dst, src)
 }

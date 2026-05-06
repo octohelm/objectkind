@@ -5,6 +5,7 @@ import (
 	"os"
 )
 
+// ResolveExposedIP 解析本机暴露的 IPv4 地址。
 func ResolveExposedIP() net.IP {
 	hostname, _ := os.Hostname()
 	if hostname == "" {

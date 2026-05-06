@@ -7,6 +7,7 @@ import (
 	"github.com/opencontainers/go-digest"
 )
 
+// NewDigester 创建一个摘要生成器，按指定的算法和哈希实例延迟计算摘要值。
 func NewDigester(alg string, h hash.Hash) digest.Digester {
 	return &digester{
 		alg:  digest.Algorithm(alg),

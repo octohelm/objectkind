@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
+// TypeMeta 资源类型与版本元数据
 type TypeMeta struct {
 	// 资源类型
 	Kind string `json:"kind,omitzero"`

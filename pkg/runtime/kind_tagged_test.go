@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/go-json-experiment/json"
+
 	"github.com/octohelm/courier/pkg/validator/taggedunion"
 	. "github.com/octohelm/x/testing/v2"
 
@@ -42,6 +43,18 @@ func TestKindTagged(t *testing.T) {
 				Expect(u2.Underlying(), Equal(any(runtime.New[TypeA]()))),
 			)
 		})
+	})
+
+	t.Run("IsZero 与非零值", func(t *testing.T) {
+		u := &Union{}
+		Then(t, "空 Union IsZero 返回 true",
+			Expect(u.IsZero(), Equal(true)),
+		)
+
+		u.SetUnderlying(runtime.New[TypeA]())
+		Then(t, "有 Underlying 后 IsZero 返回 false",
+			Expect(u.IsZero(), Equal(false)),
+		)
 	})
 }
 
