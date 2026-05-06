@@ -7,15 +7,19 @@ import (
 	"github.com/go-json-experiment/json"
 	"github.com/go-json-experiment/json/jsontext"
 	jsonv1 "github.com/go-json-experiment/json/v1"
+
 	"github.com/octohelm/courier/pkg/validator"
 )
 
+// Annotation 注解键，支持值的序列化与反序列化。
 type Annotation string
 
+// Get 从 Provider 中获取注解值。
 func (ann Annotation) Get(accessor Provider) (string, bool) {
 	return accessor.GetAnnotation(string(ann))
 }
 
+// MarshalTo 将 v 序列化后写入 Setter。
 func (ann Annotation) MarshalTo(accessor Setter, v any) error {
 	b := &bytes.Buffer{}
 
@@ -40,6 +44,7 @@ func (ann Annotation) MarshalTo(accessor Setter, v any) error {
 	return nil
 }
 
+// UnmarshalFrom 从 Provider 读取注解值并反序列化到 v。
 func (ann Annotation) UnmarshalFrom(provider Provider, v any) error {
 	if str, ok := provider.GetAnnotation(string(ann)); ok {
 		dec := jsontext.NewDecoder(bytes.NewBufferString(str))

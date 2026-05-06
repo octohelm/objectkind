@@ -3,20 +3,23 @@ package digest
 import (
 	"context"
 
+	"github.com/opencontainers/go-digest"
+
 	"github.com/octohelm/courier/pkg/validator"
 	"github.com/octohelm/x/anyjson"
-	"github.com/opencontainers/go-digest"
 
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
 	"github.com/octohelm/objectkind/pkg/sqltype/digest/flags"
 )
 
+// Hasher 定义内容哈希器，可对目标进行哈希计算并返回摘要。
 type Hasher interface {
 	Hash(target any) error
 	Digest() Digest
 }
 
+// NewHasher 创建哈希器，从上下文读取 Flags 以控制跳过行为，若 src 已带摘要则预先载入。
 func NewHasher(ctx context.Context, src any) Hasher {
 	h := &hasher{}
 
@@ -55,6 +58,7 @@ func (h *hasher) Hash(target any) error {
 	return nil
 }
 
+// HashTo 对目标计算 SHA256 摘要并写入 dgst，等价于无状态的快速哈希。
 func HashTo(dgst *Digest, target any) error {
 	h := &hasher{}
 

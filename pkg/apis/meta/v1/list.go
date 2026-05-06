@@ -1,5 +1,6 @@
 package v1
 
+// List 泛型资源列表，包含条目与总数
 type List[T any] struct {
 	// 列表
 	Items []*T `json:"items,omitzero"`

@@ -1,8 +1,9 @@
 package digest
 
 import (
-	"github.com/octohelm/exp/xiter"
 	"github.com/opencontainers/go-digest"
+
+	"github.com/octohelm/exp/xiter"
 
 	metav1 "github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	"github.com/octohelm/objectkind/pkg/object"
@@ -15,6 +16,7 @@ var annotationKeysShouldOmit = []string{
 	string(metav1.AnnotationSpecDigest),
 }
 
+// OmitAnnotations 从对象的注解中移除内置的摘要相关键以及指定的额外键。
 func OmitAnnotations[O object.Annotater](src O, omitKeys ...string) {
 	if target, ok := any(src).(object.Annotatable); ok {
 		// omit internals keys
@@ -28,4 +30,5 @@ func OmitAnnotations[O object.Annotater](src O, omitKeys ...string) {
 	}
 }
 
+// Digest 是内容摘要的类型别名，基于 opencontainers/go-digest。
 type Digest = digest.Digest

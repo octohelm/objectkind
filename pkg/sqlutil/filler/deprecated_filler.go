@@ -11,14 +11,18 @@ import (
 	"github.com/octohelm/objectkind/pkg/sqlutil"
 )
 
-// Filler
-// Deprecated use FillSet, Fill, FillSeq, FillOwnerSet, FillSubResourcesOfOwnerSet instead
+// Filler 填充操作接口
+//
+// Deprecated: use FillSet, Fill, FillSeq, FillOwnerSet, FillSubResourcesOfOwnerSet instead
 type Filler[ID ~uint64, O object.Object[ID], M sqlpipe.Model] interface {
 	FillSet(ctx context.Context, itemSet sqlpipeex.Set[ID, O]) error
 	FillSeq(ctx context.Context, itemSeq iter.Seq[*O]) error
 	Fill(ctx context.Context, items ...*O) error
 }
 
+// For 根据构造器创建 Filler 实例
+//
+// Deprecated: use Register + FillSet, Fill, FillSeq, FillOwnerSet, FillSubResourcesOfOwnerSet instead
 func For[ID ~uint64, O object.Object[ID], M sqlpipe.Model](
 	buildExecutor func(ids iter.Seq[ID]) sqlpipeex.SourceExecutor[M],
 	buildObjectSeq sqlutil.BuildObjectSeq[M, O],

@@ -5,9 +5,9 @@ import (
 
 	"github.com/octohelm/storage/pkg/sqlpipe"
 
-	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productconvert "github.com/octohelm/objectkind/internal/example/domain/product/convert"
+	productv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/product/v1"
 	"github.com/octohelm/objectkind/pkg/idgen"
 )
 
@@ -26,8 +26,10 @@ func (repo *SkuRepository) PutSkus(ctx context.Context, skus ...*productv1.Sku) 
 	mSkus := make([]*product.Sku, 0)
 
 	for _, sku := range skus {
-		if err := repo.skuID.NewTo(&sku.ID); err != nil {
-			return err
+		if sku.ID == 0 {
+			if err := repo.skuID.NewTo(&sku.ID); err != nil {
+				return err
+			}
 		}
 
 		mSku, err := productconvert.Sku.FromObject(sku)
@@ -66,4 +68,8 @@ func (repo *SkuRepository) PutSkus(ctx context.Context, skus ...*productv1.Sku) 
 	}
 
 	return nil
+}
+
+func (repo *SkuRepository) DeleteSkus(ctx context.Context, operators ...sqlpipe.SourceOperator[product.Sku]) error {
+	return repo.Sku.PipeE(operators...).PipeE(sqlpipe.DoDelete[product.Sku]()).Commit(ctx)
 }

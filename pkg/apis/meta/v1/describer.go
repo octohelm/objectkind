@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
+// Describer 资源名称、描述与注解信息
 type Describer struct {
 	// 名称
 	Name string `json:"name,omitzero"`

@@ -3,18 +3,18 @@ package repository_test
 import (
 	"testing"
 
+	"github.com/innoai-tech/infra/pkg/configuration/testingutil"
 	"github.com/innoai-tech/infra/pkg/otel"
 	"github.com/octohelm/storage/pkg/filter"
 	sessiondb "github.com/octohelm/storage/pkg/session/db"
 	"github.com/octohelm/x/cmp"
 	. "github.com/octohelm/x/testing/v2"
 
-	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
-	transactionv1 "github.com/octohelm/objectkind/internal/example/apis/transaction/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productfilter "github.com/octohelm/objectkind/internal/example/domain/product/filter"
 	productrepository "github.com/octohelm/objectkind/internal/example/domain/product/repository"
-	"github.com/octohelm/objectkind/internal/pkg/testingutil"
+	productv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/product/v1"
+	transactionv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/transaction/v1"
 	"github.com/octohelm/objectkind/pkg/idgen"
 	"github.com/octohelm/objectkind/pkg/runtime"
 )

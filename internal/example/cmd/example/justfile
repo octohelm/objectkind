@@ -1,0 +1,6 @@
+example := 'go run .'
+
+# 启动 example CLI 的 HTTP 服务（输入：透传给 `serve` 的参数）
+[group('dev')]
+serve +args:
+    {{ example }} serve {{ args }}

@@ -4,6 +4,7 @@ import (
 	"github.com/octohelm/objectkind/pkg/object"
 )
 
+// OperationTimestamps 操作时间戳，记录资源的创建与修改时间
 type OperationTimestamps struct {
 	// 创建时间
 	CreationTimestamp object.Timestamp `json:"creationTimestamp,omitzero"`

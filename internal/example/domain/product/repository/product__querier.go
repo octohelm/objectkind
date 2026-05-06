@@ -10,10 +10,10 @@ import (
 	sqlpipeex "github.com/octohelm/storage/pkg/sqlpipe/ex"
 	iterx "github.com/octohelm/x/iter"
 
-	productv1 "github.com/octohelm/objectkind/internal/example/apis/product/v1"
 	"github.com/octohelm/objectkind/internal/example/domain/product"
 	productconvert "github.com/octohelm/objectkind/internal/example/domain/product/convert"
 	productfilter "github.com/octohelm/objectkind/internal/example/domain/product/filter"
+	productv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/product/v1"
 	"github.com/octohelm/objectkind/pkg/sqlutil"
 	sqlutilfiller "github.com/octohelm/objectkind/pkg/sqlutil/filler"
 	sqlutilquery "github.com/octohelm/objectkind/pkg/sqlutil/query"
@@ -62,7 +62,7 @@ func (q *ProductQuerier) FindOneProduct(ctx context.Context, operators ...sqlpip
 	epr, err := sqlutil.FindOne(ctx, q.Product.PipeE(operators...), q.Products)
 	if err != nil {
 		if dberr.IsErrNotFound(err) {
-			return nil, &product.ErrProductNotFound{}
+			return nil, &productv1.ErrProductNotFound{}
 		}
 		return nil, err
 	}
