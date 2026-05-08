@@ -12,6 +12,8 @@
 
 表模型放在 `domain/<domain>/*.go`，用 `+gengo:table` 声明表、索引和分组。具体注解约定见 `gengo-guideline` 与 `storage-guideline`。
 
+storage session 通过 infra 的 `+gengo:injectable:provider` 机制注入：在 `cmd/{app}` 层声明 Database provider → service 通过 `inject:""` 获取 session → repository 从 service 获取数据库连接。
+
 ## repository
 
 只做单 domain 数据访问：

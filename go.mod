@@ -11,23 +11,23 @@ tool (
 // +gengo:import:group=0_controlled
 require (
 	// +skill:infra-guideline
-	github.com/innoai-tech/infra v0.0.0-20260429091147-8db53bc740da
+	github.com/innoai-tech/infra v0.0.0-20260508093839-4a99cd0e004e
 	// +skill:courier-guideline
-	github.com/octohelm/courier v0.0.0-20260423104043-41a7d6803925
+	github.com/octohelm/courier v0.0.0-20260508093754-7951d2aa2fa9
 	// +skill:enumeration-guideline
-	github.com/octohelm/enumeration v0.0.0-20260424074548-309e324da628
+	github.com/octohelm/enumeration v0.0.0-20260508105338-2e799c70cf82
 	github.com/octohelm/exp v0.0.0-20260430025146-1a23bff9d7e4
 	// +skill:gengo-guideline
-	github.com/octohelm/gengo v0.0.0-20260429071238-a7c74f0d08fb
+	github.com/octohelm/gengo v0.0.0-20260508104904-5ab1a7f587f6
 	github.com/octohelm/idx v0.0.0-20260429083346-2b418d5920c7
 	// +skill:storage-guideline
-	github.com/octohelm/storage v0.0.0-20260429085546-a4ded76a213b
+	github.com/octohelm/storage v0.0.0-20260508105832-c9935f5fc805
 	// +skill:testing-guideline
-	github.com/octohelm/x v0.0.0-20260423102402-017813b113b1
+	github.com/octohelm/x v0.0.0-20260508104609-6b72a870e0d2
 )
 
 require (
-	github.com/go-json-experiment/json v0.0.0-20260214004413-d219187c3433
+	github.com/go-json-experiment/json v0.0.0-20260505212615-e40f80bf6836
 	github.com/opencontainers/go-digest v1.0.0
 )
 
@@ -63,7 +63,7 @@ require (
 	github.com/prometheus/otlptranslator v1.0.0 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/robfig/cron/v3 v3.0.1 // indirect
-	github.com/shirou/gopsutil/v4 v4.26.3 // indirect
+	github.com/shirou/gopsutil/v4 v4.26.4 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/tklauser/go-sysconf v0.3.16 // indirect
@@ -90,14 +90,14 @@ require (
 	golang.org/x/sys v0.43.0 // indirect
 	golang.org/x/text v0.36.0 // indirect
 	golang.org/x/tools v0.44.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260427160629-7cedc36a6bc4 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260427160629-7cedc36a6bc4 // indirect
-	google.golang.org/grpc v1.80.0 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260504160031-60b97b32f348 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260504160031-60b97b32f348 // indirect
+	google.golang.org/grpc v1.81.0 // indirect
 	google.golang.org/protobuf v1.36.12-0.20260120151049-f2248ac996af // indirect
 	k8s.io/apimachinery v0.36.0 // indirect
-	modernc.org/libc v1.72.1 // indirect
+	modernc.org/libc v1.72.2 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
 	modernc.org/sqlite v1.50.0 // indirect
-	mvdan.cc/gofumpt v0.9.2 // indirect
+	mvdan.cc/gofumpt v0.10.0 // indirect
 )
