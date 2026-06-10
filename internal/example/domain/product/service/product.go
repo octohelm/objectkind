@@ -37,7 +37,8 @@ func (svc *ProductService) ListSkuByProductID(ctx context.Context, productID pro
 		return nil, err
 	}
 
-	return svc.SkuRepository.ListSku(ctx,
+	return svc.SkuRepository.ListSku(
+		ctx,
 		&productfilter.SkuByProductID{
 			ProductID: filter.Eq(productID),
 		},

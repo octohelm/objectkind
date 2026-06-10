@@ -36,13 +36,16 @@ func sorterSeq(sorters ...sortpkg.Sorter[testModel]) func(func(sortpkg.Sorter[te
 func TestAscSort(t *testing.T) {
 	by := sortpkg.AscSort(testSorter{})
 
-	Then(t, "By 字符串以 asc 结尾",
-		Expect(by.By, Equal("created_at!asc")),
+	Then(
+		t, "By 字符串以 asc 结尾",
+		Expect(by.String(), Equal("created_at!asc")),
 	)
-	Then(t, "Sorter 非空",
+	Then(
+		t, "Sorter 非空",
 		Expect(by.IsZero(), Be(cmp.False())),
 	)
-	Then(t, "操作类型为排序",
+	Then(
+		t, "操作类型为排序",
 		Expect(by.OperatorType(), Equal(sqlpipe.OperatorSort)),
 	)
 }
@@ -50,10 +53,12 @@ func TestAscSort(t *testing.T) {
 func TestDescSort(t *testing.T) {
 	by := sortpkg.DescSort(testSorter{})
 
-	Then(t, "By 字符串以 desc 结尾",
-		Expect(by.By, Equal("created_at!desc")),
+	Then(
+		t, "By 字符串以 desc 结尾",
+		Expect(by.String(), Equal("created_at!desc")),
 	)
-	Then(t, "Sorter 非空",
+	Then(
+		t, "Sorter 非空",
 		Expect(by.IsZero(), Be(cmp.False())),
 	)
 }
@@ -61,14 +66,16 @@ func TestDescSort(t *testing.T) {
 func TestByIsZero(t *testing.T) {
 	t.Run("Sorter 为 nil 时为零值", func(t *testing.T) {
 		by := &sortpkg.By[testModel]{}
-		Then(t, "IsZero 返回 true",
+		Then(
+			t, "IsZero 返回 true",
 			Expect(by.IsZero(), Be(cmp.True())),
 		)
 	})
 
 	t.Run("Sorter 非 nil 时非零值", func(t *testing.T) {
 		by := sortpkg.AscSort(testSorter{})
-		Then(t, "IsZero 返回 false",
+		Then(
+			t, "IsZero 返回 false",
 			Expect(by.IsZero(), Be(cmp.False())),
 		)
 	})
@@ -76,7 +83,8 @@ func TestByIsZero(t *testing.T) {
 
 func TestByOperatorType(t *testing.T) {
 	by := sortpkg.DescSort(testSorter{})
-	Then(t, "返回 OperatorSort",
+	Then(
+		t, "返回 OperatorSort",
 		Expect(by.OperatorType(), Equal(sqlpipe.OperatorSort)),
 	)
 }
@@ -85,7 +93,8 @@ func TestByMarshalText(t *testing.T) {
 	by := sortpkg.DescSort(testSorter{})
 	b, err := by.MarshalText()
 	Must(t, func() error { return err })
-	Then(t, "序列化为 By 字符串",
+	Then(
+		t, "序列化为 By 字符串",
 		Expect(string(b), Equal("created_at!desc")),
 	)
 }
@@ -98,7 +107,8 @@ func TestByAsEnumValues(t *testing.T) {
 	values := by.AsEnumValues(sorterSeq(s1, s2))
 
 	// Should generate both asc and desc for each sorter
-	Then(t, "生成 4 个枚举值 (2 sorters × 2 directions)",
+	Then(
+		t, "生成 4 个枚举值 (2 sorters × 2 directions)",
 		Expect(len(values), Equal(4)),
 	)
 }
@@ -117,10 +127,12 @@ func TestByUnmarshal(t *testing.T) {
 		err := by.Unmarshal("created_at!asc", sorterSeq(testSorter{}))
 		Must(t, func() error { return err })
 
-		Then(t, "By 字段匹配",
-			Expect(by.By, Equal("created_at!asc")),
+		Then(
+			t, "By 字段匹配",
+			Expect(by.String(), Equal("created_at!asc")),
 		)
-		Then(t, "Sorter 非空",
+		Then(
+			t, "Sorter 非空",
 			Expect(by.IsZero(), Be(cmp.False())),
 		)
 	})
@@ -130,10 +142,12 @@ func TestByUnmarshal(t *testing.T) {
 		err := by.Unmarshal("created_at!desc", sorterSeq(testSorter{}))
 		Must(t, func() error { return err })
 
-		Then(t, "By 字段匹配",
-			Expect(by.By, Equal("created_at!desc")),
+		Then(
+			t, "By 字段匹配",
+			Expect(by.String(), Equal("created_at!desc")),
 		)
-		Then(t, "Sorter 非空",
+		Then(
+			t, "Sorter 非空",
 			Expect(by.IsZero(), Be(cmp.False())),
 		)
 	})
@@ -143,7 +157,8 @@ func TestByUnmarshal(t *testing.T) {
 		err := by.Unmarshal("", sorterSeq(testSorter{}))
 		Must(t, func() error { return err })
 
-		Then(t, "Sorter 保持 nil",
+		Then(
+			t, "Sorter 保持 nil",
 			Expect(by.IsZero(), Be(cmp.True())),
 		)
 	})
@@ -151,7 +166,8 @@ func TestByUnmarshal(t *testing.T) {
 	t.Run("无效排序类型返回错误", func(t *testing.T) {
 		by := &sortpkg.By[testModel]{}
 		err := by.Unmarshal("invalid!asc", sorterSeq(testSorter{}))
-		Then(t, "应返回错误",
+		Then(
+			t, "应返回错误",
 			Expect(err != nil, Be(cmp.True())),
 		)
 	})
@@ -172,10 +188,12 @@ func TestEnumValueLabel(t *testing.T) {
 		}
 	}
 
-	Then(t, "包含 asc label",
+	Then(
+		t, "包含 asc label",
 		Expect(labels[0], Equal("创建时间正序")),
 	)
-	Then(t, "包含 desc label",
+	Then(
+		t, "包含 desc label",
 		Expect(labels[1], Equal("创建时间逆序")),
 	)
 }

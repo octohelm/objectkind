@@ -12,7 +12,8 @@ import (
 )
 
 func (repo *OrderRepository) ListExpiredCreatedOrders(ctx context.Context, before sqltypetime.Timestamp) (*orderv1.OrderList, error) {
-	return repo.ListOrder(ctx,
+	return repo.ListOrder(
+		ctx,
 		sqlpipefilter.AsWhere(order.OrderT.State, filter.Eq(orderv1.ORDER_STATE__CREATED)),
 		sqlpipefilter.AsWhere(order.OrderT.CreatedAt, filter.Lt(before)),
 	)

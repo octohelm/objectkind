@@ -15,14 +15,16 @@ import (
 func TestDigestible(t *testing.T) {
 	t.Run("零值 Digestible", func(t *testing.T) {
 		d := digest.Digestible{}
-		Then(t, "Digest 为空字符串",
+		Then(
+			t, "Digest 为空字符串",
 			Expect(d.GetDigest(), Equal(digest.Digest(""))),
 		)
 	})
 
 	t.Run("有值 Digestible", func(t *testing.T) {
 		d := digest.Digestible{Digest: "sha256:abc123"}
-		Then(t, "GetDigest 返回正确值",
+		Then(
+			t, "GetDigest 返回正确值",
 			Expect(d.GetDigest(), Equal(digest.Digest("sha256:abc123"))),
 		)
 	})
@@ -35,7 +37,8 @@ func TestNewDigester(t *testing.T) {
 		h := d.Hash()
 		h.Write([]byte("hello"))
 		dgst := d.Digest()
-		Then(t, "摘要非空",
+		Then(
+			t, "摘要非空",
 			Expect(dgst != "", Be(cmp.True())),
 		)
 	})
@@ -49,7 +52,8 @@ func TestNewDigester(t *testing.T) {
 		d2.Hash().Write([]byte("hello"))
 		second := d2.Digest()
 
-		Then(t, "相同输入相同算法摘要一致",
+		Then(
+			t, "相同输入相同算法摘要一致",
 			Expect(first, Equal(second)),
 		)
 	})
@@ -60,7 +64,8 @@ func TestHashTo(t *testing.T) {
 	err := digest.HashTo(&d, map[string]any{"key": "value"})
 	Must(t, func() error { return err })
 
-	Then(t, "摘要非空",
+	Then(
+		t, "摘要非空",
 		Expect(d != "", Be(cmp.True())),
 	)
 
@@ -69,7 +74,8 @@ func TestHashTo(t *testing.T) {
 		err := digest.HashTo(&d2, map[string]any{"key": "value"})
 		Must(t, func() error { return err })
 
-		Then(t, "摘要相同",
+		Then(
+			t, "摘要相同",
 			Expect(d, Equal(d2)),
 		)
 	})
@@ -79,7 +85,8 @@ func TestHashTo(t *testing.T) {
 		err := digest.HashTo(&d3, map[string]any{"key": "different"})
 		Must(t, func() error { return err })
 
-		Then(t, "摘要不同",
+		Then(
+			t, "摘要不同",
 			Expect(d != d3, Be(cmp.True())),
 		)
 	})
@@ -106,25 +113,28 @@ func TestOmitAnnotations(t *testing.T) {
 	t.Run("移除 known annotations", func(t *testing.T) {
 		src := &testAnn{
 			annotations: map[string]string{
-				"spec/digest":    "abc",
-				"revision/id":    "1",
+				"spec/digest":     "abc",
+				"revision/id":     "1",
 				"revision/digest": "xyz",
-				"custom/key":     "val",
+				"custom/key":      "val",
 			},
 		}
 
 		digest.OmitAnnotations(src)
 
 		_, ok := src.GetAnnotation("spec/digest")
-		Then(t, "spec/digest 被移除",
+		Then(
+			t, "spec/digest 被移除",
 			Expect(ok, Be(cmp.False())),
 		)
 		_, ok = src.GetAnnotation("revision/id")
-		Then(t, "revision/id 被移除",
+		Then(
+			t, "revision/id 被移除",
 			Expect(ok, Be(cmp.False())),
 		)
 		_, ok = src.GetAnnotation("revision/digest")
-		Then(t, "revision/digest 被移除",
+		Then(
+			t, "revision/digest 被移除",
 			Expect(ok, Be(cmp.False())),
 		)
 	})
@@ -140,10 +150,12 @@ func TestOmitAnnotations(t *testing.T) {
 		digest.OmitAnnotations(src)
 
 		v, ok := src.GetAnnotation("custom/key")
-		Then(t, "custom/key 保留",
+		Then(
+			t, "custom/key 保留",
 			Expect(ok, Be(cmp.True())),
 		)
-		Then(t, "custom/key 值正确",
+		Then(
+			t, "custom/key 值正确",
 			Expect(v, Equal("val")),
 		)
 	})
@@ -159,15 +171,18 @@ func TestOmitAnnotations(t *testing.T) {
 		digest.OmitAnnotations(src, "my-key")
 
 		_, ok := src.GetAnnotation("my-key")
-		Then(t, "my-key 被移除",
+		Then(
+			t, "my-key 被移除",
 			Expect(ok, Be(cmp.False())),
 		)
 
 		v, ok := src.GetAnnotation("keep-me")
-		Then(t, "keep-me 保留",
+		Then(
+			t, "keep-me 保留",
 			Expect(ok, Be(cmp.True())),
 		)
-		Then(t, "keep-me 值正确",
+		Then(
+			t, "keep-me 值正确",
 			Expect(v, Equal("keep")),
 		)
 	})
@@ -181,7 +196,8 @@ func TestNewHasher(t *testing.T) {
 		err := h.Hash(map[string]any{"x": 1})
 		Must(t, func() error { return err })
 
-		Then(t, "Digest 非空",
+		Then(
+			t, "Digest 非空",
 			Expect(h.Digest() != "", Be(cmp.True())),
 		)
 	})
@@ -193,7 +209,8 @@ func TestNewHasher(t *testing.T) {
 		h2 := digest.NewHasher(ctx, nil)
 		Must(t, func() error { return h2.Hash(map[string]any{"x": 1}) })
 
-		Then(t, "摘要相同",
+		Then(
+			t, "摘要相同",
 			Expect(h1.Digest(), Equal(h2.Digest())),
 		)
 	})
@@ -214,7 +231,8 @@ func TestHasherSkipIfExists(t *testing.T) {
 	err := h.Hash(map[string]any{"different": "content"})
 	Must(t, func() error { return err })
 
-	Then(t, "跳过时摘要保持不变",
+	Then(
+		t, "跳过时摘要保持不变",
 		Expect(h.Digest(), Equal(BeforeHash)),
 	)
 }

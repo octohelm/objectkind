@@ -12,7 +12,9 @@ func (v *Digestible) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"提供摘要字段，嵌入结构体后可获取对象的内容摘要。",
+	}, true
 }
 
 // nolint:deadcode,unused

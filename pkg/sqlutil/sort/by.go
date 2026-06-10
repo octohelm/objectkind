@@ -2,39 +2,65 @@ package sort
 
 import (
 	"cmp"
+	"encoding"
 	"fmt"
 	"iter"
 	"strings"
 
+	"github.com/octohelm/enumeration/pkg/enumeration"
+	"github.com/octohelm/storage/pkg/sort"
 	"github.com/octohelm/storage/pkg/sqlbuilder"
 	"github.com/octohelm/storage/pkg/sqlbuilder/modelscoped"
 	"github.com/octohelm/storage/pkg/sqlpipe"
 )
 
+// 创建排序
+func With[M sqlpipe.Model, E enumeration.CanEnumValues](by *sort.By[E], mapper func(e E) Sorter[M]) *By[M] {
+	if by == nil {
+		return nil
+	}
+
+	sorter := mapper(by.Field)
+	if sorter == nil {
+		return nil
+	}
+
+	return &By[M]{
+		Order:      by.Order,
+		Sorter:     sorter,
+		underlying: by,
+	}
+}
+
 // DescSort 创建降序排序
 func DescSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
 	return &By[M]{
-		By:     fmt.Sprintf("%s!%s", s.Name(), "desc"),
+		Order:  sort.Desc,
 		Sorter: s,
+		raw:    fmt.Sprintf("%s!%s", s.Name(), sort.Desc),
 	}
 }
 
 // AscSort 创建升序排序
 func AscSort[M sqlpipe.Model](s Sorter[M]) *By[M] {
 	return &By[M]{
-		By:     fmt.Sprintf("%s!%s", s.Name(), "asc"),
+		Order:  sort.Asc,
 		Sorter: s,
+		raw:    fmt.Sprintf("%s!%s", s.Name(), sort.Asc),
 	}
 }
 
 // By 排序操作符，封装排序表达式与排序器实现
 type By[M sqlpipe.Model] struct {
-	By     string
+	Order  sort.Order
 	Sorter Sorter[M]
+
+	raw        string
+	underlying encoding.TextMarshaler
 }
 
 func (a *By[M]) IsZero() bool {
-	return a.Sorter == nil
+	return a == nil || a.Sorter == nil
 }
 
 func (a *By[M]) OperatorType() sqlpipe.OperatorType {
@@ -46,7 +72,7 @@ func (a *By[M]) Next(src sqlpipe.Source[M]) sqlpipe.Source[M] {
 		return src
 	}
 
-	if strings.HasSuffix(a.By, "!desc") {
+	if a.Order == sort.Desc {
 		return sqlpipe.Pipe(src, sqlpipe.SourceOperatorFunc[M](sqlpipe.OperatorSort, func(src sqlpipe.Source[M]) sqlpipe.Source[M] {
 			return a.Sorter.Sort(src, func(col sqlbuilder.Column) sqlpipe.SourceOperator[M] {
 				return sqlpipe.DescSort(
@@ -68,12 +94,23 @@ func (a *By[M]) Next(src sqlpipe.Source[M]) sqlpipe.Source[M] {
 }
 
 func (v *By[M]) MarshalText() ([]byte, error) {
-	return []byte(v.By), nil
+	if v == nil {
+		return nil, nil
+	}
+	if v.underlying != nil {
+		return v.underlying.MarshalText()
+	}
+	return []byte(v.raw), nil
+}
+
+func (v *By[M]) String() string {
+	raw, _ := v.MarshalText()
+	return string(raw)
 }
 
 func (s *By[M]) AsEnumValues(sorters iter.Seq[Sorter[M]]) (values []any) {
 	for sorter := range sorters {
-		for _, order := range []string{"asc", "desc"} {
+		for _, order := range []sort.Order{sort.Asc, sort.Desc} {
 			values = append(values, &enumValue{
 				value: fmt.Sprintf("%s!%s", sorter.Name(), order),
 				label: sorter.Label(),
@@ -92,8 +129,17 @@ func (by *By[M]) Unmarshal(text string, sorters iter.Seq[Sorter[M]]) error {
 
 	for sorter := range sorters {
 		if parts[0] == strings.ToLower(sorter.Name()) {
-			by.By = text
+			by.raw = text
+			by.Order = sort.Asc
 			by.Sorter = sorter
+
+			if len(parts) > 0 {
+				switch strings.ToLower(parts[1]) {
+				case "desc":
+					by.Order = sort.Desc
+				}
+			}
+
 			return nil
 		}
 	}

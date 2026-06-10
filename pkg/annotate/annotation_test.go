@@ -25,7 +25,8 @@ func TestAnnotation(t *testing.T) {
 					return AnnotationX.MarshalTo(annotations, x)
 				})
 
-				Then(t, "Annotations 映射正确",
+				Then(
+					t, "Annotations 映射正确",
 					Expect(annotations, Equal(annotate.Annotations{
 						"x.io/x": fmt.Sprintf("%v", x),
 					})),
@@ -37,7 +38,8 @@ func TestAnnotation(t *testing.T) {
 					return AnnotationX.UnmarshalFrom(annotations, &ret)
 				})
 
-				Then(t, "反序列化后的值相等",
+				Then(
+					t, "反序列化后的值相等",
 					Expect(ret == x, Be(cmp.True())),
 				)
 			})
@@ -53,7 +55,8 @@ func TestAnnotation(t *testing.T) {
 				return AnnotationX.MarshalTo(annotations, val)
 			})
 
-			Then(t, "序列化为 JSON 字符串",
+			Then(
+				t, "序列化为 JSON 字符串",
 				Expect(annotations, Equal(annotate.Annotations{
 					"x.io/x": `{"str":"xxx"}`,
 				})),
@@ -66,7 +69,8 @@ func TestAnnotation(t *testing.T) {
 				return AnnotationX.UnmarshalFrom(annotations, &decoded)
 			})
 
-			Then(t, "字段值恢复正确",
+			Then(
+				t, "字段值恢复正确",
 				Expect(decoded.Str, Equal("xxx")),
 			)
 		})
@@ -103,7 +107,8 @@ func TestAnnotations(t *testing.T) {
 	t.Run("GetAnnotation 返回存在的值", func(t *testing.T) {
 		a := annotate.Annotations{"key1": "value1"}
 		v, ok := a.GetAnnotation("key1")
-		Then(t, "返回值和 ok=true",
+		Then(
+			t, "返回值和 ok=true",
 			Expect(v, Equal("value1")),
 			Expect(ok, Be(cmp.True())),
 		)
@@ -112,7 +117,8 @@ func TestAnnotations(t *testing.T) {
 	t.Run("GetAnnotation 对不存在的键返回空和 false", func(t *testing.T) {
 		a := annotate.Annotations{}
 		v, ok := a.GetAnnotation("missing")
-		Then(t, "返回空字符串和 false",
+		Then(
+			t, "返回空字符串和 false",
 			Expect(v, Equal("")),
 			Expect(ok, Be(cmp.False())),
 		)

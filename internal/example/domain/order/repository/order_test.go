@@ -66,7 +66,8 @@ func TestOrderRepository(t *testing.T) {
 		})
 	})
 
-	Then(t, "订单及订单项正确",
+	Then(
+		t, "订单及订单项正确",
 		Expect(got.ID, Equal(order.ID)),
 		Expect(got.Spec.Items, Be(cmp.Len[[]*orderv1.OrderItem](1))),
 		Expect(got.Spec.Items[0].Spec.Sku.ID, Equal(productv1.SkuID(1001))),

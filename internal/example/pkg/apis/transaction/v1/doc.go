@@ -1,6 +1,5 @@
 // Package v1 定义交易相关的通用契约类型，例如货币单位与金额表达。
-//
-//go:generate go tool devtool gen .
+// +gengo:runtimedoc
 package v1
 
 import (

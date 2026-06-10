@@ -12,7 +12,9 @@ func (v *Codable[Code]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"通过编码标识的资源基础结构",
+	}, true
 }
 
 func (v *CodableObject[ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -28,7 +30,9 @@ func (v *CodableObject[ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"编码资源对象，包含完整元数据、数字 ID 与编码",
+	}, true
 }
 
 func (v *CodableReference[O, Code]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -44,7 +48,9 @@ func (v *CodableReference[O, Code]) RuntimeDoc(names ...string) ([]string, bool)
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"编码资源引用，包含类型信息与编码",
+	}, true
 }
 
 func (v *CodableRequest[O, Code]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -63,7 +69,9 @@ func (v *CodableRequest[O, Code]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"编码请求结构，包含类型、描述与编码",
+	}, true
 }
 
 func (v *CodableResponse[O, ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -79,7 +87,9 @@ func (v *CodableResponse[O, ID, Code]) RuntimeDoc(names ...string) ([]string, bo
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"编码响应结构，包含完整元数据、数字 ID 与编码",
+	}, true
 }
 
 func (v *Describer) RuntimeDoc(names ...string) ([]string, bool) {
@@ -102,7 +112,9 @@ func (v *Describer) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"资源名称、描述与注解信息",
+	}, true
 }
 
 func (v *GroupKind) RuntimeDoc(names ...string) ([]string, bool) {
@@ -117,7 +129,9 @@ func (v *GroupKind) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"由 Group 和 Kind 组成的类型标识",
+	}, true
 }
 
 func (v *GroupVersion) RuntimeDoc(names ...string) ([]string, bool) {
@@ -132,7 +146,9 @@ func (v *GroupVersion) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"由 Group 和 Version 组成的版本标识",
+	}, true
 }
 
 func (v *GroupVersionKind) RuntimeDoc(names ...string) ([]string, bool) {
@@ -149,7 +165,9 @@ func (v *GroupVersionKind) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"由 Group、Version 和 Kind 组成的完整资源标识",
+	}, true
 }
 
 func (v *Identifiable[ID]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -163,7 +181,9 @@ func (v *Identifiable[ID]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"通过数字 ID 标识的资源基础结构",
+	}, true
 }
 
 func (v *List[T]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -182,7 +202,9 @@ func (v *List[T]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"泛型资源列表，包含条目与总数",
+	}, true
 }
 
 func (v *Metadata) RuntimeDoc(names ...string) ([]string, bool) {
@@ -201,7 +223,9 @@ func (v *Metadata) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"资源元数据组合，包含类型、描述与操作时间戳",
+	}, true
 }
 
 func (v *Object[ID]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -217,7 +241,9 @@ func (v *Object[ID]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"标准资源对象，包含完整元数据与数字 ID",
+	}, true
 }
 
 func (v *ObjectReference[O, ID]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -233,7 +259,9 @@ func (v *ObjectReference[O, ID]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"资源引用，包含类型信息与数字 ID",
+	}, true
 }
 
 func (v *OperationTimestamps) RuntimeDoc(names ...string) ([]string, bool) {
@@ -252,7 +280,30 @@ func (v *OperationTimestamps) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"操作时间戳，记录资源的创建与修改时间",
+	}, true
+}
+
+func (v *Pager) RuntimeDoc(names ...string) ([]string, bool) {
+	if len(names) > 0 {
+		switch names[0] {
+		case "Offset":
+			return []string{
+				"分页偏移",
+			}, true
+		case "Limit":
+			return []string{
+				"分页数",
+			}, true
+
+		}
+
+		return nil, false
+	}
+	return []string{
+		"分页",
+	}, true
 }
 
 func (v *Request[O]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -268,7 +319,9 @@ func (v *Request[O]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"通用请求结构，包含类型与描述信息",
+	}, true
 }
 
 func (v *Response[O, ID]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -284,7 +337,9 @@ func (v *Response[O, ID]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"通用响应结构，包含完整元数据与数字 ID",
+	}, true
 }
 
 func (v *TypeMeta) RuntimeDoc(names ...string) ([]string, bool) {
@@ -303,7 +358,9 @@ func (v *TypeMeta) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"资源类型与版本元数据",
+	}, true
 }
 
 // nolint:deadcode,unused

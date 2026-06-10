@@ -63,7 +63,8 @@ func TestSkuRepository(t *testing.T) {
 				})
 			})
 
-			Then(t, "SKU 列表属性正确",
+			Then(
+				t, "SKU 列表属性正确",
 				Expect(skuList.Items, Be(cmp.Len[[]*productv1.Sku](1))),
 				Expect(skuList.Items[0].Product.ID, Equal(pdt.ID)),
 				Expect(skuList.Items[0].Product.Name, Equal(pdt.Name)),
@@ -77,12 +78,14 @@ func TestSkuRepository(t *testing.T) {
 				})
 			})
 
-			Then(t, "产品及其关联 SKU 校验",
+			Then(
+				t, "产品及其关联 SKU 校验",
 				Expect(productList.Items, Be(cmp.Len[[]*productv1.Product](1))),
 			)
 
 			pdtWithSkus := productList.Items[0]
-			Then(t, "SKU 列表符合预期",
+			Then(
+				t, "SKU 列表符合预期",
 				Expect(pdtWithSkus.Skus, Be(cmp.Len[[]*productv1.Sku](1))),
 				Expect(pdtWithSkus.Skus[0].Code, Equal(sku.Code)),
 			)

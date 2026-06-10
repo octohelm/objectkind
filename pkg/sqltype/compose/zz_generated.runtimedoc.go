@@ -12,11 +12,15 @@ func (v *Annotatable) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"可注解类型，组合 Annotations 并提供读写便利方法。",
+	}, true
 }
 
 func (*Annotations) RuntimeDoc(names ...string) ([]string, bool) {
-	return []string{}, true
+	return []string{
+		"键值对注解，实现 sql.Scanner 与 driver.Valuer，以 JSON 文本形式存储。",
+	}, true
 }
 
 func (v *CodableResource[ID, Code]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -34,7 +38,9 @@ func (v *CodableResource[ID, Code]) RuntimeDoc(names ...string) ([]string, bool)
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"带编码的泛型资源类型，在 Resource 基础上增加人类可读编码字段。",
+	}, true
 }
 
 func (v *CreationTimestamp) RuntimeDoc(names ...string) ([]string, bool) {
@@ -48,7 +54,9 @@ func (v *CreationTimestamp) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"创建时间追踪，提供 MarkCreatedAt 方法。",
+	}, true
 }
 
 func (v *DeletionTimestamp) RuntimeDoc(names ...string) ([]string, bool) {
@@ -62,7 +70,9 @@ func (v *DeletionTimestamp) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"删除时间追踪，实现 sqltype.WithSoftDelete 接口。",
+	}, true
 }
 
 func (v *ModificationTimestamp) RuntimeDoc(names ...string) ([]string, bool) {
@@ -76,7 +86,9 @@ func (v *ModificationTimestamp) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"修改时间追踪，提供 MarkModifiedAt 方法。",
+	}, true
 }
 
 func (v *Rel[ID]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -95,7 +107,9 @@ func (v *Rel[ID]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"泛型关联表类型，只包含自增主键与创建时间，用于多对多映射。",
+	}, true
 }
 
 func (v *Resource[ID]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -126,7 +140,9 @@ func (v *Resource[ID]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"通用资源类型，组合 ID、名称、描述与创建/更新时间字段。",
+	}, true
 }
 
 func (v *Revision[ID, Digest]) RuntimeDoc(names ...string) ([]string, bool) {
@@ -149,7 +165,9 @@ func (v *Revision[ID, Digest]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
+	return []string{
+		"泛型版本记录类型，用于记录每次变更的快照摘要。",
+	}, true
 }
 
 // nolint:deadcode,unused

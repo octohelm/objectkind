@@ -21,7 +21,7 @@ require (
 	github.com/octohelm/gengo v0.0.0-20260508104904-5ab1a7f587f6
 	github.com/octohelm/idx v0.0.0-20260429083346-2b418d5920c7
 	// +skill:storage-guideline
-	github.com/octohelm/storage v0.0.0-20260508105832-c9935f5fc805
+	github.com/octohelm/storage v0.0.0-20260610031311-3dcb61642ccc
 	// +skill:testing-guideline
 	github.com/octohelm/x v0.0.0-20260508104609-6b72a870e0d2
 )

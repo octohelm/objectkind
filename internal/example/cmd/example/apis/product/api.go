@@ -1,6 +1,4 @@
 // +gengo:operator:register=R
-//
-//go:generate go tool devtool gen .
 package product
 
 import (

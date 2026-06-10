@@ -82,7 +82,8 @@ func TestOrderService(t *testing.T) {
 		return orderSvc.CreateOrder(ctx, orderRequest)
 	})
 
-	Then(t, "创建订单后金额与商品明细正确",
+	Then(
+		t, "创建订单后金额与商品明细正确",
 		Expect(created.Status.State, Equal(orderv1.ORDER_STATE__CREATED)),
 		Expect(created.Status.TotalAmount, Equal(200)),
 		Expect(created.Spec.Items, Be(cmp.Len[[]*orderv1.OrderItem](1))),
@@ -94,7 +95,8 @@ func TestOrderService(t *testing.T) {
 		return orderSvc.PayOrder(ctx, created.ID, orderv1.OrderPaymentChannel("cashier"))
 	})
 
-	Then(t, "支付后状态变更为已支付",
+	Then(
+		t, "支付后状态变更为已支付",
 		Expect(paid.Status.State, Equal(orderv1.ORDER_STATE__PAID)),
 	)
 
@@ -102,7 +104,8 @@ func TestOrderService(t *testing.T) {
 		return orderSvc.CompleteOrder(ctx, created.ID)
 	})
 
-	Then(t, "完成后状态变更为已完成",
+	Then(
+		t, "完成后状态变更为已完成",
 		Expect(completed.Status.State, Equal(orderv1.ORDER_STATE__COMPLETED)),
 	)
 
@@ -124,7 +127,8 @@ func TestOrderService(t *testing.T) {
 		return orderSvc.CancelOrder(ctx, cancelCandidate.ID, orderv1.OrderCancelReason("user_request"))
 	})
 
-	Then(t, "取消后状态变更为已取消",
+	Then(
+		t, "取消后状态变更为已取消",
 		Expect(canceled.Status.State, Equal(orderv1.ORDER_STATE__CANCELED)),
 	)
 
@@ -136,7 +140,8 @@ func TestOrderService(t *testing.T) {
 			})
 		})
 
-		Then(t, "订单列表包含订单项与商品规格",
+		Then(
+			t, "订单列表包含订单项与商品规格",
 			Expect(list.Items, Be(cmp.Len[[]*orderv1.Order](2))),
 			Expect(list.Items[0].Spec.Items, Be(cmp.NotNil[[]*orderv1.OrderItem]())),
 			Expect(list.Items[0].Spec.Items[0].Spec.Sku, Be(cmp.NotNil[*productv1.Sku]())),
@@ -175,7 +180,8 @@ func TestOrderService(t *testing.T) {
 			return orderSvc.GetOrder(ctx, expiredCandidate.ID)
 		})
 
-		Then(t, "超时未支付订单被自动关闭",
+		Then(
+			t, "超时未支付订单被自动关闭",
 			Expect(closed, Equal(1)),
 			Expect(reloaded.Status.State, Equal(orderv1.ORDER_STATE__CANCELED)),
 		)

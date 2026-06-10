@@ -1,6 +1,4 @@
 // Package product 产品领域模型定义。
-//
-//go:generate go tool devtool gen .
 package product
 
 import (

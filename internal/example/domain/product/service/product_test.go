@@ -62,7 +62,8 @@ func TestProductService(t *testing.T) {
 			})
 		})
 
-		Then(t, "商品及规格正确",
+		Then(
+			t, "商品及规格正确",
 			Expect(got.ID, Equal(pdt.ID)),
 			Expect(got.Skus, Be(cmp.Len[[]*productv1.Sku](1))),
 			Expect(got.Skus[0].Code, Equal(sku.Code)),
@@ -76,7 +77,8 @@ func TestProductService(t *testing.T) {
 			})
 		})
 
-		Then(t, "规格及所属商品正确",
+		Then(
+			t, "规格及所属商品正确",
 			Expect(got.ID, Equal(sku.ID)),
 			Expect(got.Product.ID, Equal(pdt.ID)),
 		)
@@ -94,7 +96,8 @@ func TestProductService(t *testing.T) {
 			return svc.UnpublishProduct(ctx, created.ID)
 		})
 
-		Then(t, "下架后状态正确",
+		Then(
+			t, "下架后状态正确",
 			Expect(unpublished.Status.State, Equal(productv1.PRODUCT_STATE__OFF_SALE)),
 		)
 
@@ -102,7 +105,8 @@ func TestProductService(t *testing.T) {
 			return svc.PublishProduct(ctx, created.ID)
 		})
 
-		Then(t, "重新上架后状态正确",
+		Then(
+			t, "重新上架后状态正确",
 			Expect(published.Status.State, Equal(productv1.PRODUCT_STATE__ON_SALE)),
 		)
 
@@ -122,7 +126,8 @@ func TestProductService(t *testing.T) {
 			})
 		})
 
-		Then(t, "商品规格列表正确",
+		Then(
+			t, "商品规格列表正确",
 			Expect(list.Items, Be(cmp.Len[[]*productv1.Sku](1))),
 			Expect(list.Items[0].ID, Equal(createdSku.ID)),
 		)
@@ -139,7 +144,8 @@ func TestProductService(t *testing.T) {
 			ID: filter.Eq(created.ID),
 		})
 
-		Then(t, "删除后商品不存在",
+		Then(
+			t, "删除后商品不存在",
 			Expect(err, ErrorAsType[*productv1.ErrProductNotFound]()),
 		)
 	})

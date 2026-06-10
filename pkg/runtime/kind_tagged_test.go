@@ -19,7 +19,8 @@ func TestKindTagged(t *testing.T) {
 	u.SetUnderlying(runtime.New[TypeA]())
 
 	t.Run("Underlying 类型校验", func(t *testing.T) {
-		Then(t, "Underlying 应该是 TypeA 指针",
+		Then(
+			t, "Underlying 应该是 TypeA 指针",
 			Expect(u.Underlying(), Equal(any(runtime.New[TypeA]()))),
 		)
 	})
@@ -29,7 +30,8 @@ func TestKindTagged(t *testing.T) {
 			return json.Marshal(u)
 		})
 
-		Then(t, "序列化结果符合预期",
+		Then(
+			t, "序列化结果符合预期",
 			Expect(string(raw), Equal(`{"kind":"TypeA"}`)),
 		)
 
@@ -39,7 +41,8 @@ func TestKindTagged(t *testing.T) {
 				return json.Unmarshal(raw, u2)
 			})
 
-			Then(t, "反序列化后的 Underlying 保持一致",
+			Then(
+				t, "反序列化后的 Underlying 保持一致",
 				Expect(u2.Underlying(), Equal(any(runtime.New[TypeA]()))),
 			)
 		})
@@ -47,12 +50,14 @@ func TestKindTagged(t *testing.T) {
 
 	t.Run("IsZero 与非零值", func(t *testing.T) {
 		u := &Union{}
-		Then(t, "空 Union IsZero 返回 true",
+		Then(
+			t, "空 Union IsZero 返回 true",
 			Expect(u.IsZero(), Equal(true)),
 		)
 
 		u.SetUnderlying(runtime.New[TypeA]())
-		Then(t, "有 Underlying 后 IsZero 返回 false",
+		Then(
+			t, "有 Underlying 后 IsZero 返回 false",
 			Expect(u.IsZero(), Equal(false)),
 		)
 	})

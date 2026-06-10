@@ -1,6 +1,4 @@
 // Package filter 产品查询过滤条件。
-//
-//go:generate go tool devtool gen .
 package filter
 
 import (

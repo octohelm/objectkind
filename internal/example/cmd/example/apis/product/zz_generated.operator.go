@@ -17,10 +17,6 @@ func (CreateProduct) ResponseContent() any {
 	return new(productv1.Product)
 }
 
-func (CreateProduct) ResponseData() *productv1.Product {
-	return new(productv1.Product)
-}
-
 func (CreateProduct) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -36,10 +32,6 @@ func init() {
 }
 
 func (CreateSkuByProductID) ResponseContent() any {
-	return new(productv1.Sku)
-}
-
-func (CreateSkuByProductID) ResponseData() *productv1.Sku {
 	return new(productv1.Sku)
 }
 
@@ -66,10 +58,6 @@ func (DeleteProductByID) ResponseContent() any {
 	return new(courierhttp.NoContent)
 }
 
-func (DeleteProductByID) ResponseData() *courierhttp.NoContent {
-	return new(courierhttp.NoContent)
-}
-
 func (DeleteProductByID) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -85,10 +73,6 @@ func init() {
 }
 
 func (DeleteSkuByID) ResponseContent() any {
-	return new(courierhttp.NoContent)
-}
-
-func (DeleteSkuByID) ResponseData() *courierhttp.NoContent {
 	return new(courierhttp.NoContent)
 }
 
@@ -110,10 +94,6 @@ func (GetProductByID) ResponseContent() any {
 	return new(productv1.Product)
 }
 
-func (GetProductByID) ResponseData() *productv1.Product {
-	return new(productv1.Product)
-}
-
 func (GetProductByID) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -129,10 +109,6 @@ func init() {
 }
 
 func (GetSkuByID) ResponseContent() any {
-	return new(productv1.Sku)
-}
-
-func (GetSkuByID) ResponseData() *productv1.Sku {
 	return new(productv1.Sku)
 }
 
@@ -154,19 +130,11 @@ func (ListProduct) ResponseContent() any {
 	return new(productv1.ProductList)
 }
 
-func (ListProduct) ResponseData() *productv1.ProductList {
-	return new(productv1.ProductList)
-}
-
 func init() {
 	R.Register(courier.NewRouter(&ListSkuByProductID{}))
 }
 
 func (ListSkuByProductID) ResponseContent() any {
-	return new(productv1.SkuList)
-}
-
-func (ListSkuByProductID) ResponseData() *productv1.SkuList {
 	return new(productv1.SkuList)
 }
 
@@ -185,10 +153,6 @@ func init() {
 }
 
 func (PublishProductByID) ResponseContent() any {
-	return new(productv1.Product)
-}
-
-func (PublishProductByID) ResponseData() *productv1.Product {
 	return new(productv1.Product)
 }
 
@@ -215,10 +179,6 @@ func (UnpublishProductByID) ResponseContent() any {
 	return new(productv1.Product)
 }
 
-func (UnpublishProductByID) ResponseData() *productv1.Product {
-	return new(productv1.Product)
-}
-
 func (UnpublishProductByID) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -242,10 +202,6 @@ func (UpdateProductByID) ResponseContent() any {
 	return new(productv1.Product)
 }
 
-func (UpdateProductByID) ResponseData() *productv1.Product {
-	return new(productv1.Product)
-}
-
 func (UpdateProductByID) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -261,10 +217,6 @@ func init() {
 }
 
 func (UpdateSkuByID) ResponseContent() any {
-	return new(productv1.Sku)
-}
-
-func (UpdateSkuByID) ResponseData() *productv1.Sku {
 	return new(productv1.Sku)
 }
 

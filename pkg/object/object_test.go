@@ -89,14 +89,14 @@ type testObj struct {
 	updatedAt   object.Timestamp
 }
 
-func (t testObj) GetKind() string                         { return t.kind }
-func (t testObj) GetName() string                         { return t.name }
-func (t testObj) GetDescription() string                  { return t.description }
-func (t testObj) GetAnnotations() map[string]string       { return t.annotations }
-func (t testObj) GetAnnotation(k string) (string, bool)   { v, ok := t.annotations[k]; return v, ok }
-func (t testObj) GetCreationTimestamp() object.Timestamp     { return t.createdAt }
-func (t testObj) SetCreationTimestamp(ts object.Timestamp)   { t.createdAt = ts }
-func (t testObj) GetModificationTimestamp() object.Timestamp { return t.updatedAt }
+func (t testObj) GetKind() string                              { return t.kind }
+func (t testObj) GetName() string                              { return t.name }
+func (t testObj) GetDescription() string                       { return t.description }
+func (t testObj) GetAnnotations() map[string]string            { return t.annotations }
+func (t testObj) GetAnnotation(k string) (string, bool)        { v, ok := t.annotations[k]; return v, ok }
+func (t testObj) GetCreationTimestamp() object.Timestamp       { return t.createdAt }
+func (t testObj) SetCreationTimestamp(ts object.Timestamp)     { t.createdAt = ts }
+func (t testObj) GetModificationTimestamp() object.Timestamp   { return t.updatedAt }
 func (t testObj) SetModificationTimestamp(ts object.Timestamp) { t.updatedAt = ts }
 
 func TestInterfaces(t *testing.T) {

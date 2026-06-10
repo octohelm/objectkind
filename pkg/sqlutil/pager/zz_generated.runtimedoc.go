@@ -17,26 +17,9 @@ func (v *Pager[M]) RuntimeDoc(names ...string) ([]string, bool) {
 
 		return nil, false
 	}
-	return []string{}, true
-}
-
-func (v *RawPager) RuntimeDoc(names ...string) ([]string, bool) {
-	if len(names) > 0 {
-		switch names[0] {
-		case "Offset":
-			return []string{
-				"分页偏移",
-			}, true
-		case "Limit":
-			return []string{
-				"分页条数",
-			}, true
-
-		}
-
-		return nil, false
-	}
-	return []string{}, true
+	return []string{
+		"分页操作符，包含偏移量和条数限制",
+	}, true
 }
 
 // nolint:deadcode,unused

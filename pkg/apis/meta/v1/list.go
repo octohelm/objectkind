@@ -11,3 +11,11 @@ type List[T any] struct {
 func (v *List[T]) Add(item *T) {
 	v.Items = append(v.Items, item)
 }
+
+// 分页
+type Pager struct {
+	// 分页偏移
+	Offset int64 `name:"offset,omitzero" in:"query"`
+	// 分页数
+	Limit int64 `name:"limit,omitzero"  in:"query" validate:"@int[-1,50] = 10"`
+}

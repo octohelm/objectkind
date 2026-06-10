@@ -100,8 +100,8 @@ github.com/octohelm/gengo v0.0.0-20260508104904-5ab1a7f587f6 h1:d+2zjlYpwiXDfvy7
 github.com/octohelm/gengo v0.0.0-20260508104904-5ab1a7f587f6/go.mod h1:Nq2HlC7xfgihnmOZ0nYz34aN+3sTRR8Tr5WlZcr5BME=
 github.com/octohelm/idx v0.0.0-20260429083346-2b418d5920c7 h1:OaLjhyBbJUxTftd5Y+uF68VftxkYp252Z7LbIrkNTEk=
 github.com/octohelm/idx v0.0.0-20260429083346-2b418d5920c7/go.mod h1:e8mYfhdxxhFP3tWsXWd+XP4fVP2nCno4mhie4daAzdo=
-github.com/octohelm/storage v0.0.0-20260508105832-c9935f5fc805 h1:5uVqSjEcierdc4sY2pJuwSpHv6O8pN/bcgkTQXw273I=
-github.com/octohelm/storage v0.0.0-20260508105832-c9935f5fc805/go.mod h1:HCbNagQIIUDILOmF2DLy19rSC2z50Wv4CcXMa7HxpO4=
+github.com/octohelm/storage v0.0.0-20260610031311-3dcb61642ccc h1:TII4BGEG3qe2FBYVKQGzlmdKwYtJ0mqXjkXEOFqHj/s=
+github.com/octohelm/storage v0.0.0-20260610031311-3dcb61642ccc/go.mod h1:HCbNagQIIUDILOmF2DLy19rSC2z50Wv4CcXMa7HxpO4=
 github.com/octohelm/x v0.0.0-20260508104609-6b72a870e0d2 h1:LxqawVVW/F3HhhYG/ZkIsNTmmscEY6GlvBiqpmCf8pQ=
 github.com/octohelm/x v0.0.0-20260508104609-6b72a870e0d2/go.mod h1:9S/Ui6UzHySbZlBJbmFN8Aojiy3mcD05F4rdAaJIXN0=
 github.com/opencontainers/go-digest v1.0.0 h1:apOUWs51W5PlhuyGyz9FCeeBIOUDA/6nW8Oi/yOhh5U=

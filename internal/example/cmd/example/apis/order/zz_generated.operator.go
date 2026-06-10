@@ -6,7 +6,6 @@ import (
 	statuserror "github.com/octohelm/courier/pkg/statuserror"
 
 	orderv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/order/v1"
-	productv1 "github.com/octohelm/objectkind/internal/example/pkg/apis/product/v1"
 )
 
 func init() {
@@ -14,10 +13,6 @@ func init() {
 }
 
 func (CancelOrderByID) ResponseContent() any {
-	return new(orderv1.Order)
-}
-
-func (CancelOrderByID) ResponseData() *orderv1.Order {
 	return new(orderv1.Order)
 }
 
@@ -33,11 +28,6 @@ func (CancelOrderByID) ResponseErrors() []error {
 			Message: "订单当前状态不允许执行该操作",
 			Status:  409,
 		},
-		&statuserror.Descriptor{
-			Code:    statuserror.ErrCodeFor[productv1.ErrSkuNotFound](),
-			Message: "商品规格不存在",
-			Status:  404,
-		},
 	}
 }
 
@@ -46,10 +36,6 @@ func init() {
 }
 
 func (CompleteOrderByID) ResponseContent() any {
-	return new(orderv1.Order)
-}
-
-func (CompleteOrderByID) ResponseData() *orderv1.Order {
 	return new(orderv1.Order)
 }
 
@@ -65,11 +51,6 @@ func (CompleteOrderByID) ResponseErrors() []error {
 			Message: "订单当前状态不允许执行该操作",
 			Status:  409,
 		},
-		&statuserror.Descriptor{
-			Code:    statuserror.ErrCodeFor[productv1.ErrSkuNotFound](),
-			Message: "商品规格不存在",
-			Status:  404,
-		},
 	}
 }
 
@@ -81,20 +62,11 @@ func (CreateOrder) ResponseContent() any {
 	return new(orderv1.Order)
 }
 
-func (CreateOrder) ResponseData() *orderv1.Order {
-	return new(orderv1.Order)
-}
-
 func (CreateOrder) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
 			Code:    statuserror.ErrCodeFor[orderv1.ErrOrderNotFound](),
 			Message: "订单不存在",
-			Status:  404,
-		},
-		&statuserror.Descriptor{
-			Code:    statuserror.ErrCodeFor[productv1.ErrSkuNotFound](),
-			Message: "商品规格不存在",
 			Status:  404,
 		},
 	}
@@ -108,20 +80,11 @@ func (GetOrderByID) ResponseContent() any {
 	return new(orderv1.Order)
 }
 
-func (GetOrderByID) ResponseData() *orderv1.Order {
-	return new(orderv1.Order)
-}
-
 func (GetOrderByID) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
 			Code:    statuserror.ErrCodeFor[orderv1.ErrOrderNotFound](),
 			Message: "订单不存在",
-			Status:  404,
-		},
-		&statuserror.Descriptor{
-			Code:    statuserror.ErrCodeFor[productv1.ErrSkuNotFound](),
-			Message: "商品规格不存在",
 			Status:  404,
 		},
 	}
@@ -135,29 +98,11 @@ func (ListOrder) ResponseContent() any {
 	return new(orderv1.OrderList)
 }
 
-func (ListOrder) ResponseData() *orderv1.OrderList {
-	return new(orderv1.OrderList)
-}
-
-func (ListOrder) ResponseErrors() []error {
-	return []error{
-		&statuserror.Descriptor{
-			Code:    statuserror.ErrCodeFor[productv1.ErrSkuNotFound](),
-			Message: "商品规格不存在",
-			Status:  404,
-		},
-	}
-}
-
 func init() {
 	R.Register(courier.NewRouter(&PayOrderByID{}))
 }
 
 func (PayOrderByID) ResponseContent() any {
-	return new(orderv1.Order)
-}
-
-func (PayOrderByID) ResponseData() *orderv1.Order {
 	return new(orderv1.Order)
 }
 
@@ -172,11 +117,6 @@ func (PayOrderByID) ResponseErrors() []error {
 			Code:    statuserror.ErrCodeFor[orderv1.ErrOrderStateConflict](),
 			Message: "订单当前状态不允许执行该操作",
 			Status:  409,
-		},
-		&statuserror.Descriptor{
-			Code:    statuserror.ErrCodeFor[productv1.ErrSkuNotFound](),
-			Message: "商品规格不存在",
-			Status:  404,
 		},
 	}
 }

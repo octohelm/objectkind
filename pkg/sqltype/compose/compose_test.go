@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-json-experiment/json"
+
 	"github.com/octohelm/x/cmp"
 	. "github.com/octohelm/x/testing/v2"
 
@@ -17,19 +18,24 @@ func TestResource(t *testing.T) {
 	t.Run("初始化 Resource[uint64] 为零值", func(t *testing.T) {
 		r := &compose.Resource[uint64]{}
 
-		Then(t, "ID 应为 0",
+		Then(
+			t, "ID 应为 0",
 			Expect(r.GetID(), Equal(uint64(0))),
 		)
-		Then(t, "Name 应为空",
+		Then(
+			t, "Name 应为空",
 			Expect(r.GetName(), Equal("")),
 		)
-		Then(t, "Description 应为空",
+		Then(
+			t, "Description 应为空",
 			Expect(r.GetDescription(), Equal("")),
 		)
-		Then(t, "CreatedAt 为零值",
+		Then(
+			t, "CreatedAt 为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.True())),
 		)
-		Then(t, "UpdatedAt 为零值",
+		Then(
+			t, "UpdatedAt 为零值",
 			Expect(r.GetModificationTimestamp().IsZero(), Be(cmp.True())),
 		)
 	})
@@ -37,13 +43,15 @@ func TestResource(t *testing.T) {
 	t.Run("MarkCreatedAt 仅在 CreatedAt 为零值时设置", func(t *testing.T) {
 		r := &compose.Resource[uint64]{}
 
-		Then(t, "首次 MarkCreatedAt 前 CreatedAt 为零值",
+		Then(
+			t, "首次 MarkCreatedAt 前 CreatedAt 为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.True())),
 		)
 
 		r.MarkCreatedAt()
 
-		Then(t, "首次 MarkCreatedAt 后 CreatedAt 不再为零值",
+		Then(
+			t, "首次 MarkCreatedAt 后 CreatedAt 不再为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 
@@ -51,7 +59,8 @@ func TestResource(t *testing.T) {
 		time.Sleep(1 * time.Millisecond)
 		r.MarkCreatedAt()
 
-		Then(t, "再次 MarkCreatedAt 后 CreatedAt 不变",
+		Then(
+			t, "再次 MarkCreatedAt 后 CreatedAt 不变",
 			Expect(r.GetCreationTimestamp(), Equal(firstCreatedAt)),
 		)
 	})
@@ -62,13 +71,16 @@ func TestResource(t *testing.T) {
 
 			r.MarkModifiedAt()
 
-			Then(t, "UpdatedAt 不再为零值",
+			Then(
+				t, "UpdatedAt 不再为零值",
 				Expect(r.GetModificationTimestamp().IsZero(), Be(cmp.False())),
 			)
-			Then(t, "CreatedAt 不再为零值",
+			Then(
+				t, "CreatedAt 不再为零值",
 				Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 			)
-			Then(t, "CreatedAt 等于 UpdatedAt",
+			Then(
+				t, "CreatedAt 等于 UpdatedAt",
 				Expect(r.GetCreationTimestamp(), Equal(r.GetModificationTimestamp())),
 			)
 		})
@@ -81,10 +93,12 @@ func TestResource(t *testing.T) {
 			time.Sleep(1 * time.Millisecond)
 			r.MarkModifiedAt()
 
-			Then(t, "CreatedAt 保持不变",
+			Then(
+				t, "CreatedAt 保持不变",
 				Expect(r.GetCreationTimestamp(), Equal(createdAt)),
 			)
-			Then(t, "UpdatedAt 不再为零值",
+			Then(
+				t, "UpdatedAt 不再为零值",
 				Expect(r.GetModificationTimestamp().IsZero(), Be(cmp.False())),
 			)
 		})
@@ -97,7 +111,8 @@ func TestResource(t *testing.T) {
 			time.Sleep(1 * time.Millisecond)
 			r.MarkModifiedAt()
 
-			Then(t, "UpdatedAt 保持不变",
+			Then(
+				t, "UpdatedAt 保持不变",
 				Expect(r.GetModificationTimestamp(), Equal(updatedAt)),
 			)
 		})
@@ -108,13 +123,16 @@ func TestResource(t *testing.T) {
 
 		r.ForceMarkModifiedAt()
 
-		Then(t, "UpdatedAt 不再为零值",
+		Then(
+			t, "UpdatedAt 不再为零值",
 			Expect(r.GetModificationTimestamp().IsZero(), Be(cmp.False())),
 		)
-		Then(t, "CreatedAt 不再为零值",
+		Then(
+			t, "CreatedAt 不再为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
-		Then(t, "CreatedAt 等于 UpdatedAt",
+		Then(
+			t, "CreatedAt 等于 UpdatedAt",
 			Expect(r.GetCreationTimestamp(), Equal(r.GetModificationTimestamp())),
 		)
 
@@ -122,10 +140,12 @@ func TestResource(t *testing.T) {
 		time.Sleep(1 * time.Millisecond)
 		r.ForceMarkModifiedAt()
 
-		Then(t, "再次调用后 UpdatedAt 已更新",
+		Then(
+			t, "再次调用后 UpdatedAt 已更新",
 			Expect(r.GetModificationTimestamp() != prev, Be(cmp.True())),
 		)
-		Then(t, "CreatedAt 也被更新为新的时间",
+		Then(
+			t, "CreatedAt 也被更新为新的时间",
 			Expect(r.GetCreationTimestamp(), Equal(r.GetModificationTimestamp())),
 		)
 	})
@@ -133,7 +153,8 @@ func TestResource(t *testing.T) {
 	t.Run("GetName / SetName 回转", func(t *testing.T) {
 		r := &compose.Resource[uint64]{}
 		r.SetName("test-name")
-		Then(t, "Name 应等于设置值",
+		Then(
+			t, "Name 应等于设置值",
 			Expect(r.GetName(), Equal("test-name")),
 		)
 	})
@@ -141,7 +162,8 @@ func TestResource(t *testing.T) {
 	t.Run("GetDescription / SetDescription 回转", func(t *testing.T) {
 		r := &compose.Resource[uint64]{}
 		r.SetDescription("test-desc")
-		Then(t, "Description 应等于设置值",
+		Then(
+			t, "Description 应等于设置值",
 			Expect(r.GetDescription(), Equal("test-desc")),
 		)
 	})
@@ -149,7 +171,8 @@ func TestResource(t *testing.T) {
 	t.Run("GetID / SetID 回转", func(t *testing.T) {
 		r := &compose.Resource[uint64]{}
 		r.SetID(42)
-		Then(t, "ID 应等于设置值",
+		Then(
+			t, "ID 应等于设置值",
 			Expect(r.GetID(), Equal(uint64(42))),
 		)
 	})
@@ -157,7 +180,8 @@ func TestResource(t *testing.T) {
 	t.Run("GetAsRefID 返回 RefID", func(t *testing.T) {
 		r := &compose.Resource[uint64]{}
 		r.SetID(100)
-		Then(t, "GetAsRefID 应返回对应 RefID",
+		Then(
+			t, "GetAsRefID 应返回对应 RefID",
 			Expect(r.GetAsRefID(), Equal(object.RefID(100))),
 		)
 	})
@@ -167,12 +191,14 @@ func TestResource(t *testing.T) {
 		ts := object.Timestamp(time.Now())
 
 		r.SetCreationTimestamp(ts)
-		Then(t, "SetCreationTimestamp 后 GetCreationTimestamp 应返回设置值",
+		Then(
+			t, "SetCreationTimestamp 后 GetCreationTimestamp 应返回设置值",
 			Expect(r.GetCreationTimestamp(), Equal(ts)),
 		)
 
 		r.SetModificationTimestamp(ts)
-		Then(t, "SetModificationTimestamp 后 GetModificationTimestamp 应返回设置值",
+		Then(
+			t, "SetModificationTimestamp 后 GetModificationTimestamp 应返回设置值",
 			Expect(r.GetModificationTimestamp(), Equal(ts)),
 		)
 	})
@@ -182,7 +208,8 @@ func TestCodableResource(t *testing.T) {
 	t.Run("GetCode / SetCode 回转", func(t *testing.T) {
 		r := &compose.CodableResource[uint64, string]{}
 		r.SetCode("my-code")
-		Then(t, "Code 应等于设置值",
+		Then(
+			t, "Code 应等于设置值",
 			Expect(r.GetCode(), Equal("my-code")),
 		)
 	})
@@ -190,7 +217,8 @@ func TestCodableResource(t *testing.T) {
 	t.Run("GetAsRefCode 返回 RefCode", func(t *testing.T) {
 		r := &compose.CodableResource[uint64, string]{}
 		r.SetCode("my-code")
-		Then(t, "GetAsRefCode 应返回对应 RefCode",
+		Then(
+			t, "GetAsRefCode 应返回对应 RefCode",
 			Expect(r.GetAsRefCode(), Equal(object.RefCode("my-code"))),
 		)
 	})
@@ -198,11 +226,13 @@ func TestCodableResource(t *testing.T) {
 	t.Run("内嵌 Resource 的方法仍可用", func(t *testing.T) {
 		r := &compose.CodableResource[uint64, string]{}
 		r.SetName("embedded-name")
-		Then(t, "内嵌 Resource 的 GetName 仍可用",
+		Then(
+			t, "内嵌 Resource 的 GetName 仍可用",
 			Expect(r.GetName(), Equal("embedded-name")),
 		)
 		r.SetID(7)
-		Then(t, "内嵌 Resource 的 GetID 仍可用",
+		Then(
+			t, "内嵌 Resource 的 GetID 仍可用",
 			Expect(r.GetID(), Equal(uint64(7))),
 		)
 	})
@@ -211,7 +241,8 @@ func TestCodableResource(t *testing.T) {
 func TestRel(t *testing.T) {
 	t.Run("GetID 返回 ID", func(t *testing.T) {
 		r := &compose.Rel[uint64]{ID: 99}
-		Then(t, "GetID 应返回 99",
+		Then(
+			t, "GetID 应返回 99",
 			Expect(r.GetID(), Equal(uint64(99))),
 		)
 	})
@@ -219,13 +250,15 @@ func TestRel(t *testing.T) {
 	t.Run("MarkModifiedAt 在 CreatedAt 为零值时设置", func(t *testing.T) {
 		r := &compose.Rel[uint64]{}
 
-		Then(t, "MarkModifiedAt 前 CreatedAt 为零值",
+		Then(
+			t, "MarkModifiedAt 前 CreatedAt 为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.True())),
 		)
 
 		r.MarkModifiedAt()
 
-		Then(t, "MarkModifiedAt 后 CreatedAt 不再为零值",
+		Then(
+			t, "MarkModifiedAt 后 CreatedAt 不再为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 	})
@@ -238,7 +271,8 @@ func TestRel(t *testing.T) {
 		time.Sleep(1 * time.Millisecond)
 		r.MarkModifiedAt()
 
-		Then(t, "CreatedAt 保持不变",
+		Then(
+			t, "CreatedAt 保持不变",
 			Expect(r.GetCreationTimestamp(), Equal(createdAt)),
 		)
 	})
@@ -248,18 +282,21 @@ func TestRel(t *testing.T) {
 		ts := object.Timestamp(time.Now())
 
 		r.SetCreationTimestamp(ts)
-		Then(t, "SetCreationTimestamp 触发 MarkModifiedAt 设置时间",
+		Then(
+			t, "SetCreationTimestamp 触发 MarkModifiedAt 设置时间",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 
 		thenTS := r.GetCreationTimestamp()
 
-		Then(t, "GetModificationTimestamp 返回 CreatedAt",
+		Then(
+			t, "GetModificationTimestamp 返回 CreatedAt",
 			Expect(r.GetModificationTimestamp(), Equal(thenTS)),
 		)
 
 		r.SetModificationTimestamp(ts)
-		Then(t, "SetModificationTimestamp 也触发 MarkModifiedAt",
+		Then(
+			t, "SetModificationTimestamp 也触发 MarkModifiedAt",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 	})
@@ -269,7 +306,8 @@ func TestRevision(t *testing.T) {
 	t.Run("GetID / SetID 回转", func(t *testing.T) {
 		r := &compose.Revision[uint64, string]{}
 		r.SetID(55)
-		Then(t, "GetID 应返回 55",
+		Then(
+			t, "GetID 应返回 55",
 			Expect(r.GetID(), Equal(uint64(55))),
 		)
 	})
@@ -277,13 +315,15 @@ func TestRevision(t *testing.T) {
 	t.Run("MarkModifiedAt 在 CreatedAt 为零值时设置", func(t *testing.T) {
 		r := &compose.Revision[uint64, string]{}
 
-		Then(t, "MarkModifiedAt 前 CreatedAt 为零值",
+		Then(
+			t, "MarkModifiedAt 前 CreatedAt 为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.True())),
 		)
 
 		r.MarkModifiedAt()
 
-		Then(t, "MarkModifiedAt 后 CreatedAt 不再为零值",
+		Then(
+			t, "MarkModifiedAt 后 CreatedAt 不再为零值",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 	})
@@ -293,18 +333,21 @@ func TestRevision(t *testing.T) {
 		ts := object.Timestamp(time.Now())
 
 		r.SetCreationTimestamp(ts)
-		Then(t, "SetCreationTimestamp 触发 MarkModifiedAt",
+		Then(
+			t, "SetCreationTimestamp 触发 MarkModifiedAt",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 
 		thenTS := r.GetCreationTimestamp()
 
-		Then(t, "GetModificationTimestamp 返回 CreatedAt",
+		Then(
+			t, "GetModificationTimestamp 返回 CreatedAt",
 			Expect(r.GetModificationTimestamp(), Equal(thenTS)),
 		)
 
 		r.SetModificationTimestamp(ts)
-		Then(t, "SetModificationTimestamp 也触发 MarkModifiedAt",
+		Then(
+			t, "SetModificationTimestamp 也触发 MarkModifiedAt",
 			Expect(r.GetCreationTimestamp().IsZero(), Be(cmp.False())),
 		)
 	})
@@ -314,13 +357,15 @@ func TestCreationTimestamp(t *testing.T) {
 	t.Run("MarkCreatedAt 在 CreatedAt 为零值时设置", func(t *testing.T) {
 		ct := &compose.CreationTimestamp{}
 
-		Then(t, "MarkCreatedAt 前 CreatedAt 为零值",
+		Then(
+			t, "MarkCreatedAt 前 CreatedAt 为零值",
 			Expect(ct.CreatedAt.IsZero(), Be(cmp.True())),
 		)
 
 		ct.MarkCreatedAt()
 
-		Then(t, "MarkCreatedAt 后 CreatedAt 不再为零值",
+		Then(
+			t, "MarkCreatedAt 后 CreatedAt 不再为零值",
 			Expect(ct.CreatedAt.IsZero(), Be(cmp.False())),
 		)
 	})
@@ -333,7 +378,8 @@ func TestCreationTimestamp(t *testing.T) {
 		time.Sleep(1 * time.Millisecond)
 		ct.MarkCreatedAt()
 
-		Then(t, "CreatedAt 保持不变",
+		Then(
+			t, "CreatedAt 保持不变",
 			Expect(ct.CreatedAt, Equal(createdAt)),
 		)
 	})
@@ -343,13 +389,15 @@ func TestModificationTimestamp(t *testing.T) {
 	t.Run("MarkModifiedAt 在 UpdatedAt 为零值时设置", func(t *testing.T) {
 		mt := &compose.ModificationTimestamp{}
 
-		Then(t, "MarkModifiedAt 前 UpdatedAt 为零值",
+		Then(
+			t, "MarkModifiedAt 前 UpdatedAt 为零值",
 			Expect(mt.UpdatedAt.IsZero(), Be(cmp.True())),
 		)
 
 		mt.MarkModifiedAt()
 
-		Then(t, "MarkModifiedAt 后 UpdatedAt 不再为零值",
+		Then(
+			t, "MarkModifiedAt 后 UpdatedAt 不再为零值",
 			Expect(mt.UpdatedAt.IsZero(), Be(cmp.False())),
 		)
 	})
@@ -362,7 +410,8 @@ func TestModificationTimestamp(t *testing.T) {
 		time.Sleep(1 * time.Millisecond)
 		mt.MarkModifiedAt()
 
-		Then(t, "UpdatedAt 保持不变",
+		Then(
+			t, "UpdatedAt 保持不变",
 			Expect(mt.UpdatedAt, Equal(updatedAt)),
 		)
 	})
@@ -373,24 +422,26 @@ func TestDeletionTimestamp(t *testing.T) {
 		dt := compose.DeletionTimestamp{}
 		field, zeroVal := dt.SoftDeleteFieldAndZeroValue()
 
-		Then(t, "字段名应为 DeletedAt",
+		Then(
+			t, "字段名应为 DeletedAt",
 			Expect(field, Equal("DeletedAt")),
 		)
 		Then(t, "零值应为 int64(0)",
-			Expect(zeroVal, Equal(driver.Value(int64(0))),
-			))
+			Expect(zeroVal, Equal(driver.Value(int64(0)))))
 	})
 
 	t.Run("MarkDeletedAt 设置 DeletedAt", func(t *testing.T) {
 		dt := &compose.DeletionTimestamp{}
 
-		Then(t, "MarkDeletedAt 前 DeletedAt 为零值",
+		Then(
+			t, "MarkDeletedAt 前 DeletedAt 为零值",
 			Expect(dt.DeletedAt.IsZero(), Be(cmp.True())),
 		)
 
 		dt.MarkDeletedAt()
 
-		Then(t, "MarkDeletedAt 后 DeletedAt 不再为零值",
+		Then(
+			t, "MarkDeletedAt 后 DeletedAt 不再为零值",
 			Expect(dt.DeletedAt.IsZero(), Be(cmp.False())),
 		)
 	})
@@ -408,7 +459,8 @@ func TestAnnotations(t *testing.T) {
 				return json.Marshal(compose.Annotations{"key": "value"})
 			})
 
-			Then(t, "Value 返回序列化后的 JSON",
+			Then(
+				t, "Value 返回序列化后的 JSON",
 				Expect(val.(string), Equal(string(expected))),
 			)
 		})
@@ -419,7 +471,8 @@ func TestAnnotations(t *testing.T) {
 
 			Must(t, func() error { return err })
 
-			Then(t, "空 map 应返回空字符串",
+			Then(
+				t, "空 map 应返回空字符串",
 				Expect(val, Equal(driver.Value(""))),
 			)
 		})
@@ -430,12 +483,11 @@ func TestAnnotations(t *testing.T) {
 
 			Must(t, func() error { return err })
 
-			Then(t, "nil map 应返回空字符串",
+			Then(
+				t, "nil map 应返回空字符串",
 				Expect(val, Equal(driver.Value(""))),
 			)
 		})
-
-
 	})
 
 	t.Run("Scan 反序列化", func(t *testing.T) {
@@ -449,7 +501,8 @@ func TestAnnotations(t *testing.T) {
 				return annos.Scan(jsonBytes)
 			})
 
-			Then(t, "反序列化后应包含键值对",
+			Then(
+				t, "反序列化后应包含键值对",
 				Expect(annos["k"], Equal("v")),
 			)
 		})
@@ -461,7 +514,8 @@ func TestAnnotations(t *testing.T) {
 				return annos.Scan([]byte{})
 			})
 
-			Then(t, "空 bytes 不修改已有值",
+			Then(
+				t, "空 bytes 不修改已有值",
 				Expect(annos["pre"], Equal("existing")),
 			)
 		})
@@ -473,7 +527,8 @@ func TestAnnotations(t *testing.T) {
 				return annos.Scan(`{"x":"y"}`)
 			})
 
-			Then(t, "反序列化后应包含键值对",
+			Then(
+				t, "反序列化后应包含键值对",
 				Expect(annos["x"], Equal("y")),
 			)
 		})
@@ -485,7 +540,8 @@ func TestAnnotations(t *testing.T) {
 				return annos.Scan("")
 			})
 
-			Then(t, "空 string 不修改已有值",
+			Then(
+				t, "空 string 不修改已有值",
 				Expect(annos["pre"], Equal("existing")),
 			)
 		})
@@ -497,7 +553,8 @@ func TestAnnotations(t *testing.T) {
 				return annos.Scan(nil)
 			})
 
-			Then(t, "nil 不修改已有值",
+			Then(
+				t, "nil 不修改已有值",
 				Expect(annos["pre"], Equal("existing")),
 			)
 		})
@@ -507,7 +564,8 @@ func TestAnnotations(t *testing.T) {
 
 			err := annos.Scan(123)
 
-			Then(t, "应返回错误",
+			Then(
+				t, "应返回错误",
 				Expect(err != nil, Be(cmp.True())),
 			)
 		})
@@ -519,7 +577,8 @@ func TestAnnotatable(t *testing.T) {
 		a := compose.Annotatable{}
 		annos := a.GetAnnotations()
 
-		Then(t, "Annotations 应为 nil",
+		Then(
+			t, "Annotations 应为 nil",
 			Expect(annos == nil, Be(cmp.True())),
 		)
 	})
@@ -531,13 +590,16 @@ func TestAnnotatable(t *testing.T) {
 		a.SetAnnotations(input)
 		result := a.GetAnnotations()
 
-		Then(t, "annotation 值匹配",
+		Then(
+			t, "annotation 值匹配",
 			Expect(result["env"], Equal("prod")),
 		)
-		Then(t, "annotation 值匹配",
+		Then(
+			t, "annotation 值匹配",
 			Expect(result["region"], Equal("us-east")),
 		)
-		Then(t, "annotation 长度匹配",
+		Then(
+			t, "annotation 长度匹配",
 			Expect(len(result), Equal(2)),
 		)
 	})
@@ -549,10 +611,12 @@ func TestAnnotatable(t *testing.T) {
 
 		result := a.GetAnnotations()
 
-		Then(t, "旧键不存在",
+		Then(
+			t, "旧键不存在",
 			Expect(result["old"], Equal("")),
 		)
-		Then(t, "新键存在",
+		Then(
+			t, "新键存在",
 			Expect(result["new"], Equal("data")),
 		)
 	})
@@ -562,18 +626,22 @@ func TestAnnotatable(t *testing.T) {
 		a.SetAnnotations(map[string]string{"k1": "v1"})
 
 		v, ok := a.GetAnnotation("k1")
-		Then(t, "应找到 k1",
+		Then(
+			t, "应找到 k1",
 			Expect(ok, Be(cmp.True())),
 		)
-		Then(t, "k1 值应为 v1",
+		Then(
+			t, "k1 值应为 v1",
 			Expect(v, Equal("v1")),
 		)
 
 		v2, ok2 := a.GetAnnotation("missing")
-		Then(t, "不存在的 key 不应找到",
+		Then(
+			t, "不存在的 key 不应找到",
 			Expect(ok2, Be(cmp.False())),
 		)
-		Then(t, "不存在的 key 返回空字符串",
+		Then(
+			t, "不存在的 key 返回空字符串",
 			Expect(v2, Equal("")),
 		)
 	})
@@ -581,10 +649,12 @@ func TestAnnotatable(t *testing.T) {
 	t.Run("GetAnnotation 在 nil annotations 时返回 false", func(t *testing.T) {
 		a := compose.Annotatable{}
 		v, ok := a.GetAnnotation("any")
-		Then(t, "nil annotations 不应找到 key",
+		Then(
+			t, "nil annotations 不应找到 key",
 			Expect(ok, Be(cmp.False())),
 		)
-		Then(t, "返回空字符串",
+		Then(
+			t, "返回空字符串",
 			Expect(v, Equal("")),
 		)
 	})
@@ -594,22 +664,27 @@ func TestAnnotatable(t *testing.T) {
 
 		a.SetAnnotation("step1", "one")
 		v1, ok1 := a.GetAnnotation("step1")
-		Then(t, "应找到 step1",
+		Then(
+			t, "应找到 step1",
 			Expect(ok1, Be(cmp.True())),
 		)
-		Then(t, "step1 值为 one",
+		Then(
+			t, "step1 值为 one",
 			Expect(v1, Equal("one")),
 		)
 
 		a.SetAnnotation("step2", "two")
 		v2, ok2 := a.GetAnnotation("step2")
-		Then(t, "应找到 step2",
+		Then(
+			t, "应找到 step2",
 			Expect(ok2, Be(cmp.True())),
 		)
-		Then(t, "step2 值为 two",
+		Then(
+			t, "step2 值为 two",
 			Expect(v2, Equal("two")),
 		)
-		Then(t, "step1 仍存在",
+		Then(
+			t, "step1 仍存在",
 			Expect(a.GetAnnotations()["step1"], Equal("one")),
 		)
 	})
@@ -619,10 +694,12 @@ func TestAnnotatable(t *testing.T) {
 		a.SetAnnotation("newkey", "newval")
 
 		annos := a.GetAnnotations()
-		Then(t, "Annotations 不再是 nil",
+		Then(
+			t, "Annotations 不再是 nil",
 			Expect(annos != nil, Be(cmp.True())),
 		)
-		Then(t, "值应正确",
+		Then(
+			t, "值应正确",
 			Expect(annos["newkey"], Equal("newval")),
 		)
 	})
@@ -639,7 +716,8 @@ func TestAnnotatable(t *testing.T) {
 func TestAnnotationsDataType(t *testing.T) {
 	a := compose.Annotations{}
 	dt := a.DataType("mysql")
-	Then(t, "DataType 返回 text",
+	Then(
+		t, "DataType 返回 text",
 		Expect(dt, Equal("text")),
 	)
 }
