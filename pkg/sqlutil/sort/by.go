@@ -68,7 +68,7 @@ func (a *By[M]) OperatorType() sqlpipe.OperatorType {
 }
 
 func (a *By[M]) Next(src sqlpipe.Source[M]) sqlpipe.Source[M] {
-	if a.Sorter == nil {
+	if a.IsZero() {
 		return src
 	}
 
