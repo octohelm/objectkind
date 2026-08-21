@@ -6,6 +6,7 @@ import (
 	"github.com/octohelm/storage/pkg/sqlpipe"
 	. "github.com/octohelm/x/testing/v2"
 
+	"github.com/octohelm/objectkind/pkg/apis/meta/v1"
 	pkgpager "github.com/octohelm/objectkind/pkg/sqlutil/pager"
 )
 
@@ -59,7 +60,7 @@ func TestPagerLimitCap(t *testing.T) {
 }
 
 func TestRawPager(t *testing.T) {
-	r := pkgpager.RawPager{Offset: 10, Limit: 20}
+	r := v1.Pager{Offset: 10, Limit: 20}
 
 	Then(
 		t, "Offset 正确",
@@ -72,7 +73,7 @@ func TestRawPager(t *testing.T) {
 }
 
 func TestRawPagerDefaults(t *testing.T) {
-	r := pkgpager.RawPager{}
+	r := v1.Pager{}
 
 	Then(
 		t, "Offset 默认为 0",

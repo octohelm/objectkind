@@ -2,11 +2,10 @@ package annotate
 
 import (
 	"bytes"
+	jsonv1 "encoding/json"
+	"encoding/json/jsontext"
+	"encoding/json/v2"
 	"strconv"
-
-	"github.com/go-json-experiment/json"
-	"github.com/go-json-experiment/json/jsontext"
-	jsonv1 "github.com/go-json-experiment/json/v1"
 
 	"github.com/octohelm/courier/pkg/validator"
 )

@@ -2,9 +2,8 @@ package compose
 
 import (
 	"database/sql/driver"
+	"encoding/json/v2"
 	"fmt"
-
-	"github.com/go-json-experiment/json"
 
 	"github.com/octohelm/objectkind/pkg/object"
 )

@@ -16,6 +16,10 @@ func (CancelOrderByID) ResponseContent() any {
 	return new(orderv1.Order)
 }
 
+func (CancelOrderByID) ResponseData() *orderv1.Order {
+	return new(orderv1.Order)
+}
+
 func (CancelOrderByID) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -36,6 +40,10 @@ func init() {
 }
 
 func (CompleteOrderByID) ResponseContent() any {
+	return new(orderv1.Order)
+}
+
+func (CompleteOrderByID) ResponseData() *orderv1.Order {
 	return new(orderv1.Order)
 }
 
@@ -62,6 +70,10 @@ func (CreateOrder) ResponseContent() any {
 	return new(orderv1.Order)
 }
 
+func (CreateOrder) ResponseData() *orderv1.Order {
+	return new(orderv1.Order)
+}
+
 func (CreateOrder) ResponseErrors() []error {
 	return []error{
 		&statuserror.Descriptor{
@@ -77,6 +89,10 @@ func init() {
 }
 
 func (GetOrderByID) ResponseContent() any {
+	return new(orderv1.Order)
+}
+
+func (GetOrderByID) ResponseData() *orderv1.Order {
 	return new(orderv1.Order)
 }
 
@@ -98,11 +114,19 @@ func (ListOrder) ResponseContent() any {
 	return new(orderv1.OrderList)
 }
 
+func (ListOrder) ResponseData() *orderv1.OrderList {
+	return new(orderv1.OrderList)
+}
+
 func init() {
 	R.Register(courier.NewRouter(&PayOrderByID{}))
 }
 
 func (PayOrderByID) ResponseContent() any {
+	return new(orderv1.Order)
+}
+
+func (PayOrderByID) ResponseData() *orderv1.Order {
 	return new(orderv1.Order)
 }
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/go-json-experiment/json"
+	"encoding/json/v2"
 
 	"github.com/octohelm/courier/pkg/validator/taggedunion"
 	. "github.com/octohelm/x/testing/v2"
